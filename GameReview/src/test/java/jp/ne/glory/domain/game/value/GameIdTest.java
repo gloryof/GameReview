@@ -3,7 +3,6 @@ package jp.ne.glory.domain.game.value;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import jp.ne.groly.domain.game.value.GameId;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;

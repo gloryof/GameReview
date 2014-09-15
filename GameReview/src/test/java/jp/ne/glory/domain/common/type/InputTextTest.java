@@ -1,18 +1,16 @@
 package jp.ne.glory.domain.common.type;
 
 import java.util.List;
-import jp.ne.groly.domain.common.annotation.MaxLength;
-import jp.ne.groly.domain.common.annotation.Required;
-import jp.ne.groly.domain.common.annotation.ValidCharacters;
-import jp.ne.groly.domain.common.annotation.param.ValidCharcterType;
-import jp.ne.groly.domain.common.error.ErrorInfo;
-import jp.ne.groly.domain.common.error.ValidateError;
-import jp.ne.groly.domain.common.error.ValidateErrors;
+import jp.ne.glory.domain.common.annotation.MaxLength;
+import jp.ne.glory.domain.common.annotation.Required;
+import jp.ne.glory.domain.common.annotation.ValidCharacters;
+import jp.ne.glory.domain.common.annotation.param.ValidCharcterType;
+import jp.ne.glory.domain.common.error.ErrorInfo;
+import jp.ne.glory.domain.common.error.ValidateError;
+import jp.ne.glory.domain.common.error.ValidateErrors;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-
-import jp.ne.groly.domain.common.type.InputText;
 
 import org.junit.Before;
 import org.junit.Test;

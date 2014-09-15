@@ -9,8 +9,6 @@ package jp.ne.glory.domain.common.error;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-import jp.ne.groly.domain.common.error.ErrorInfo;
-import jp.ne.groly.domain.common.error.ValidateError;
 import org.junit.Before;
 import org.junit.Test;
 

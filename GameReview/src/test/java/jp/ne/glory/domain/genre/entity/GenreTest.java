@@ -3,9 +3,8 @@ package jp.ne.glory.domain.genre.entity;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import jp.ne.groly.domain.genre.entity.Genre;
-import jp.ne.groly.domain.genre.value.GenreId;
-import jp.ne.groly.domain.genre.value.GenreName;
+import jp.ne.glory.domain.genre.value.GenreId;
+import jp.ne.glory.domain.genre.value.GenreName;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;

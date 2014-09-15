@@ -6,9 +6,11 @@
 
 package jp.ne.glory.common.annotation.param;
 
-import jp.ne.groly.domain.common.annotation.param.ValidCharcterType;
+import jp.ne.glory.domain.common.annotation.param.ValidCharcterType;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
+
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;

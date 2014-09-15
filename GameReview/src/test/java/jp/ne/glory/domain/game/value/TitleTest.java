@@ -6,11 +6,9 @@ import static jp.ne.glory.test.validate.ValidateMatcher.*;
 
 import java.util.List;
 import jp.ne.glory.test.util.TestUtil;
-import jp.ne.groly.domain.common.error.ErrorInfo;
-import jp.ne.groly.domain.common.error.ValidateError;
-import jp.ne.groly.domain.common.error.ValidateErrors;
-
-import jp.ne.groly.domain.game.value.Title;
+import jp.ne.glory.domain.common.error.ErrorInfo;
+import jp.ne.glory.domain.common.error.ValidateError;
+import jp.ne.glory.domain.common.error.ValidateErrors;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;

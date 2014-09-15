@@ -6,10 +6,7 @@ import static jp.ne.glory.test.validate.ValidateMatcher.*;
 
 import java.util.List;
 import java.util.stream.IntStream;
-import jp.ne.groly.domain.common.error.ErrorInfo;
-import jp.ne.groly.domain.common.error.ValidateError;
-import jp.ne.groly.domain.common.error.ValidateErrors;
-import jp.ne.groly.domain.game.value.Title;
+import jp.ne.glory.domain.game.value.Title;
 
 import org.junit.Before;
 import org.junit.Test;

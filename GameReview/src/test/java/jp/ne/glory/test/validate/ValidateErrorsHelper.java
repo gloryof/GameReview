@@ -6,8 +6,8 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import java.util.Optional;
-import jp.ne.groly.domain.common.error.ValidateError;
-import jp.ne.groly.domain.common.error.ValidateErrors;
+import jp.ne.glory.domain.common.error.ValidateError;
+import jp.ne.glory.domain.common.error.ValidateErrors;
 
 public class ValidateErrorsHelper {
 

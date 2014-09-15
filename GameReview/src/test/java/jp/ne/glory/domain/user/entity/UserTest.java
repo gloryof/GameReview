@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import jp.ne.glory.test.validate.ValidateErrorsHelper;
-import jp.ne.groly.domain.common.error.ErrorInfo;
-import jp.ne.groly.domain.common.error.ValidateError;
-import jp.ne.groly.domain.common.error.ValidateErrors;
+import jp.ne.glory.domain.common.error.ErrorInfo;
+import jp.ne.glory.domain.common.error.ValidateError;
+import jp.ne.glory.domain.common.error.ValidateErrors;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import jp.ne.groly.domain.user.entity.User;
-import jp.ne.groly.domain.user.value.Authorities;
-import jp.ne.groly.domain.user.value.Authority;
-import jp.ne.groly.domain.user.value.LoginId;
-import jp.ne.groly.domain.user.value.UserId;
-import jp.ne.groly.domain.user.value.UserName;
+import jp.ne.glory.domain.user.value.Authorities;
+import jp.ne.glory.domain.user.value.Authority;
+import jp.ne.glory.domain.user.value.LoginId;
+import jp.ne.glory.domain.user.value.UserId;
+import jp.ne.glory.domain.user.value.UserName;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;

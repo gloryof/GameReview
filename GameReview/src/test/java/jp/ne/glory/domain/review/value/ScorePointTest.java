@@ -1,8 +1,8 @@
 package jp.ne.glory.domain.review.value;
 
-import jp.ne.groly.domain.review.value.ScorePoint;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;

@@ -1,6 +1,6 @@
 package jp.ne.glory.test.validate;
 
-import jp.ne.groly.domain.common.error.ValidateError;
+import jp.ne.glory.domain.common.error.ValidateError;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

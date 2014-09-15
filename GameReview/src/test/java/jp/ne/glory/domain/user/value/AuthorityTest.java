@@ -1,8 +1,8 @@
 package jp.ne.glory.domain.user.value;
 
-import jp.ne.groly.domain.user.value.Authority;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;

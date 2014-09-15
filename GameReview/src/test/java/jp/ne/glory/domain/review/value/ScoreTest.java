@@ -11,11 +11,9 @@ import static jp.ne.glory.test.validate.ValidateMatcher.validatedBy;
 import static org.hamcrest.CoreMatchers.is;
 
 import java.util.List;
-import jp.ne.groly.domain.common.error.ErrorInfo;
-import jp.ne.groly.domain.common.error.ValidateError;
-import jp.ne.groly.domain.common.error.ValidateErrors;
-import jp.ne.groly.domain.review.value.Score;
-import jp.ne.groly.domain.review.value.ScorePoint;
+import jp.ne.glory.domain.common.error.ErrorInfo;
+import jp.ne.glory.domain.common.error.ValidateError;
+import jp.ne.glory.domain.common.error.ValidateErrors;
 
 import org.junit.Before;
 import org.junit.Test;

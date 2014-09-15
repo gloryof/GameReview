@@ -3,12 +3,11 @@ package jp.ne.glory.domain.game.entity;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import jp.ne.groly.domain.game.entity.Game;
-import jp.ne.groly.domain.game.value.CeroRating;
-import jp.ne.groly.domain.game.value.GameId;
-import jp.ne.groly.domain.game.value.SiteUrl;
-import jp.ne.groly.domain.game.value.Title;
-import jp.ne.groly.domain.genre.value.GenreId;
+import jp.ne.glory.domain.game.value.CeroRating;
+import jp.ne.glory.domain.game.value.GameId;
+import jp.ne.glory.domain.game.value.SiteUrl;
+import jp.ne.glory.domain.game.value.Title;
+import jp.ne.glory.domain.genre.value.GenreId;
 import org.junit.Before;
 import org.junit.Test;
 

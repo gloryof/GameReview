@@ -1,9 +1,10 @@
 package jp.ne.glory.domain.common.type;
 
-import jp.ne.groly.domain.common.type.EntityId;
-import jp.ne.groly.domain.game.value.GameId;
+import jp.ne.glory.domain.game.value.GameId;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
 import org.junit.Before;
 import org.junit.Test;
 

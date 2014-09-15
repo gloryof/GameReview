@@ -1,8 +1,8 @@
 package jp.ne.glory.domain.review.value;
 
-import jp.ne.groly.domain.review.value.ReviewId;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
 import org.junit.Test;
 
 public class ReviewIdTest {
