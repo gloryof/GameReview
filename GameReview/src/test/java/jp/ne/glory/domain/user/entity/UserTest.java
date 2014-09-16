@@ -1,17 +1,10 @@
 package jp.ne.glory.domain.user.entity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import jp.ne.glory.test.validate.ValidateErrorsHelper;
-import jp.ne.glory.domain.common.error.ErrorInfo;
-import jp.ne.glory.domain.common.error.ValidateError;
-import jp.ne.glory.domain.common.error.ValidateErrors;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import jp.ne.glory.domain.user.value.Authorities;
 import jp.ne.glory.domain.user.value.Authority;
 import jp.ne.glory.domain.user.value.LoginId;
 import jp.ne.glory.domain.user.value.UserId;
@@ -50,14 +43,6 @@ public class UserTest {
 
             assertThat(sut.isRegistered(), is(true));
         }
-
-        @Test
-        public void validateを実行しても入力チェックエラーにならない() {
-
-            final ValidateErrors actualErrors = sut.validate();
-
-            assertThat(actualErrors.hasError(), is(false));
-        }
     }
 
     public static class 全ての値が初期値の場合 {
@@ -87,23 +72,6 @@ public class UserTest {
         public void isRegisteredにfalseが設定されている() {
 
             assertThat(sut.isRegistered(), is(false));
-        }
-
-        @Test
-        public void validateで全ての項目がエラーチェックになる() {
-
-            final ValidateErrors actual = sut.validate();
-
-            assertThat(actual.hasError(), is(true));
-
-            final List<ValidateError> errorList = new ArrayList<>();
-
-            errorList.add(new ValidateError(ErrorInfo.Required, UserName.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.Required, LoginId.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.RequiredSelectOne, Authorities.LABEL));
-
-            final ValidateErrorsHelper helper = new ValidateErrorsHelper(actual);
-            helper.assertErrors(errorList);
         }
     }
 }

@@ -1,7 +1,5 @@
 package jp.ne.glory.domain.user.entity;
 
-import jp.ne.glory.domain.common.error.ValidateErrors;
-import jp.ne.glory.domain.common.type.Validatable;
 import jp.ne.glory.domain.user.value.Authorities;
 import jp.ne.glory.domain.user.value.LoginId;
 import jp.ne.glory.domain.user.value.UserId;
@@ -11,7 +9,10 @@ import jp.ne.glory.domain.user.value.UserName;
  * ユーザ.
  * @author Junki Yamada
  */
-public class User implements Validatable {
+public class User {
+
+    /** ラベル. */
+    public static final String LABEL = "ユーザ";
 
     /** ユーザID. */
     public final UserId userId;
@@ -51,21 +52,4 @@ public class User implements Validatable {
         
         return userId.isSetValue;
     }
-
-    /**
-     * 入力情報の検証を行う.
-     * @return 検証結果
-     */
-    @Override
-    public ValidateErrors validate() {
-
-        final ValidateErrors errors = new ValidateErrors();
-
-        errors.addAll(loginId.validate());
-        errors.addAll(userName.validate());
-        errors.addAll(authorities.validate());
-
-        return errors;
-    }
-
 }
