@@ -16,7 +16,7 @@ public class GenreRegisterResult {
     public final ValidateErrors errors;
 
     /**
-     * 登録されたユーザID.
+     * 登録されたジャンルID.
      */
     public final GenreId registeredGenreId;
 
@@ -24,7 +24,7 @@ public class GenreRegisterResult {
      * コンストラクタ.
      *
      * @param paramErrors 入力チェック結果
-     * @param paramGenreId 登録されたユーザID
+     * @param paramGenreId 登録されたジャンルID
      */
     public GenreRegisterResult(final ValidateErrors paramErrors, final GenreId paramGenreId) {
 
