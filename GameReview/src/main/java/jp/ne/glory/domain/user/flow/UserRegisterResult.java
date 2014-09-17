@@ -16,13 +16,19 @@ public class UserRegisterResult {
     public final ValidateErrors erros;
 
     /**
-     * 登録されたユーザID
+     * 登録されたユーザID.
      */
     public final UserId registeredUserId;
 
-    public UserRegisterResult(final ValidateErrors erros, final UserId registeredUserId) {
+    /**
+     * コンストラクタ.
+     *
+     * @param errors 入力チェック結果
+     * @param registeredUserId 登録されたユーザID
+     */
+    public UserRegisterResult(final ValidateErrors errors, final UserId registeredUserId) {
 
-        this.erros = erros;
+        this.erros = errors;
         this.registeredUserId = registeredUserId;
     }
 }
