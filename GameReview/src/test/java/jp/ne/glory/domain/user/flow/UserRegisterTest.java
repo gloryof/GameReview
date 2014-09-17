@@ -43,7 +43,7 @@ public class UserRegisterTest {
 
             final UserRegisterResult result = sut.register(user);
 
-            final ValidateErrors errors = result.UserRegisterResult.this.errors;
+            final ValidateErrors errors = result.errors;
             assertThat(errors.hasError(), is(false));
 
             final Optional<User> savedUser = repoStub.findBy(result.registeredUserId);
@@ -58,7 +58,7 @@ public class UserRegisterTest {
 
             final UserRegisterResult result = sut.register(user);
 
-            final ValidateErrors errors = result.UserRegisterResult.this.errors;
+            final ValidateErrors errors = result.errors;
             assertThat(errors.hasError(), is(true));
         }
     }
@@ -86,7 +86,7 @@ public class UserRegisterTest {
 
             final UserRegisterResult result = sut.finishEdit(user);
 
-            final ValidateErrors errors = result.UserRegisterResult.this.errors;
+            final ValidateErrors errors = result.errors;
             assertThat(errors.hasError(), is(false));
 
             final Optional<User> savedUser = repoStub.findBy(result.registeredUserId);
@@ -101,7 +101,7 @@ public class UserRegisterTest {
 
             final UserRegisterResult result = sut.finishEdit(user);
 
-            final ValidateErrors errors = result.UserRegisterResult.this.errors;
+            final ValidateErrors errors = result.errors;
             assertThat(errors.hasError(), is(true));
         }
 
@@ -115,7 +115,7 @@ public class UserRegisterTest {
 
             final UserRegisterResult result = sut.finishEdit(user);
 
-            final ValidateErrors errors = result.UserRegisterResult.this.errors;
+            final ValidateErrors errors = result.errors;
             assertThat(errors.hasError(), is(true));
         }
     }
