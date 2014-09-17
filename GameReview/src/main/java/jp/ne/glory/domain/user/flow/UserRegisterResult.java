@@ -13,7 +13,7 @@ public class UserRegisterResult {
     /**
      * 入力チェック結果.
      */
-    public final ValidateErrors erros;
+    public final ValidateErrors errors;
 
     /**
      * 登録されたユーザID.
@@ -28,7 +28,7 @@ public class UserRegisterResult {
      */
     public UserRegisterResult(final ValidateErrors errors, final UserId registeredUserId) {
 
-        this.erros = errors;
+        this.errors = errors;
         this.registeredUserId = registeredUserId;
     }
 }
