@@ -6,8 +6,7 @@
 
 package jp.ne.glory.domain.review.entity;
 
-import jp.ne.glory.domain.common.error.ValidateErrors;
-import jp.ne.glory.domain.common.type.Validatable;
+import jp.ne.glory.domain.game.value.GameId;
 import jp.ne.glory.domain.review.value.BadPoint;
 import jp.ne.glory.domain.review.value.Comment;
 import jp.ne.glory.domain.review.value.GoodPoint;
@@ -26,7 +25,14 @@ public class Review {
     /** ID. */
     public final ReviewId id;
 
-    /** 良い点. */
+    /**
+     * ゲームID
+     */
+    public GameId gameId;
+
+    /**
+     * 良い点.
+     */
     public GoodPoint gooodPoint = GoodPoint.empty();
 
     /** 悪い点. */

@@ -3,6 +3,7 @@ package jp.ne.glory.domain.review.validate;
 import jp.ne.glory.domain.common.error.ErrorInfo;
 import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
+import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.review.entity.Review;
 
 /**
@@ -12,15 +13,22 @@ import jp.ne.glory.domain.review.entity.Review;
 public class ReviewValidateRule {
 
     /** チェック対象レビュー. */
-    public final Review review;
+    private final Review review;
+
+    /**
+     * レビューに紐付くゲーム.
+     */
+    private final Game game;
 
     /**
      * コンストラクタ.
-     * @param paramReview レビュー 
+     * @param paramReview レビュー
+     * @param paramGame ゲーム
      */
-    public ReviewValidateRule(final Review paramReview) {
+    public ReviewValidateRule(final Review paramReview, final Game paramGame) {
 
         review = paramReview;
+        game = paramGame;
     }
 
     /**
@@ -28,6 +36,7 @@ public class ReviewValidateRule {
      * @return エラー情報
      */
     public ValidateErrors validateForRegister() {
+
         return validateCommon();
     }
 
@@ -62,6 +71,38 @@ public class ReviewValidateRule {
         errors.addAll(review.comment.validate());
         errors.addAll(review.score.validate());
 
+        final ValidateError gameValidateError = validateRelationGame();
+        if (gameValidateError != null) {
+
+            errors.add(gameValidateError);
+        }
+
         return errors;
+    }
+
+    /**
+     * 紐付くゲーム情報の検証を行う.
+     *
+     * @return 検証結果
+     */
+    private ValidateError validateRelationGame() {
+
+
+        if (game == null) {
+
+            return new ValidateError(ErrorInfo.NotInputInfo, Game.LABEL);
+        }
+
+        if (review.gameId == null) {
+
+            return new ValidateError(ErrorInfo.NotSettingRelation, Game.LABEL);
+        }
+
+        if (!review.gameId.isSame(game.id)) {
+
+            return new ValidateError(ErrorInfo.MismatchRelation, Game.LABEL);
+        }
+
+        return null;
     }
 }

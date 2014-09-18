@@ -23,7 +23,18 @@ public enum ErrorInfo {
     
     /** 未登録エラー. */
     NotRegister("登録されていない{0}です。"),
-    ;
+    /**
+     * 未入力エラー.
+     */
+    NotInputInfo("{0}が入力されていません。"),
+    /**
+     * 紐付きミスマッチエラー.
+     */
+    MismatchRelation("異なる{0}が紐付けされています。"),
+    /**
+     * 紐付き未設定エラー.
+     */
+    NotSettingRelation("{0}が紐付けされていません。"),;
 
     /** メッセージ. */
     public final String message;
