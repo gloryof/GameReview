@@ -76,17 +76,17 @@ public class ReviewValidateRuleTest {
         }
 
         @Test
-        public void validateForRegisterを実行しても入力チェックエラーにならない() {
+        public void validateForPostを実行しても入力チェックエラーにならない() {
 
-            final ValidateErrors actualErrors = sut.validateForRegister();
+            final ValidateErrors actualErrors = sut.validateForPost();
 
             assertThat(actualErrors.hasError(), is(false));
         }
 
         @Test
-        public void validateForEditを実行しても入力チェックエラーにならない() {
+        public void validateForRepostを実行しても入力チェックエラーにならない() {
 
-            final ValidateErrors actualErrors = sut.validateForEdit();
+            final ValidateErrors actualErrors = sut.validateForRepost();
 
             assertThat(actualErrors.hasError(), is(false));
         }
@@ -105,9 +105,9 @@ public class ReviewValidateRuleTest {
         }
 
         @Test
-        public void validateForRegisterでゲーム情報が未登録のエラーになる() {
+        public void validateForPostでゲーム情報が未登録のエラーになる() {
 
-            final ValidateErrors actual = sut.validateForRegister();
+            final ValidateErrors actual = sut.validateForPost();
 
             assertThat(actual.hasError(), is(true));
 
@@ -120,9 +120,9 @@ public class ReviewValidateRuleTest {
         }
 
         @Test
-        public void validateForEditでゲーム情報が未登録のエラーになる() {
+        public void validateForRepostでゲーム情報が未登録のエラーになる() {
 
-            final ValidateErrors actual = sut.validateForEdit();
+            final ValidateErrors actual = sut.validateForRepost();
 
             assertThat(actual.hasError(), is(true));
 
@@ -153,9 +153,9 @@ public class ReviewValidateRuleTest {
         }
 
         @Test
-        public void validateForRegisterでゲーム情報の紐付けミスマッチエラーになる() {
+        public void validateForPostでゲーム情報の紐付けミスマッチエラーになる() {
 
-            final ValidateErrors actual = sut.validateForRegister();
+            final ValidateErrors actual = sut.validateForPost();
 
             assertThat(actual.hasError(), is(true));
 
@@ -168,9 +168,9 @@ public class ReviewValidateRuleTest {
         }
 
         @Test
-        public void validateForEditでゲーム情報が紐付けミスマッチエラーになる() {
+        public void validateForRepostでゲーム情報が紐付けミスマッチエラーになる() {
 
-            final ValidateErrors actual = sut.validateForEdit();
+            final ValidateErrors actual = sut.validateForRepost();
 
             assertThat(actual.hasError(), is(true));
 
@@ -202,9 +202,9 @@ public class ReviewValidateRuleTest {
         }
 
         @Test
-        public void validateForRegisterでゲーム情報の紐付け未設定エラーになる() {
+        public void validateForPostでゲーム情報の紐付け未設定エラーになる() {
 
-            final ValidateErrors actual = sut.validateForRegister();
+            final ValidateErrors actual = sut.validateForPost();
 
             assertThat(actual.hasError(), is(true));
 
@@ -217,9 +217,9 @@ public class ReviewValidateRuleTest {
         }
 
         @Test
-        public void validateForEditでゲーム情報が紐付け未設定エラーになる() {
+        public void validateForRepostでゲーム情報が紐付け未設定エラーになる() {
 
-            final ValidateErrors actual = sut.validateForEdit();
+            final ValidateErrors actual = sut.validateForRepost();
 
             assertThat(actual.hasError(), is(true));
 
@@ -246,9 +246,9 @@ public class ReviewValidateRuleTest {
         }
 
         @Test
-        public void validateForRegisterで必須項目がエラーチェックになる() {
+        public void validateForPostで必須項目がエラーチェックになる() {
 
-            final ValidateErrors actual = sut.validateForRegister();
+            final ValidateErrors actual = sut.validateForPost();
 
             assertThat(actual.hasError(), is(true));
 
@@ -265,9 +265,9 @@ public class ReviewValidateRuleTest {
         }
 
         @Test
-        public void validateForEditで全ての必須項目がエラーチェックになる() {
+        public void validateForRepostで全ての必須項目がエラーチェックになる() {
 
-            final ValidateErrors actual = sut.validateForEdit();
+            final ValidateErrors actual = sut.validateForRepost();
 
             assertThat(actual.hasError(), is(true));
 

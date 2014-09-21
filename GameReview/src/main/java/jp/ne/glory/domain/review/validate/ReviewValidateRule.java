@@ -35,7 +35,7 @@ public class ReviewValidateRule {
      * 登録時の入力チェックを行う.
      * @return エラー情報
      */
-    public ValidateErrors validateForRegister() {
+    public ValidateErrors validateForPost() {
 
         return validateCommon();
     }
@@ -44,7 +44,7 @@ public class ReviewValidateRule {
      * 編集時の入力チェックを行う.
      * @return エラー情報
      */
-    public ValidateErrors validateForEdit() {
+    public ValidateErrors validateForRepost() {
 
         final ValidateErrors errors = new ValidateErrors();
 
