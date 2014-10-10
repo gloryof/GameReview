@@ -1,26 +1,19 @@
 package jp.ne.glory.web.top;
 
 import java.time.LocalDateTime;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import jp.ne.glory.web.top.bean.TopInfo;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.glassfish.jersey.server.mvc.Viewable;
 
-
-@Controller
-@RequestMapping("/top")
+@Path("top")
 public class Top {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String test(final Model model) {
+    @GET
+    public Viewable test() {
 
-        final TopInfo topInfo = new TopInfo(LocalDateTime.now(), "Junki", "Yamada");
+        final TopInfo topInfo = new TopInfo(LocalDateTime.now(), "Taro", "Yamada");
 
-        model.addAttribute(topInfo);
-
-        System.out.println("test");
-
-        return "/top/top";
+        return new Viewable("/top/top", topInfo);
     }
 }
