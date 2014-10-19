@@ -39,18 +39,28 @@ public class ThymeleafViewProcessor implements TemplateProcessor<String> {
     private HttpServletRequest request;
 
     /**
-     * *
      * レスポンス.
      */
     @Context
     private HttpServletResponse response;
 
+    /**
+     * コンテキスト
+     */
     @Context
     private ServletContext servletContext;
-     private final TemplateEngine templateEngine;
 
+    /**
+     * テンプレートエンジン.
+     */
+    private final TemplateEngine templateEngine;
+
+    /**
+     * コンストラクタ.<br>
+     * テンプレートエンジンの設定を行う.
+     */
     public ThymeleafViewProcessor() {
-        System.out.println("load ThymeleafViewProcessor");
+
         TemplateResolver resolver = new ServletContextTemplateResolver();
         resolver.setPrefix("/WEB-INF/view/");
         resolver.setSuffix(".html");
@@ -61,21 +71,40 @@ public class ThymeleafViewProcessor implements TemplateProcessor<String> {
         templateEngine.setTemplateResolver(resolver);
     }
 
+    /**
+     * 名前解決
+     *
+     * @param name 名前
+     * @param mediaType メディアタイプ
+     * @return 名前
+     */
     @Override
     public String resolve(String name, MediaType mediaType) {
 
         return name;
     }
 
+    /**
+     * レスポンスの書き込み.<br>
+     * 下記の情報を設定する。<br>
+     * ・it:モデルオブジェクト
+     *
+     * @param templateReference テンプレート参照名
+     * @param viewable ビューオブジェクト
+     * @param mediaType メディアタイプ
+     * @param httpHeaders ヘッダ情報
+     * @param out 出力ストリーム.
+     * @throws IOException
+     */
     @Override
     public void writeTo(String templateReference, Viewable viewable, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream out) throws IOException {
 
         WebContext context = new WebContext(request, response, servletContext);
 
-        context.setVariable("item", viewable.getModel());
+        context.setVariable("it", viewable.getModel());
 
         Writer writer = new OutputStreamWriter(out);
-        templateEngine.process(templateReference, context, response.getWriter());
+        templateEngine.process(templateReference, context, writer);
 
         writer.flush();
     }

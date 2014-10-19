@@ -16,9 +16,13 @@ import org.glassfish.jersey.server.mvc.MvcFeature;
  *
  * @author Junki Yamada
  */
-@ApplicationPath("/service")
+@ApplicationPath("/")
 public class ApplicationSetting extends ResourceConfig {
 
+    /**
+     * コンストラクタ.<br>
+     * アプリケーションの設定を行う。
+     */
     public ApplicationSetting() {
 
         packages(this.getClass().getPackage().getName());
