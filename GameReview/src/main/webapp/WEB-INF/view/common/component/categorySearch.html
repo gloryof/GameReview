@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Top Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="../../../css/normalize.css" th:href="@{/css/normalize.css}" />
+        <link rel="stylesheet" href="../../../css/base.css" th:href="@{/css/base.css}" />
+    </head>
+    <body>
+        <div class="bs-left-menu" th:fragment="leftMenu">
+             <div class="cp-category-search">
+                <h1>カテゴリ検索</h1>
+                <ul>
+                    <li>
+                        <a href="#">アクション</a>
+                    </li>
+                    <li>
+                        <a href="#">RPG</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

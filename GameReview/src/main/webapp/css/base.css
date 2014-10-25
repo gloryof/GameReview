@@ -1,6 +1,26 @@
 body {
-    margin : 0px;
-    padding : 0px;
     background-color : lightsteelblue;
-    text-align: center;
+}
+
+ul {
+    list-style:  none;
+    padding-left : 0px;
+}
+
+.bs-content-area {
+    width : 1000px;
+    margin : 0 auto;
+}
+
+.bs-top-menu {
+}
+
+.bs-left-menu {
+    float : left;
+    width : 200px;
+}
+
+.bs-main-contents {
+    float : right;
+    width : 800px;
 }
