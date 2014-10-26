@@ -1,53 +1,15 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Top Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" href="../../../css/normalize.css" th:href="@{/css/normalize.css}" />
-        <link rel="stylesheet" href="../../../css/base.css" th:href="@{/css/base.css}" />
-    </head>
+    <head th:include="/common/base/metaInfo :: commonHeader (title='Top Page')" />
     <body>
         <div class="bs-content-area">
-            <div th:replace="/common/component/topMenu :: topMenu"></div>
+            <div th:replace="/common/component/topMenu :: topMenu">
+            </div>
             <div class="bs-left-menu">
-                <div class="cp-category-search">
-                    <h1>カテゴリ検索</h1>
-                    <ul>
-                        <li>
-                            <a href="#">アクション</a>
-                        </li>
-                        <li>
-                            <a href="#">RPG</a>
-                        </li>
-                    </ul>
-                </div>
+                <div th:replace="/common/component/categorySearch :: categorySearch"></div>
             </div>
             <div class="bs-main-contents">
-                <h2>テストタイトル</h2>
-                <dl>
-                    <dd>熱中度</dd>
-                    <dt>5点</dt>
-                    <dd>ストーリー</dd>
-                    <dt>4点</dt>
-                    <dd>操作性</dd>
-                    <dt>3点</dt>
-                    <dd>ロード時間</dd>
-                    <dt>2点</dt>
-                    <dd>音楽</dd>
-                    <dt>1点</dt>
-                </dl>
-                <h3>良い点</h3>
-                <p>
-                    テストテストテスト。
-                </p>
-                <h3>悪い点</h3>
-                <p>
-                    テストテストテスト。
-                </p>
-                <h3>コメント</h3>
-                <p>
-                    テストテストテスト。
-                </p>
+                <div th:replace="/review/review :: reviewArea"></div>
             </div>
         </div>
     </body>

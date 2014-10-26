@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head th:fragment="commonHeader">
+        <title>レビューページ</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="../../../css/normalize.css" th:href="@{/css/normalize.css}" />
+        <link rel="stylesheet" href="../../../css/base.css" th:href="@{/css/base.css}" />
+    </head>
+    <body>
+        <div class="fm-review" th:fragment="reviewArea">
+            <ul>
+                <li>
+                    <h2>テストタイトル</h2>
+                    <dl>
+                        <dd>熱中度</dd>
+                        <dt>5点</dt>
+                        <dd>ストーリー</dd>
+                        <dt>4点</dt>
+                        <dd>操作性</dd>
+                        <dt>3点</dt>
+                        <dd>ロード時間</dd>
+                        <dt>2点</dt>
+                        <dd>音楽</dd>
+                        <dt>1点</dt>
+                    </dl>
+                    <h3>良い点</h3>
+                    <p>
+                        テストテストテスト。
+                    </p>
+                    <h3>悪い点</h3>
+                    <p>
+                        テストテストテスト。
+                    </p>
+                    <h3>コメント</h3>
+                    <p>
+                        テストテストテスト。
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
