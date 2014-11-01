@@ -66,6 +66,7 @@ public class ThymeleafViewProcessor implements TemplateProcessor<String> {
         resolver.setSuffix(".html");
         resolver.setTemplateMode("HTML5");
         resolver.setCacheTTLMs(3600000L);
+        resolver.setCharacterEncoding(ThymeleafConstant.CHARCTER_ENCODING);
 
         templateEngine = new TemplateEngine();
         templateEngine.setTemplateResolver(resolver);
@@ -97,13 +98,15 @@ public class ThymeleafViewProcessor implements TemplateProcessor<String> {
      * @throws IOException
      */
     @Override
-    public void writeTo(String templateReference, Viewable viewable, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream out) throws IOException {
+    public void writeTo(String templateReference, Viewable viewable, MediaType mediaType,
+            MultivaluedMap<String, Object> httpHeaders, OutputStream out) throws IOException {
 
         WebContext context = new WebContext(request, response, servletContext);
 
         context.setVariable("it", viewable.getModel());
 
-        Writer writer = new OutputStreamWriter(out);
+        Writer writer = new OutputStreamWriter(out, ThymeleafConstant.CHARCTER_ENCODING);
+
         templateEngine.process(templateReference, context, writer);
 
         writer.flush();
