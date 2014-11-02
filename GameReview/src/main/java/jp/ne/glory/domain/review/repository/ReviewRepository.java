@@ -5,9 +5,12 @@
  */
 package jp.ne.glory.domain.review.repository;
 
+import java.util.List;
 import java.util.Optional;
 import jp.ne.glory.domain.review.entity.Review;
 import jp.ne.glory.domain.review.value.ReviewId;
+import jp.ne.glory.domain.review.value.search.ReviewSearchCondition;
+import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
 
 /**
  * レビューリポジトリ.
@@ -31,4 +34,20 @@ public interface ReviewRepository {
      * @return レビュー
      */
     Optional<Review> findBy(final ReviewId reviewId);
+
+    /**
+     * レビューを検索する.
+     *
+     * @param condition 検索条件
+     * @return 検索結果
+     */
+    List<ReviewSearchResult> search(final ReviewSearchCondition condition);
+
+    /**
+     * レビュー検索の件数を取得する.
+     *
+     * @param condition 検索条件
+     * @return 件数
+     */
+    int getSearchCount(final ReviewSearchCondition condition);
 }
