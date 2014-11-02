@@ -1,12 +1,12 @@
 package jp.ne.glory.domain.review.entity;
 
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
+import java.time.LocalDateTime;
+import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.review.value.BadPoint;
 import jp.ne.glory.domain.review.value.Comment;
 import jp.ne.glory.domain.review.value.GoodPoint;
+import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.Score;
 import jp.ne.glory.domain.review.value.ScorePoint;
@@ -14,6 +14,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Enclosed.class)
 public class ReviewTest {
@@ -38,6 +43,7 @@ public class ReviewTest {
             sut.score.addiction = ScorePoint.Point3;
             sut.score.music = ScorePoint.Point2;
             sut.score.loadTime = ScorePoint.Point1;
+            sut.postTime = new PostDateTime(new DateTimeValue(LocalDateTime.now()));
         }
 
         @Test

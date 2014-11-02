@@ -10,6 +10,7 @@ import jp.ne.glory.domain.game.value.GameId;
 import jp.ne.glory.domain.review.value.BadPoint;
 import jp.ne.glory.domain.review.value.Comment;
 import jp.ne.glory.domain.review.value.GoodPoint;
+import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.Score;
 
@@ -43,6 +44,11 @@ public class Review {
 
     /** スコア. */
     public Score score = new Score();
+
+    /**
+     * 投稿日時.
+     */
+    public PostDateTime postTime = PostDateTime.empty();
 
     /**
      * コンストラクタ.
