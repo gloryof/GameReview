@@ -2,14 +2,17 @@ package jp.ne.glory.web.top;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import jp.ne.glory.application.review.ReviewSearch;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.genre.value.GenreName;
 import jp.ne.glory.ui.genre.GenreSearchView;
+import jp.ne.glory.ui.review.ReviewView;
 import jp.ne.glory.ui.top.TopView;
 import org.glassfish.jersey.server.mvc.Viewable;
 
@@ -20,6 +23,22 @@ import org.glassfish.jersey.server.mvc.Viewable;
  */
 @Path("top")
 public class Top {
+
+    /**
+     * レビュー検索.
+     */
+    private final ReviewSearch search;
+
+    /**
+     * コンストラクタ.
+     *
+     * @param injectSearch レビュー検索
+     */
+    @Inject
+    public Top(final ReviewSearch injectSearch) {
+
+        search = injectSearch;
+    }
 
     /**
      * 画面を表示する.
@@ -35,7 +54,9 @@ public class Top {
         genreList.add(new Genre(new GenreId(2l), new GenreName("RPG")));
         genreList.add(new Genre(new GenreId(3l), new GenreName("シミュレーション")));
 
-        final TopView topView = new TopView(new GenreSearchView(genreList));
+        final ReviewView reviewView = new ReviewView(search.searchNewReviews(5));
+        final GenreSearchView genreSearchView = new GenreSearchView(genreList);
+        final TopView topView = new TopView(genreSearchView, reviewView);
 
         return new Viewable("/top/top", topView);
     }

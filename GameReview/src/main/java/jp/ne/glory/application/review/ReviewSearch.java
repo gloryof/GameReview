@@ -1,6 +1,8 @@
 package jp.ne.glory.application.review;
 
 import java.util.List;
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
 import jp.ne.glory.domain.review.repository.ReviewRepository;
 import jp.ne.glory.domain.review.value.search.ReviewSearchCondition;
 import jp.ne.glory.domain.review.value.search.ReviewSearchOrderType;
@@ -12,6 +14,7 @@ import jp.ne.glory.domain.review.value.search.ReviewSearchResults;
  *
  * @author Junki Yamada.
  */
+@Dependent
 public class ReviewSearch {
 
     /**
@@ -22,11 +25,12 @@ public class ReviewSearch {
     /**
      * コンストラクタ.
      *
-     * @param paramRepository リポジトリ
+     * @param repository リポジトリ
      */
-    public ReviewSearch(final ReviewRepository paramRepository) {
+    @Inject
+    public ReviewSearch(final ReviewRepository repository) {
 
-        repository = paramRepository;
+        this.repository = repository;
     }
 
     /**

@@ -9,7 +9,7 @@
                 <div th:replace="/common/component/genreSearch :: genreSearch"></div>
             </div>
             <div class="bs-main-contents">
-                <div th:replace="/review/review :: reviewArea"></div>
+                <div th:replace="/review/review :: reviewArea(reviewView=${it.review})"></div>
             </div>
         </div>
     </body>
