@@ -13,25 +13,19 @@ public enum ScorePoint {
     Point0(1, 0, "最悪"),
 
     /** 1点. */
-    Point1(2, 1, ""),
-
+    Point1(2, 1, "1"),
     /** 2点. */
-    Point2(3, 2, ""),
-
+    Point2(3, 2, "2"),
     /** 3点. */
-    Point3(4, 3, ""),
-
+    Point3(4, 3, "3"),
     /** 4点. */
-    Point4(5, 4, ""),
-
+    Point4(5, 4, "4"),
     /** 5点. */
-    Point5(6, 5, ""),
-
+    Point5(6, 5, "5"),
     /** 未入力. */
-    NotInput(7, 0, ""),
-
+    NotInput(7, 0, "未入力"),
     /** 評価対象外. */
-    Exclued(8, 0, "");
+    Exclued(8, 0, "対象外");
 
     /** タイプID. */
     public final int typeId;

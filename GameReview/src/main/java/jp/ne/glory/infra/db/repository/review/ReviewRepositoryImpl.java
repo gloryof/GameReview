@@ -11,6 +11,9 @@ import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.value.GameId;
 import jp.ne.glory.domain.game.value.Title;
+import jp.ne.glory.domain.genre.entity.Genre;
+import jp.ne.glory.domain.genre.value.GenreId;
+import jp.ne.glory.domain.genre.value.GenreName;
 import jp.ne.glory.domain.review.entity.Review;
 import jp.ne.glory.domain.review.repository.ReviewRepository;
 import jp.ne.glory.domain.review.value.PostDateTime;
@@ -39,8 +42,9 @@ public class ReviewRepositoryImpl implements ReviewRepository {
             review.postTime = new PostDateTime(new DateTimeValue(LocalDateTime.now()));
 
             final Game game = new Game(gameId, new Title("テスト" + v));
+            final Genre genre = new Genre(new GenreId(1l), new GenreName("テストジャンル"));
 
-            stubResults.add(new ReviewSearchResult(review, game));
+            stubResults.add(new ReviewSearchResult(review, game, genre));
         });
     }
 

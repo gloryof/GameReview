@@ -17,9 +17,9 @@ import jp.ne.glory.ui.top.TopView;
 import org.glassfish.jersey.server.mvc.Viewable;
 
 /**
- * Top画面.
+ * Topリソース.
  *
- * @author Admin
+ * @author Junki Yamada
  */
 @Path("top")
 public class Top {

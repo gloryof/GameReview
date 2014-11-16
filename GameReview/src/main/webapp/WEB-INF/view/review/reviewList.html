@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head th:fragment="commonHeader">
+        <title>レビューページ</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="../../../css/normalize.css" th:href="@{/css/normalize.css}" />
+        <link rel="stylesheet" href="../../../css/base.css" th:href="@{/css/base.css}" />
+    </head>
+    <body>
+        <div class="cp-review-list" th:fragment="reviewList (reviewListView)">
+            <p th:if="${reviewListView.reviews.isEmpty()}" >条件に一致するレビューが見つかりませんでした。</p>
+            <table th:if="${reviewListView.reviews.isEmpty() == false}">
+                <col width="30px" />
+                <col width="*" />
+                <col width="*" />
+                <col width="100px" />
+                <col width="100px" />
+                <col width="100px" />
+                <col width="100px" />
+                <col width="100px" />
+                <tr>
+                    <th rowspan="2">No.</th>
+                    <th rowspan="2">タイトル</th>
+                    <th rowspan="2">ジャンル</th>
+                    <th colspan="5">評価</th>
+                </tr>
+                <tr>
+                    <!-- /* <th> rowspan2 */ -->
+                    <!-- /* <th> rowspan2 */ -->
+                    <!-- /* <th> rowspan2 */ -->
+                    <th>熱中度</th>
+                    <th>ストーリー</th>
+                    <th>操作性</th>
+                    <th>ロード時間</th>
+                    <th>音楽</th>
+                </tr>
+                <tr th:each="review,stat : ${reviewListView.reviews}">
+                    <td th:text="${stat.count}">1</td>
+                    <td th:text="${review.title}">タイトル</td>
+                    <td th:text="${review.genreName}">ジャンル</td>
+                    <td th:text="${review.addictionScore}">1</td>
+                    <td th:text="${review.storyScore}">2</td>
+                    <td th:text="${review.operabilityScore}">3</td>
+                    <td th:text="${review.loadTimeScore}">4</td>
+                    <td th:text="${review.musicScore}">5</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

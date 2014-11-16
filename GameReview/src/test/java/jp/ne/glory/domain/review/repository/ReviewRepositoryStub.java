@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.value.GameId;
 import jp.ne.glory.domain.game.value.Title;
+import jp.ne.glory.domain.genre.entity.Genre;
+import jp.ne.glory.domain.genre.value.GenreId;
+import jp.ne.glory.domain.genre.value.GenreName;
 import jp.ne.glory.domain.review.entity.Review;
 import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.search.ReviewSearchCondition;
@@ -76,9 +79,10 @@ public class ReviewRepositoryStub implements ReviewRepository {
     private List<ReviewSearchResult> getSearchResult(ReviewSearchCondition condition) {
 
         final Game stubGame = new Game(GameId.notNumberingValue(), new Title("テスト"));
+        final Genre stubGenre = new Genre(new GenreId(2l), new GenreName("テストジャンル"));
         final List<ReviewSearchResult> resultList = reviewMap.entrySet().stream()
                 .filter(entry -> true)
-                .map(entry -> new ReviewSearchResult(entry.getValue(), stubGame))
+                .map(entry -> new ReviewSearchResult(entry.getValue(), stubGame, stubGenre))
                 .collect(Collectors.toList());
 
         return resultList;

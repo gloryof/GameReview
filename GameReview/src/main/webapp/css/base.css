@@ -1,5 +1,6 @@
 body {
     background-color : lightsteelblue;
+    font-size : 16px;
 }
 
 ul {
@@ -7,9 +8,37 @@ ul {
     padding-left : 0px;
 }
 
+table {
+    border-collapse: collapse;
+    background-color: #ffffff;
+    margin-top : 8px;
+    margin-bottom : 8px;
+    width: 100%;
+}
+
+tr {
+    border : solid 1px #000000;
+}
+
+tr:nth-child(even) {
+    background-color : #e0ffff;
+}
+
+th {
+    border : solid 1px #000000;
+    background-color : #dcdcdc;
+    padding : 4px;
+}
+
+td {
+    border : solid 1px #000000;
+    padding : 4px;
+}
+
 .bs-content-area {
     width : 1000px;
     margin : 0 auto;
+    padding : 8px;
 }
 
 .bs-top-menu {

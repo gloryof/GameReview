@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResults;
 
 /**
- * レビュー画面情報.
+ * レビューリスト画面情報.
  *
  * @author Junki Yamada
  */
-public class ReviewView {
+public class ReviewListView {
 
     /**
      * レビューリスト.
@@ -21,7 +21,7 @@ public class ReviewView {
      *
      * @param results 検索結果
      */
-    public ReviewView(final ReviewSearchResults results) {
+    public ReviewListView(final ReviewSearchResults results) {
 
         reviews = results.results
                 .stream()
