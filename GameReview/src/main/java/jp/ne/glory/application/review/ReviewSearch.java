@@ -1,7 +1,7 @@
 package jp.ne.glory.application.review;
 
 import java.util.List;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import jp.ne.glory.domain.review.repository.ReviewRepository;
 import jp.ne.glory.domain.review.value.search.ReviewSearchCondition;
@@ -14,13 +14,24 @@ import jp.ne.glory.domain.review.value.search.ReviewSearchResults;
  *
  * @author Junki Yamada.
  */
-@Dependent
+@RequestScoped
 public class ReviewSearch {
 
     /**
      * レビューリポジトリ.
      */
     private final ReviewRepository repository;
+
+    /**
+     * コンストラクタ.<br>
+     * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
+     *
+     */
+    @Deprecated
+    ReviewSearch() {
+
+        this.repository = null;
+    }
 
     /**
      * コンストラクタ.

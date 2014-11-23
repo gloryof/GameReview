@@ -2,6 +2,7 @@ package jp.ne.glory.web.genreSearch;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,12 +23,23 @@ import org.glassfish.jersey.server.mvc.Viewable;
  * @author Junki Yamada
  */
 @Path("genreSearch")
+@RequestScoped
 public class GenreSearch {
 
     /**
      * レビュー検索.
      */
     private final ReviewSearch search;
+
+    /**
+     * コンストラクタ.<br>
+     * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
+     *
+     */
+    @Deprecated
+    GenreSearch() {
+        this.search = null;
+    }
 
     /**
      * コンストラクタ.
