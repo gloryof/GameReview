@@ -56,6 +56,7 @@ public class ReviewSearch {
 
         final ReviewSearchCondition condition = new ReviewSearchCondition();
         condition.targetCount = count;
+        condition.lotPerCount = count;
         condition.orderType = ReviewSearchOrderType.PostTimeDesc;
 
         final List<ReviewSearchResult> resultList = repository.search(condition);
