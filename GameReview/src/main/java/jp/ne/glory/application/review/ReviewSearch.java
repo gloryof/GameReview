@@ -3,6 +3,7 @@ package jp.ne.glory.application.review;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.review.repository.ReviewRepository;
 import jp.ne.glory.domain.review.value.search.ReviewSearchCondition;
 import jp.ne.glory.domain.review.value.search.ReviewSearchOrderType;
@@ -45,7 +46,8 @@ public class ReviewSearch {
     }
 
     /**
-     * 最新のレビューを取得する.
+     * 最新のレビューを取得する.<br>
+     * countの数だけデータを取得する
      *
      * @param count 取得件数
      * @return レビュー検索結果
@@ -60,5 +62,20 @@ public class ReviewSearch {
         final int resultCount = repository.getSearchCount(condition);
 
         return new ReviewSearchResults(condition, resultList, resultCount);
+    }
+
+    /**
+     * ジャンルIDで検索を行う.<br>
+     * lotPerCounttの数だけデータを取得する。<br>
+     * lotNumberに全体の何ロット目を取得するかを設定する。
+     *
+     * @param genreId ジャンルID
+     * @param lotPerCount ロット内のカウント
+     * @param lotNumber ロット数
+     * @return レビュー検索結果
+     */
+    public ReviewSearchResults searchReviewByGenre(final GenreId genreId, final int lotPerCount, final int lotNumber) {
+
+        return null;
     }
 }

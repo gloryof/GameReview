@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.value.GameId;
@@ -26,7 +26,7 @@ import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
  *
  * @author Junki Yamada
  */
-@Dependent
+@RequestScoped
 public class ReviewRepositoryImpl implements ReviewRepository {
 
     private static final List<ReviewSearchResult> stubResults = new ArrayList<>();

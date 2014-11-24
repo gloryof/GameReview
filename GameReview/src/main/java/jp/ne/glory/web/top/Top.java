@@ -1,20 +1,17 @@
 package jp.ne.glory.web.top;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import jp.ne.glory.application.genre.GenreList;
 import jp.ne.glory.application.review.ReviewSearch;
-import jp.ne.glory.domain.genre.entity.Genre;
-import jp.ne.glory.domain.genre.value.GenreId;
-import jp.ne.glory.domain.genre.value.GenreName;
 import jp.ne.glory.ui.genre.GenreSearchView;
 import jp.ne.glory.ui.review.ReviewView;
 import jp.ne.glory.ui.top.TopView;
+import jp.ne.glory.web.common.WebPageConst;
 import org.glassfish.jersey.server.mvc.Viewable;
 
 /**
@@ -32,6 +29,11 @@ public class Top {
     private final ReviewSearch search;
 
     /**
+     * ジャンルリスト.
+     */
+    private final GenreList genreList;
+
+    /**
      * コンストラクタ.<br>
      * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
      *
@@ -39,17 +41,20 @@ public class Top {
     @Deprecated
     Top() {
         this.search = null;
+        this.genreList = null;
     }
 
     /**
      * コンストラクタ.
      *
-     * @param injectSearch レビュー検索
+     * @param reviewSearch レビュー検索
+     * @param genreList ジャンルリスト
      */
     @Inject
-    public Top(final ReviewSearch injectSearch) {
+    public Top(final ReviewSearch reviewSearch, final GenreList genreList) {
 
-        search = injectSearch;
+        search = reviewSearch;
+        this.genreList = genreList;
     }
 
     /**
@@ -61,13 +66,8 @@ public class Top {
     @Produces(MediaType.TEXT_HTML)
     public Viewable view() {
 
-        final List<Genre> genreList = new ArrayList<>();
-        genreList.add(new Genre(new GenreId(1l), new GenreName("アクション")));
-        genreList.add(new Genre(new GenreId(2l), new GenreName("RPG")));
-        genreList.add(new Genre(new GenreId(3l), new GenreName("シミュレーション")));
-
-        final ReviewView reviewView = new ReviewView(search.searchNewReviews(5));
-        final GenreSearchView genreSearchView = new GenreSearchView(genreList);
+        final ReviewView reviewView = new ReviewView(search.searchNewReviews(WebPageConst.PAGE_PER_REVIEWS));
+        final GenreSearchView genreSearchView = new GenreSearchView(genreList.getAllGenres());
         final TopView topView = new TopView(genreSearchView, reviewView);
 
         return new Viewable("/top/top", topView);
