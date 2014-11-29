@@ -50,7 +50,7 @@ public class ReviewSearchTest {
 
             assertThat(actualCondition, is(not(nullValue())));
             assertThat(actualCondition.targetCount, is(expectedPagePerCount));
-            assertThat(actualCondition.lotPerCount, is(0));
+            assertThat(actualCondition.lotPerCount, is(expectedPagePerCount));
             assertThat(actualCondition.orderType, is(ReviewSearchOrderType.PostTimeDesc));
 
             assertThat(actualList.size(), is(expectedPagePerCount));
