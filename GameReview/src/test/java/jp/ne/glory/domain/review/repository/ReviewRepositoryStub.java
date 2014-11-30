@@ -19,7 +19,7 @@ import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
 
 public class ReviewRepositoryStub implements ReviewRepository {
 
-    private final Map<Long, Review> reviewMap = new HashMap<>();
+    private final Map<Long, ReviewSearchResult> reviewMap = new HashMap<>();
 
     private long sequence = 1;
 
@@ -40,21 +40,37 @@ public class ReviewRepositoryStub implements ReviewRepository {
 
             saveReview = review;
         }
-        reviewMap.put(saveReview.id.value, saveReview);
+
+        final Game stubGame = new Game(GameId.notNumberingValue(), new Title("テスト"));
+        final Genre stubGenre = new Genre(new GenreId(2l), new GenreName("テストジャンル"));
+        final ReviewSearchResult result = new ReviewSearchResult(saveReview, stubGame, stubGenre);
+        reviewMap.put(saveReview.id.value, result);
 
         return saveReview.id;
+    }
+
+    public void addResult(final ReviewSearchResult result) {
+
+        reviewMap.put(result.review.id.value, result);
     }
 
     @Override
     public Optional<Review> findBy(ReviewId reviewId) {
 
-        return Optional.ofNullable(reviewMap.get(reviewId.value));
+        final ReviewSearchResult result = reviewMap.get(reviewId.value);
+
+        if (result == null) {
+
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(result.review);
     }
 
     @Override
     public List<ReviewSearchResult> search(ReviewSearchCondition condition) {
 
-        List<ReviewSearchResult> resultList = getSearchResult(condition);
+        List<ReviewSearchResult> resultList = getSearchResult(condition, true);
         
         resultList.sort((x, y) -> {
             LocalDateTime xPostTime = x.review.postTime.getValue().getValue();
@@ -68,23 +84,49 @@ public class ReviewRepositoryStub implements ReviewRepository {
             resultList = resultList.subList(0, condition.targetCount);
         }
 
-        return resultList;
+        final int first = (condition.lotNumber - 1) * condition.lotPerCount;
+        final int last = condition.lotNumber * condition.lotPerCount;
+
+        return resultList.subList(first, last);
     }
 
     @Override
-    public int getSearchCount(ReviewSearchCondition condition) {
-        return getSearchResult(condition).size();
+    public int getSearchCount(final ReviewSearchCondition condition) {
+        return getSearchResult(condition, false).size();
     }
 
-    private List<ReviewSearchResult> getSearchResult(ReviewSearchCondition condition) {
+    private List<ReviewSearchResult> getSearchResult(final ReviewSearchCondition condition, final boolean limitedCount) {
 
-        final Game stubGame = new Game(GameId.notNumberingValue(), new Title("テスト"));
-        final Genre stubGenre = new Genre(new GenreId(2l), new GenreName("テストジャンル"));
+        long maxCount = Long.MAX_VALUE;
+        if (limitedCount && 0 < condition.targetCount) {
+
+            maxCount = condition.targetCount;
+        }
+
         final List<ReviewSearchResult> resultList = reviewMap.entrySet().stream()
-                .filter(entry -> true)
-                .map(entry -> new ReviewSearchResult(entry.getValue(), stubGame, stubGenre))
+                .filter(entry -> isMatchSearchCondition(entry.getValue(), condition))
+                .limit(maxCount)
+                .map(v -> v.getValue())
                 .collect(Collectors.toList());
 
         return resultList;
+    }
+
+    private boolean isMatchSearchCondition(final ReviewSearchResult result, final ReviewSearchCondition condition) {
+
+        final List<GenreId> genreIds = condition.genreIds;
+        if (!genreIds.isEmpty()) {
+
+            final Map<Long, GenreId> idMap = genreIds
+                    .stream()
+                    .collect(Collectors.toMap(v -> v.value, v -> v));
+
+            if (!idMap.containsKey(result.genre.id.value)) {
+
+                return false;
+            }
+        }
+
+        return true;
     }
 }

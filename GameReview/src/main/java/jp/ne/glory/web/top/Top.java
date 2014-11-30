@@ -66,7 +66,7 @@ public class Top {
     @Produces(MediaType.TEXT_HTML)
     public Viewable view() {
 
-        final ReviewView reviewView = new ReviewView(search.searchNewReviews(WebPageConst.PAGE_PER_REVIEWS));
+        final ReviewView reviewView = new ReviewView(search.searchNewReviews(WebPageConst.PAGE_PER_REVIEWS, 1));
         final GenreSearchView genreSearchView = new GenreSearchView(genreList.getAllGenres());
         final TopView topView = new TopView(genreSearchView, reviewView);
 

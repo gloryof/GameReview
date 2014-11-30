@@ -8,9 +8,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import jp.ne.glory.application.genre.GenreList;
 import jp.ne.glory.application.review.ReviewSearch;
+import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.ui.genre.GenreSearchResultView;
 import jp.ne.glory.ui.genre.GenreSearchView;
 import jp.ne.glory.ui.review.ReviewListView;
+import jp.ne.glory.web.common.WebPageConst;
 import org.glassfish.jersey.server.mvc.Viewable;
 
 /**
@@ -58,9 +60,12 @@ public class GenreSearch {
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public Viewable view() {
+    public Viewable view(final long paramGenreId) {
 
-        final ReviewListView reviewView = new ReviewListView(search.searchNewReviews(5));
+        final GenreId genreId = new GenreId(paramGenreId);
+        
+        final ReviewListView reviewView
+                = new ReviewListView(search.searchReviewByGenre(genreId, WebPageConst.PAGE_PER_SEARCH_REVIEWS, 1));
         final GenreSearchView genreSearchView = new GenreSearchView(genreList.getAllGenres());
         final GenreSearchResultView genreSearchResult = new GenreSearchResultView(genreSearchView, reviewView);
 

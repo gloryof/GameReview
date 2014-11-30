@@ -1,8 +1,10 @@
 package jp.ne.glory.test.review.search;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
+import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.value.GameId;
 import jp.ne.glory.domain.game.value.Title;
@@ -10,18 +12,25 @@ import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.genre.value.GenreName;
 import jp.ne.glory.domain.review.entity.Review;
+import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
 
 public class ReviewSearchDataGenerator {
 
+    public static List<ReviewSearchResult> createBaseSearchResults(final int dataCount) {
+
+        return createBaseSearchResults(dataCount, createBaseGenreList());
+    }
+
     public static List<ReviewSearchResult> createBaseSearchResults(final int dataCount, final List<Genre> genreList) {
 
         return LongStream
                 .rangeClosed(1, dataCount)
-                .mapToObj(i -> createSearchResult(dataCount, genreList))
+                .mapToObj(i -> createSearchResult(i, genreList))
                 .collect(Collectors.toList());
     }
+
 
     public static List<Genre> createBaseGenreList() {
 
@@ -52,6 +61,10 @@ public class ReviewSearchDataGenerator {
 
     private static Review createTestReview(final long number) {
 
-        return new Review(new ReviewId(number));
+        final Review review = new Review(new ReviewId(number));
+
+        review.postTime = new PostDateTime(new DateTimeValue(LocalDateTime.now()));
+
+        return review;
     }
 }

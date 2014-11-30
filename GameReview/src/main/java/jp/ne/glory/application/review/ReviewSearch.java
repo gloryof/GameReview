@@ -47,16 +47,19 @@ public class ReviewSearch {
 
     /**
      * 最新のレビューを取得する.<br>
-     * countの数だけデータを取得する
+     * lotPerCounttの数だけデータを取得する。<br>
+     * lotNumberに全体の何ロット目を取得するかを設定する。<br>
+     * 投稿日時の降順でソートされる。
      *
-     * @param count 取得件数
+     * @param lotPerCount ロット内のカウント
+     * @param lotNumber ロット数
      * @return レビュー検索結果
      */
-    public ReviewSearchResults searchNewReviews(final int count) {
+    public ReviewSearchResults searchNewReviews(final int lotPerCount, final int lotNumber) {
 
         final ReviewSearchCondition condition = new ReviewSearchCondition();
-        condition.targetCount = count;
-        condition.lotPerCount = count;
+        condition.lotNumber = lotNumber;
+        condition.lotPerCount = lotPerCount;
         condition.orderType = ReviewSearchOrderType.PostTimeDesc;
 
         final List<ReviewSearchResult> resultList = repository.search(condition);
@@ -68,7 +71,8 @@ public class ReviewSearch {
     /**
      * ジャンルIDで検索を行う.<br>
      * lotPerCounttの数だけデータを取得する。<br>
-     * lotNumberに全体の何ロット目を取得するかを設定する。
+     * lotNumberに全体の何ロット目を取得するかを設定する。<br>
+     * 投稿日時の降順でソートされる。
      *
      * @param genreId ジャンルID
      * @param lotPerCount ロット内のカウント
@@ -77,6 +81,15 @@ public class ReviewSearch {
      */
     public ReviewSearchResults searchReviewByGenre(final GenreId genreId, final int lotPerCount, final int lotNumber) {
 
-        return null;
+        final ReviewSearchCondition condition = new ReviewSearchCondition();
+        condition.lotNumber = lotNumber;
+        condition.lotPerCount = lotPerCount;
+        condition.genreIds.add(genreId);
+        condition.orderType = ReviewSearchOrderType.PostTimeDesc;
+
+        final List<ReviewSearchResult> resultList = repository.search(condition);
+        final int resultCount = repository.getSearchCount(condition);
+
+        return new ReviewSearchResults(condition, resultList, resultCount);
     }
 }
