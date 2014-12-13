@@ -12,7 +12,7 @@
             <h1>ジャンル検索</h1>
             <ul>
                 <li th:each="genre : ${it.genreSearch.genres}">
-                    <a href="" th:text="${genre.title}">テスト</a>
+                    <a th:href="@{/genreSearch/id/{id}(id=${genre.id})}" th:text="${genre.title}">テスト</a>
                 </li>
                 <li th:remove="all">
                     <a href="#">アクション</a>

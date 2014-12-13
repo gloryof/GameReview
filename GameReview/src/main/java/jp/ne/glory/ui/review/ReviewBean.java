@@ -13,6 +13,11 @@ import jp.ne.glory.domain.review.value.Score;
 public class ReviewBean {
 
     /**
+     * レビューID
+     */
+    public final Long reviewId;
+
+    /**
      * タイトル.
      */
     public final String title;
@@ -71,6 +76,7 @@ public class ReviewBean {
      */
     public ReviewBean(final Review review, final Game game, final Genre genre) {
 
+        reviewId = review.id.value;
         title = game.title.value;
         genreName = genre.name.value;
 

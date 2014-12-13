@@ -36,7 +36,9 @@
                 </tr>
                 <tr th:each="review,stat : ${reviewListView.reviews}">
                     <td th:text="${stat.count}">1</td>
-                    <td th:text="${review.title}">タイトル</td>
+                    <td>
+                        <a href="" th:href="@{/review/id/{id}(id=${review.reviewId})}" th:text="${review.title}">タイトル</a>
+                    </td>
                     <td th:text="${review.genreName}">ジャンル</td>
                     <td th:text="${review.addictionScore}">1</td>
                     <td th:text="${review.storyScore}">2</td>

@@ -4,6 +4,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import jp.ne.glory.application.genre.GenreList;
@@ -20,8 +21,8 @@ import org.glassfish.jersey.server.mvc.Viewable;
  *
  * @author Junki Yamada
  */
-@Path("genreSearch")
 @RequestScoped
+@Path("genreSearch")
 public class GenreSearch {
 
     /**
@@ -58,10 +59,18 @@ public class GenreSearch {
         this.genreList = genreList;
     }
 
+    /**
+     * ジャンル検索を行う.
+     *
+     * @param paramGenreId 検索ジャンルID
+     * @return Viewable ジャンル検索結果画面
+     */
     @GET
+    @Path("id/{id}")
     @Produces(MediaType.TEXT_HTML)
-    public Viewable view(final long paramGenreId) {
+    public Viewable view(@PathParam("id") final long paramGenreId) {
 
+        System.out.println("vie : " + paramGenreId);
         final GenreId genreId = new GenreId(paramGenreId);
         
         final ReviewListView reviewView

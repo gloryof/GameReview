@@ -42,7 +42,8 @@ public class ReviewRepositoryImpl implements ReviewRepository {
             review.postTime = new PostDateTime(new DateTimeValue(LocalDateTime.now()));
 
             final Game game = new Game(gameId, new Title("テスト" + v));
-            final Genre genre = new Genre(new GenreId(1l), new GenreName("テストジャンル"));
+            final long genreId = (v % 3) + 1;
+            final Genre genre = new Genre(new GenreId(genreId), new GenreName("テストジャンル"));
 
             stubResults.add(new ReviewSearchResult(review, game, genre));
         });
@@ -73,9 +74,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
         List<ReviewSearchResult> returnList = stubResults
                 .stream()
-                .filter(v -> {
-                    return true;
-                })
+                .filter(v -> isMatchGenreIdStub(condition, v))
                 .collect(Collectors.toList());
 
         if (1 < condition.targetCount) {
@@ -84,5 +83,18 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         }
 
         return returnList;
+    }
+
+    private boolean isMatchGenreIdStub(final ReviewSearchCondition condition, final ReviewSearchResult result) {
+
+        final List<GenreId> genreIds = condition.genreIds;
+        if (genreIds.isEmpty()) {
+
+            return true;
+        }
+
+        final Optional<GenreId> option = genreIds.stream().filter(v -> v.isSame(result.genre.id)).findAny();
+
+        return option.isPresent();
     }
 }
