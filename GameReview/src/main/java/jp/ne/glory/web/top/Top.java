@@ -11,6 +11,7 @@ import jp.ne.glory.application.review.ReviewSearch;
 import jp.ne.glory.ui.genre.GenreSearchView;
 import jp.ne.glory.ui.review.ReviewView;
 import jp.ne.glory.ui.top.TopView;
+import jp.ne.glory.web.common.PagePaths;
 import jp.ne.glory.web.common.WebPageConst;
 import org.glassfish.jersey.server.mvc.Viewable;
 
@@ -70,6 +71,6 @@ public class Top {
         final GenreSearchView genreSearchView = new GenreSearchView(genreList.getAllGenres());
         final TopView topView = new TopView(genreSearchView, reviewView);
 
-        return new Viewable("/top/top", topView);
+        return new Viewable(PagePaths.TOP, topView);
     }
 }

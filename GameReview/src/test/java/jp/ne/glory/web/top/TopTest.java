@@ -11,6 +11,7 @@ import jp.ne.glory.test.review.search.ReviewSearchDataGenerator;
 import jp.ne.glory.ui.genre.GenreSearchView;
 import jp.ne.glory.ui.review.ReviewView;
 import jp.ne.glory.ui.top.TopView;
+import jp.ne.glory.web.common.PagePaths;
 import jp.ne.glory.web.common.WebPageConst;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.junit.Before;
@@ -48,7 +49,7 @@ public class TopTest {
 
             final Viewable viewable = sut.view();
 
-            assertThat(viewable.getTemplateName(), is("/top/top"));
+            assertThat(viewable.getTemplateName(), is(PagePaths.TOP));
 
             assertThat(viewable.getModel(), is(instanceOf(TopView.class)));
             final TopView actualView = (TopView) viewable.getModel();

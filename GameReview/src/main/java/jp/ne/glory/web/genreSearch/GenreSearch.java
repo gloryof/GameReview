@@ -13,6 +13,7 @@ import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.ui.genre.GenreSearchResultView;
 import jp.ne.glory.ui.genre.GenreSearchView;
 import jp.ne.glory.ui.review.ReviewListView;
+import jp.ne.glory.web.common.PagePaths;
 import jp.ne.glory.web.common.WebPageConst;
 import org.glassfish.jersey.server.mvc.Viewable;
 
@@ -78,6 +79,6 @@ public class GenreSearch {
         final GenreSearchView genreSearchView = new GenreSearchView(genreList.getAllGenres());
         final GenreSearchResultView genreSearchResult = new GenreSearchResultView(genreSearchView, reviewView);
 
-        return new Viewable("/genreSearch/genreSearchResult", genreSearchResult);
+        return new Viewable(PagePaths.GENRE_SEARCH_RESULT, genreSearchResult);
     }
 }

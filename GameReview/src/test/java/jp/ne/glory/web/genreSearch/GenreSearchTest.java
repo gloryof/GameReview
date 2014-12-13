@@ -12,6 +12,7 @@ import jp.ne.glory.ui.genre.GenreSearchResultView;
 import jp.ne.glory.ui.genre.GenreSearchView;
 import jp.ne.glory.ui.review.ReviewBean;
 import jp.ne.glory.ui.review.ReviewListView;
+import jp.ne.glory.web.common.PagePaths;
 import jp.ne.glory.web.common.WebPageConst;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.junit.Before;
@@ -50,7 +51,7 @@ public class GenreSearchTest {
             final Genre expectedGenre = genreListStub.getAllGenres().get(1);
             final Viewable viewable = sut.view(expectedGenre.id.value);
 
-            assertThat(viewable.getTemplateName(), is("/genreSearch/genreSearchResult"));
+            assertThat(viewable.getTemplateName(), is(PagePaths.GENRE_SEARCH_RESULT));
 
             assertThat(viewable.getModel(), is(instanceOf(GenreSearchResultView.class)));
             final GenreSearchResultView actualView = (GenreSearchResultView) viewable.getModel();
