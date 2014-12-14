@@ -5,6 +5,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.review.repository.ReviewRepository;
+import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.search.ReviewSearchCondition;
 import jp.ne.glory.domain.review.value.search.ReviewSearchOrderType;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
@@ -85,6 +86,26 @@ public class ReviewSearch {
         condition.lotNumber = lotNumber;
         condition.lotPerCount = lotPerCount;
         condition.genreIds.add(genreId);
+        condition.orderType = ReviewSearchOrderType.PostTimeDesc;
+
+        final List<ReviewSearchResult> resultList = repository.search(condition);
+        final int resultCount = repository.getSearchCount(condition);
+
+        return new ReviewSearchResults(condition, resultList, resultCount);
+    }
+
+    /**
+     * レビューIDで検索を行う.
+     *
+     * @param reviewId レビューId
+     * @return レビュー検索結果
+     */
+    public ReviewSearchResults searchByReviewId(final ReviewId reviewId) {
+
+        final ReviewSearchCondition condition = new ReviewSearchCondition();
+        condition.lotNumber = 1;
+        condition.lotPerCount = 1;
+        condition.reviewIds.add(reviewId);
         condition.orderType = ReviewSearchOrderType.PostTimeDesc;
 
         final List<ReviewSearchResult> resultList = repository.search(condition);

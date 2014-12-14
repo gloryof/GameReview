@@ -3,6 +3,7 @@ package jp.ne.glory.application.review;
 import java.util.List;
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.review.repository.ReviewRepositoryStub;
+import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.search.ReviewSearchCondition;
 import jp.ne.glory.domain.review.value.search.ReviewSearchOrderType;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
@@ -37,6 +38,18 @@ public class ReviewSearchStub extends ReviewSearch {
         condition.lotNumber = lotNumber;
         condition.lotPerCount = lotPerCount;
         condition.genreIds.add(genreId);
+        condition.orderType = ReviewSearchOrderType.PostTimeDesc;
+
+        return search(condition);
+    }
+
+    @Override
+    public ReviewSearchResults searchByReviewId(final ReviewId reviewId) {
+
+        final ReviewSearchCondition condition = new ReviewSearchCondition();
+        condition.lotNumber = 1;
+        condition.lotPerCount = 1;
+        condition.reviewIds.add(reviewId);
         condition.orderType = ReviewSearchOrderType.PostTimeDesc;
 
         return search(condition);

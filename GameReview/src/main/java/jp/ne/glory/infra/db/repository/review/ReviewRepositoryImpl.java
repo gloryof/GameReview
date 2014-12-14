@@ -74,7 +74,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
         List<ReviewSearchResult> returnList = stubResults
                 .stream()
-                .filter(v -> isMatchGenreIdStub(condition, v))
+                .filter(v -> isMatch(condition, v))
                 .collect(Collectors.toList());
 
         if (1 < condition.targetCount) {
@@ -83,6 +83,34 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         }
 
         return returnList;
+    }
+
+    private boolean isMatch(final ReviewSearchCondition condition, final ReviewSearchResult result) {
+
+        if (!isMatchReviewIdStub(condition, result)) {
+
+            return false;
+        }
+
+        if (!isMatchGenreIdStub(condition, result)) {
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isMatchReviewIdStub(final ReviewSearchCondition condition, final ReviewSearchResult result) {
+
+        final List<ReviewId> reviewIds = condition.reviewIds;
+        if (reviewIds.isEmpty()) {
+
+            return true;
+        }
+
+        final Optional<ReviewId> option = reviewIds.stream().filter(v -> v.isSame(result.review.id)).findAny();
+
+        return option.isPresent();
     }
 
     private boolean isMatchGenreIdStub(final ReviewSearchCondition condition, final ReviewSearchResult result) {

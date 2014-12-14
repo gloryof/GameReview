@@ -1,7 +1,6 @@
 package jp.ne.glory.domain.common.type;
 
 import java.util.Optional;
-import jp.ne.glory.domain.game.value.GameId;
 
 /**
  * エンティティのID

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.value.GameId;
@@ -114,14 +115,30 @@ public class ReviewRepositoryStub implements ReviewRepository {
 
     private boolean isMatchSearchCondition(final ReviewSearchResult result, final ReviewSearchCondition condition) {
 
+        final List<ReviewId> reviewIds = condition.reviewIds;
         final List<GenreId> genreIds = condition.genreIds;
+
+        if (!reviewIds.isEmpty()) {
+
+            final Set<Long> idSet = reviewIds
+                    .stream()
+                    .map(v -> v.value)
+                    .collect(Collectors.toSet());
+
+            if (!idSet.contains(result.review.id.value)) {
+
+                return false;
+            }
+        }
+
         if (!genreIds.isEmpty()) {
 
-            final Map<Long, GenreId> idMap = genreIds
+            final Set<Long> idSet = genreIds
                     .stream()
-                    .collect(Collectors.toMap(v -> v.value, v -> v));
+                    .map(v -> v.value)
+                    .collect(Collectors.toSet());
 
-            if (!idMap.containsKey(result.genre.id.value)) {
+            if (!idSet.contains(result.genre.id.value)) {
 
                 return false;
             }

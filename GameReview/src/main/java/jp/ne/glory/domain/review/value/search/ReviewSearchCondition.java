@@ -3,6 +3,7 @@ package jp.ne.glory.domain.review.value.search;
 import java.util.ArrayList;
 import java.util.List;
 import jp.ne.glory.domain.genre.value.GenreId;
+import jp.ne.glory.domain.review.value.ReviewId;
 
 /**
  * レビュー検索条件.
@@ -35,6 +36,11 @@ public class ReviewSearchCondition {
      * デフォルトは投稿日時の降順。
      */
     public ReviewSearchOrderType orderType = ReviewSearchOrderType.PostTimeDesc;
+
+    /**
+     * レビューID.
+     */
+    public final List<ReviewId> reviewIds = new ArrayList<>();
 
     /**
      * ジャンルID.
