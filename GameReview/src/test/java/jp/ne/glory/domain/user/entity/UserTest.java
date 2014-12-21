@@ -1,18 +1,18 @@
 package jp.ne.glory.domain.user.entity;
 
 import java.util.Arrays;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
 import jp.ne.glory.domain.user.value.Authority;
 import jp.ne.glory.domain.user.value.LoginId;
+import jp.ne.glory.domain.user.value.Password;
 import jp.ne.glory.domain.user.value.UserId;
 import jp.ne.glory.domain.user.value.UserName;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Enclosed.class)
 public class UserTest {
@@ -30,6 +30,7 @@ public class UserTest {
             Arrays.stream(Authority.values()).forEach(v -> sut.authorities.add(v));
             sut.loginId = new LoginId("test-user");
             sut.userName = new UserName("シュンツ");
+            sut.password = new Password("19CB2A070DDBE8157E17C5DDA0EA38E8AA16FAE1725C1F7AC22747D870368579");
         }
 
         @Test

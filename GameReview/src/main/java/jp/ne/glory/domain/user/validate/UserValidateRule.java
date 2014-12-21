@@ -58,6 +58,7 @@ public class UserValidateRule {
         errors.addAll(user.loginId.validate());
         errors.addAll(user.userName.validate());
         errors.addAll(user.authorities.validate());
+        errors.addAll(user.password.validate());
 
         return errors;
     }

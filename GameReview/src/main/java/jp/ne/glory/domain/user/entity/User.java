@@ -2,6 +2,7 @@ package jp.ne.glory.domain.user.entity;
 
 import jp.ne.glory.domain.user.value.Authorities;
 import jp.ne.glory.domain.user.value.LoginId;
+import jp.ne.glory.domain.user.value.Password;
 import jp.ne.glory.domain.user.value.UserId;
 import jp.ne.glory.domain.user.value.UserName;
 
@@ -25,6 +26,11 @@ public class User {
 
     /** ユーザ名. */
     public UserName userName = UserName.empty();
+
+    /**
+     * パスワード.
+     */
+    public Password password = Password.empty();
 
     /**
      * コンストラクタ.

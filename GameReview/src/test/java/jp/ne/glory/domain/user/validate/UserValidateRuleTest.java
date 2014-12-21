@@ -9,6 +9,7 @@ import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.value.Authorities;
 import jp.ne.glory.domain.user.value.Authority;
 import jp.ne.glory.domain.user.value.LoginId;
+import jp.ne.glory.domain.user.value.Password;
 import jp.ne.glory.domain.user.value.UserId;
 import jp.ne.glory.domain.user.value.UserName;
 import jp.ne.glory.test.validate.ValidateErrorsHelper;
@@ -35,6 +36,7 @@ public class UserValidateRuleTest {
             user.authorities.add(Authority.ReviewPost);
             user.loginId = new LoginId("test");
             user.userName = new UserName("テストユーザ");
+            user.password = new Password("19CB2A070DDBE8157E17C5DDA0EA38E8AA16FAE1725C1F7AC22747D870368579");
 
             sut = new UserValidateRule(user);
         }
@@ -78,6 +80,7 @@ public class UserValidateRuleTest {
             errorList.add(new ValidateError(ErrorInfo.Required, UserName.LABEL));
             errorList.add(new ValidateError(ErrorInfo.Required, LoginId.LABEL));
             errorList.add(new ValidateError(ErrorInfo.RequiredSelectOne, Authorities.LABEL));
+            errorList.add(new ValidateError(ErrorInfo.Required, Password.LABEL));
 
             final ValidateErrorsHelper helper = new ValidateErrorsHelper(actual);
             helper.assertErrors(errorList);
@@ -96,6 +99,7 @@ public class UserValidateRuleTest {
             errorList.add(new ValidateError(ErrorInfo.Required, UserName.LABEL));
             errorList.add(new ValidateError(ErrorInfo.Required, LoginId.LABEL));
             errorList.add(new ValidateError(ErrorInfo.RequiredSelectOne, Authorities.LABEL));
+            errorList.add(new ValidateError(ErrorInfo.Required, Password.LABEL));
 
             final ValidateErrorsHelper helper = new ValidateErrorsHelper(actual);
             helper.assertErrors(errorList);
