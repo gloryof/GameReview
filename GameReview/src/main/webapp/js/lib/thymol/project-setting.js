@@ -1,0 +1,1 @@
+var thPath = "localhost/view";
