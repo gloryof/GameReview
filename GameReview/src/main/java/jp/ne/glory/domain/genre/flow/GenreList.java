@@ -1,4 +1,4 @@
-package jp.ne.glory.application.genre;
+package jp.ne.glory.domain.genre.flow;
 
 import java.util.List;
 import javax.enterprise.context.RequestScoped;

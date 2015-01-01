@@ -1,4 +1,4 @@
-package jp.ne.glory.application.user;
+package jp.ne.glory.domain.user.flow;
 
 import java.util.Optional;
 import jp.ne.glory.domain.user.entity.User;

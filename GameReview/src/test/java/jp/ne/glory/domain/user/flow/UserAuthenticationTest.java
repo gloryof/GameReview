@@ -1,5 +1,5 @@
 
-package jp.ne.glory.application.user;
+package jp.ne.glory.domain.user.flow;
 
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepositoryStub;
