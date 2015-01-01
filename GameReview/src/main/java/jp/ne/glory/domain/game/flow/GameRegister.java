@@ -20,6 +20,15 @@ public class GameRegister {
     private final GameRepository repository;
 
     /**
+     * コンストラクタ.<br>
+     * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
+     *
+     */
+    GameRegister() {
+        this.repository = null;
+    }
+
+    /**
      * コンストラクタ.
      *
      * @param paramRepository リポジトリ

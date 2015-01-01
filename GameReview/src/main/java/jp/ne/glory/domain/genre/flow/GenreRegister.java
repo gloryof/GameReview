@@ -20,6 +20,15 @@ public class GenreRegister {
     private final GenreRepository repository;
 
     /**
+     * コンストラクタ.<br>
+     * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
+     *
+     */
+    GenreRegister() {
+        this.repository = null;
+    }
+
+    /**
      * コンストラクタ.
      *
      * @param paramRepository リポジトリ

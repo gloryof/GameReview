@@ -1,6 +1,7 @@
 package jp.ne.glory.domain.user.flow;
 
 import java.util.function.Function;
+import javax.enterprise.context.RequestScoped;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepository;
@@ -12,12 +13,22 @@ import jp.ne.glory.domain.user.value.UserId;
  *
  * @author Junki Yamada
  */
+@RequestScoped
 public class UserRegister {
 
     /**
      * ユーザリポジトリ.
      */
     private final UserRepository repository;
+
+    /**
+     * コンストラクタ.<br>
+     * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
+     */
+    @Deprecated
+    UserRegister() {
+        this.repository = null;
+    }
 
     /**
      * コンストラクタ.

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head th:include="/common/base/metaInfo :: commonHeader (title='ログイン')" >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <div class="bs-content-area">
+            <form th:action="@{/login}" method="post">
+                <dl>
+                    <dt>ユーザID</dt>
+                    <dd><input type="text" name="userId" th:value="${it.userId}" /></dd>
+                    <dt>パスワード</dt>
+                    <dd><input typt="password" name="password"  /></dd>
+                </dl>
+                <div>
+                    <button>ログイン</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

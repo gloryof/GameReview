@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.value.Authority;
+import jp.ne.glory.domain.user.value.LoginId;
 import jp.ne.glory.domain.user.value.UserId;
 
 public class UserRepositoryStub implements UserRepository {
@@ -42,6 +43,15 @@ public class UserRepositoryStub implements UserRepository {
     public Optional<User> findBy(final UserId userId) {
 
         return Optional.ofNullable(userMap.get(userId.value));
+    }
+
+    @Override
+    public Optional<User> findBy(LoginId loginId) {
+        return userMap.entrySet()
+                .stream()
+                .map(e -> e.getValue())
+                .filter(v -> v.loginId.value.equals(loginId.value))
+                .findAny();
     }
 
 }

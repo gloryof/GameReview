@@ -7,6 +7,7 @@ import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepositoryStub;
 import jp.ne.glory.domain.user.value.Authority;
 import jp.ne.glory.domain.user.value.LoginId;
+import jp.ne.glory.domain.user.value.Password;
 import jp.ne.glory.domain.user.value.UserId;
 import jp.ne.glory.domain.user.value.UserName;
 import org.junit.Before;
@@ -40,6 +41,7 @@ public class UserRegisterTest {
             Arrays.stream(Authority.values()).forEach(v -> user.authorities.add(v));
             user.loginId = new LoginId("test-user");
             user.userName = new UserName("シュンツ");
+            user.password = new Password("test");
 
             final UserRegisterResult result = sut.register(user);
 
@@ -83,6 +85,7 @@ public class UserRegisterTest {
             Arrays.stream(Authority.values()).forEach(v -> user.authorities.add(v));
             user.loginId = new LoginId("test-user");
             user.userName = new UserName("シュンツ");
+            user.password = new Password("test");
 
             final UserRegisterResult result = sut.finishEdit(user);
 

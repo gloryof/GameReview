@@ -8,12 +8,17 @@ package jp.ne.glory.web.common;
 public final class PagePaths {
 
     /**
-     * トップ画面
+     * トップ画面.
      */
     public static final String TOP = "/top/top";
 
     /**
-     * ジャンル検索結果画面
+     * ジャンル検索結果画面.
      */
     public static final String GENRE_SEARCH_RESULT = "/genreSearch/genreSearchResult";
+
+    /**
+     * ログイン画面.
+     */
+    public static final String LOGIN = "/login/login";
 }

@@ -2,6 +2,7 @@ package jp.ne.glory.domain.review.flow;
 
 import java.util.Optional;
 import java.util.function.Supplier;
+import javax.enterprise.context.RequestScoped;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.repository.GameRepository;
@@ -16,6 +17,7 @@ import jp.ne.glory.domain.review.value.ReviewId;
  *
  * @author Junki Yamada
  */
+@RequestScoped
 public class ReviewPost {
 
     /**
@@ -27,6 +29,17 @@ public class ReviewPost {
      * ゲームリポジトリ.
      */
     private final GameRepository gameRepository;
+
+    /**
+     * コンストラクタ.<br>
+     * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
+     *
+     */
+    @Deprecated
+    ReviewPost() {
+        this.reviewRepository = null;
+        this.gameRepository = null;
+    }
 
     /**
      * コンストラクタ.
