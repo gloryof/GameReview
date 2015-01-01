@@ -1,4 +1,4 @@
-package jp.ne.glory.domain.user.flow;
+package jp.ne.glory.application.user;
 
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.user.value.UserId;

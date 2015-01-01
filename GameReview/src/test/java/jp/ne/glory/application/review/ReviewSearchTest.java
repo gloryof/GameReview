@@ -1,6 +1,6 @@
-package jp.ne.glory.domain.review.flow;
+package jp.ne.glory.application.review;
 
-import jp.ne.glory.domain.review.flow.ReviewSearch;
+import jp.ne.glory.application.review.ReviewSearch;
 import java.util.List;
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.review.repository.ReviewRepositoryStub;

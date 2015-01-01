@@ -1,6 +1,6 @@
-package jp.ne.glory.domain.genre.flow;
+package jp.ne.glory.application.genre;
 
-import jp.ne.glory.domain.genre.flow.GenreList;
+import jp.ne.glory.application.genre.GenreList;
 import java.util.ArrayList;
 import java.util.List;
 import jp.ne.glory.domain.genre.entity.Genre;

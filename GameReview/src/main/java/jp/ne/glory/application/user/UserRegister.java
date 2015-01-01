@@ -1,4 +1,4 @@
-package jp.ne.glory.domain.user.flow;
+package jp.ne.glory.application.user;
 
 import java.util.function.Function;
 import javax.enterprise.context.RequestScoped;

@@ -1,5 +1,7 @@
-package jp.ne.glory.domain.game.flow;
+package jp.ne.glory.application.game;
 
+import jp.ne.glory.application.game.GameRegister;
+import jp.ne.glory.application.game.GameRegisterResult;
 import java.util.Optional;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.game.entity.Game;

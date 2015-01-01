@@ -1,7 +1,7 @@
 
-package jp.ne.glory.domain.genre.flow;
+package jp.ne.glory.application.genre;
 
-import jp.ne.glory.domain.genre.flow.GenreList;
+import jp.ne.glory.application.genre.GenreList;
 import java.util.List;
 import java.util.stream.IntStream;
 import jp.ne.glory.domain.genre.entity.Genre;

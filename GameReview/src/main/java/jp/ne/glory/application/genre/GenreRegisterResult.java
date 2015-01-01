@@ -1,4 +1,4 @@
-package jp.ne.glory.domain.genre.flow;
+package jp.ne.glory.application.genre;
 
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.genre.value.GenreId;

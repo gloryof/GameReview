@@ -1,5 +1,7 @@
-package jp.ne.glory.domain.user.flow;
+package jp.ne.glory.application.user;
 
+import jp.ne.glory.application.user.UserRegisterResult;
+import jp.ne.glory.application.user.UserRegister;
 import java.util.Arrays;
 import java.util.Optional;
 import jp.ne.glory.domain.common.error.ValidateErrors;

@@ -1,4 +1,4 @@
-package jp.ne.glory.domain.review.flow;
+package jp.ne.glory.application.review;
 
 import java.util.List;
 import javax.enterprise.context.RequestScoped;

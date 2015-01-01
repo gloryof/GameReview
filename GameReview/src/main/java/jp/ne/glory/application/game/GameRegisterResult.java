@@ -1,4 +1,4 @@
-package jp.ne.glory.domain.game.flow;
+package jp.ne.glory.application.game;
 
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.game.value.GameId;
