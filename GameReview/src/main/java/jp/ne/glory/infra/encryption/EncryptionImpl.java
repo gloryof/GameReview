@@ -1,15 +1,19 @@
 package jp.ne.glory.infra.encryption;
 
+import javax.enterprise.context.RequestScoped;
 import jp.ne.glory.domain.user.value.Password;
 
-public class EncryptionStub implements Encryption {
-
-    public boolean isEncrypted = false;
+/**
+ * 暗号化クラス.
+ *
+ * @author Junki Yamada
+ */
+@RequestScoped
+public class EncryptionImpl implements Encryption {
 
     @Override
     public Password encrypt(String value) {
 
-        isEncrypted = true;
         return new Password(value);
     }
 

@@ -1,7 +1,6 @@
 
 package jp.ne.glory.application.user;
 
-import jp.ne.glory.application.user.UserAuthentication;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepositoryStub;
 import jp.ne.glory.domain.user.value.LoginId;

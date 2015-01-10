@@ -1,6 +1,8 @@
 package jp.ne.glory.application.user;
 
 import java.util.Optional;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepository;
 import jp.ne.glory.domain.user.value.LoginId;
@@ -11,6 +13,7 @@ import jp.ne.glory.domain.user.value.Password;
  *
  * @author Junki Yamada
  */
+@RequestScoped
 public class UserAuthentication {
 
     /**
@@ -19,10 +22,20 @@ public class UserAuthentication {
     private final UserRepository repository;
 
     /**
+     * コンストラクタ.<br>
+     * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
+     */
+    @Deprecated
+    protected UserAuthentication() {
+        this.repository = null;
+    }
+
+    /**
      * コンストラクタ.
      *
      * @param repository リポジトリ
      */
+    @Inject
     public UserAuthentication(final UserRepository repository) {
 
         this.repository = repository;

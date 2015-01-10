@@ -21,4 +21,9 @@ public final class PagePaths {
      * ログイン画面.
      */
     public static final String LOGIN = "/login/login";
+
+    /**
+     * 管理画面TOP.
+     */
+    public static final String ADMIN_TOP = "/admin/top";
 }

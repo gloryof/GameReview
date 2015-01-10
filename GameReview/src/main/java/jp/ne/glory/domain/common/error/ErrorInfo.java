@@ -34,7 +34,12 @@ public enum ErrorInfo {
     /**
      * 紐付き未設定エラー.
      */
-    NotSettingRelation("{0}が紐付けされていません。"),;
+    NotSettingRelation("{0}が紐付けされていません。"),
+
+    /**
+     * ログインエラー.
+     */
+    LoginFailed("ログインIDとパスワードの組み合わせが間違っています。");
 
     /** メッセージ. */
     public final String message;
