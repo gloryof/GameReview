@@ -29,3 +29,26 @@ var createGenreData = function (id, title) {
         title: title
     };
 };
+
+var createErrorData = function (count) {
+
+    var errorList = [];
+
+    for (var i = 0; i < count; i++) {
+
+        errorList.push({
+            getMessage: function () {
+                return "エラーメッセージ";
+            }
+        });
+    }
+
+    return {
+        hasError: function () {
+            return true;
+        },
+        toList: function () {
+            return errorList;
+        }
+    };
+};
