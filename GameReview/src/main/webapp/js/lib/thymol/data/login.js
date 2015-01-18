@@ -4,6 +4,5 @@ thymol.configurePreExecution(function () {
         errors: createErrorData(3)
     };
 
-    console.log(data);
     thymol.requestContext.createVariable("it", data);
 });

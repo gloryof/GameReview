@@ -30,6 +30,11 @@ var createGenreData = function (id, title) {
     };
 };
 
+/**
+ * エラーメッセージデータの作成
+ * @param {type} count 件数
+ * @returns {createErrorData.base-dataAnonym$2} エラー情報オブジェクト
+ */
 var createErrorData = function (count) {
 
     var errorList = [];
