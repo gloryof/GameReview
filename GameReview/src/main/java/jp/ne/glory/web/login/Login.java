@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import jp.ne.glory.application.user.UserAuthentication;
 import jp.ne.glory.domain.common.error.ErrorInfo;
 import jp.ne.glory.domain.common.error.ValidateError;
@@ -19,6 +20,7 @@ import jp.ne.glory.domain.user.value.Password;
 import jp.ne.glory.infra.certify.CertifyControl;
 import jp.ne.glory.infra.encryption.Encryption;
 import jp.ne.glory.ui.login.LoginView;
+import jp.ne.glory.web.admin.Top;
 import jp.ne.glory.web.common.PagePaths;
 import org.glassfish.jersey.server.mvc.Viewable;
 
@@ -108,7 +110,9 @@ public class Login {
 
         final LoginId loginId = new LoginId(view.loginId);
         certify.createAuthentication(loginId);
-        return Response.seeOther(new URI("/admin/top")).build();
+
+        URI uri = UriBuilder.fromResource(Top.class).build();
+        return Response.seeOther(uri).build();
     }
 
     /**

@@ -12,8 +12,13 @@ import jp.ne.glory.domain.user.value.LoginId;
 @RequestScoped
 public class CertifyControlImpl implements CertifyControl {
 
+    /**
+     * 認証情報をセッションに設定する.
+     *
+     * @param loginId ログインID
+     */
     @Override
-    public void createAuthentication(LoginId loginId) {
+    public void createAuthentication(final LoginId loginId) {
 
         System.out.println("certify!");
     }
