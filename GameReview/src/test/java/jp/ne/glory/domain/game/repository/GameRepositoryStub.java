@@ -16,27 +16,27 @@ public class GameRepositoryStub implements GameRepository {
     public GameId save(final Game game) {
 
         final Game saveGame;
-        if (game.id == null) {
+        if (game.getId() == null) {
 
-            saveGame = new Game(new GameId(sequence), game.title);
-            saveGame.ceroRating = game.ceroRating;
-            saveGame.genreId = game.genreId;
-            saveGame.url = game.url;
+            saveGame = new Game(new GameId(sequence), game.getTitle());
+            saveGame.setCeroRating(game.getCeroRating());
+            saveGame.setGenreId(game.getGenreId());
+            saveGame.setUrl(game.getUrl());
 
             sequence++;
         } else {
 
             saveGame = game;
         }
-        gameMap.put(saveGame.id.value, saveGame);
+        gameMap.put(saveGame.getId().getValue(), saveGame);
 
-        return saveGame.id;
+        return saveGame.getId();
     }
 
     @Override
     public Optional<Game> findBy(final GameId gameId) {
 
-        return Optional.ofNullable(gameMap.get(gameId.value));
+        return Optional.ofNullable(gameMap.get(gameId.getValue()));
     }
 
 }

@@ -1,9 +1,9 @@
 package jp.ne.glory.domain.review.value;
 
+import org.junit.Test;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
 
 public class ReviewIdTest {
     
@@ -14,8 +14,8 @@ public class ReviewIdTest {
 
             final ReviewId actual  = ReviewId.notNumberingValue();
 
-            assertThat(actual.value, is(0L));
-            assertThat(actual.isSetValue, is(false));
+            assertThat(actual.getValue(), is(0L));
+            assertThat(actual.isSetValue(), is(false));
         }
     }
 }

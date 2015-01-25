@@ -19,30 +19,30 @@ public class UserRepositoryStub implements UserRepository {
     public UserId save(final User user) {
 
         final User saveUser;
-        if (user.userId == null) {
+        if (user.getUserId() == null) {
 
             saveUser = new User(new UserId(sequence));
             sequence++;
 
             Arrays.stream(Authority.values())
-                    .filter(v -> user.authorities.hasAuthority(v))
-                    .forEach(saveUser.authorities::add);
-            saveUser.loginId = user.loginId;
-            saveUser.userName = user.userName;
+                    .filter(v -> user.getAuthorities().hasAuthority(v))
+                    .forEach(saveUser.getAuthorities()::add);
+            saveUser.setLoginId(user.getLoginId());
+            saveUser.setUserName(user.getUserName());
 
         } else {
 
             saveUser = user;
         }
-        userMap.put(saveUser.userId.value, saveUser);
+        userMap.put(saveUser.getUserId().getValue(), saveUser);
 
-        return saveUser.userId;
+        return saveUser.getUserId();
     }
 
     @Override
     public Optional<User> findBy(final UserId userId) {
 
-        return Optional.ofNullable(userMap.get(userId.value));
+        return Optional.ofNullable(userMap.get(userId.getValue()));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class UserRepositoryStub implements UserRepository {
         return userMap.entrySet()
                 .stream()
                 .map(e -> e.getValue())
-                .filter(v -> v.loginId.value.equals(loginId.value))
+                .filter(v -> v.getLoginId().getValue().equals(loginId.getValue()))
                 .findAny();
     }
 

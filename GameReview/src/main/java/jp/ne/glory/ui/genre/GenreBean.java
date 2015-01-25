@@ -1,6 +1,7 @@
 package jp.ne.glory.ui.genre;
 
 import jp.ne.glory.domain.genre.entity.Genre;
+import lombok.Getter;
 
 /**
  * ジャンル情報.
@@ -12,12 +13,14 @@ public class GenreBean {
     /**
      * タイトル.
      */
-    public final String title;
+    @Getter
+    private final String title;
 
     /**
      * ID.
      */
-    public final long id;
+    @Getter
+    private final long id;
 
     /**
      * コンストラクタ.
@@ -26,7 +29,7 @@ public class GenreBean {
      */
     public GenreBean(final Genre genre) {
 
-        title = genre.name.value;
-        id = genre.id.value;
+        title = genre.getName().getValue();
+        id = genre.getId().getValue();
     }
 }

@@ -43,17 +43,17 @@ public class ReviewValidateRuleTest {
 
         if (gameIdValue != null) {
 
-            review.gameId = new GameId(gameIdValue);
+            review.setGameId(new GameId(gameIdValue));
         }
-        review.gooodPoint = new GoodPoint("良い点：テスト");
-        review.badPoint = new BadPoint("悪い点：テスト");
-        review.comment = new Comment("コメント：テスト");
-        review.score = new Score();
-        review.score.story = ScorePoint.Point5;
-        review.score.operability = ScorePoint.Point4;
-        review.score.addiction = ScorePoint.Point3;
-        review.score.music = ScorePoint.Point2;
-        review.score.loadTime = ScorePoint.Point1;
+        review.setGoodPoint(new GoodPoint("良い点：テスト"));
+        review.setBadPoint(new BadPoint("悪い点：テスト"));
+        review.setComment(new Comment("コメント：テスト"));
+        review.setScore(new Score());
+        review.getScore().setStory(ScorePoint.Point5);
+        review.getScore().setOperability(ScorePoint.Point4);
+        review.getScore().setAddiction(ScorePoint.Point3);
+        review.getScore().setMusic(ScorePoint.Point2);
+        review.getScore().setLoadTime(ScorePoint.Point1);
 
         return review;
     }
@@ -66,11 +66,11 @@ public class ReviewValidateRuleTest {
         public void setUp() {
 
             final Game game = new Game(new GameId(100L), new Title("タイトル"));
-            final Review review = createBaseReveiw(123L, game.id.value);
+            final Review review = createBaseReveiw(123L, game.getId().getValue());
 
-            game.genreId = new GenreId(200L);
-            game.ceroRating = CeroRating.A;
-            game.url = new SiteUrl("http://test.co.jp");
+            game.setGenreId(new GenreId(200L));
+            game.setCeroRating(CeroRating.A);
+            game.setUrl(new SiteUrl("http://test.co.jp"));
 
             sut = new ReviewValidateRule(review, game);
         }
@@ -143,11 +143,11 @@ public class ReviewValidateRuleTest {
         public void setUp() {
 
             final Game game = new Game(new GameId(100L), new Title("タイトル"));
-            final Review review = createBaseReveiw(123L, (game.id.value + 1));
+            final Review review = createBaseReveiw(123L, (game.getId().getValue() + 1));
 
-            game.genreId = new GenreId(200L);
-            game.ceroRating = CeroRating.A;
-            game.url = new SiteUrl("http://test.co.jp");
+            game.setGenreId(new GenreId(200L));
+            game.setCeroRating(CeroRating.A);
+            game.setUrl(new SiteUrl("http://test.co.jp"));
 
             sut = new ReviewValidateRule(review, game);
         }
@@ -193,10 +193,9 @@ public class ReviewValidateRuleTest {
             final Game game = new Game(new GameId(100L), new Title("タイトル"));
             final Review review = createBaseReveiw(123L);
 
-
-            game.genreId = new GenreId(200L);
-            game.ceroRating = CeroRating.A;
-            game.url = new SiteUrl("http://test.co.jp");
+            game.setGenreId(new GenreId(200L));
+            game.setCeroRating(CeroRating.A);
+            game.setUrl(new SiteUrl("http://test.co.jp"));
 
             sut = new ReviewValidateRule(review, game);
         }

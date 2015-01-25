@@ -2,6 +2,7 @@ package jp.ne.glory.application.review;
 
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.review.value.ReviewId;
+import lombok.Getter;
 
 /**
  * レビュー投稿結果.
@@ -13,12 +14,14 @@ public class ReviewPostResult {
     /**
      * 入力チェック結果.
      */
-    public final ValidateErrors errors;
+    @Getter
+    private final ValidateErrors errors;
 
     /**
      * 投稿されたレビューID.
      */
-    public final ReviewId postedReviewId;
+    @Getter
+    private final ReviewId postedReviewId;
 
     /**
      * コンストラクタ.

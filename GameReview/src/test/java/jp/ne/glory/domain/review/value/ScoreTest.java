@@ -6,17 +6,16 @@
 
 package jp.ne.glory.domain.review.value;
 
-import static org.junit.Assert.*;
-import static jp.ne.glory.test.validate.ValidateMatcher.validatedBy;
-import static org.hamcrest.CoreMatchers.is;
-
 import java.util.List;
 import jp.ne.glory.domain.common.error.ErrorInfo;
 import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static jp.ne.glory.test.validate.ValidateMatcher.validatedBy;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class ScoreTest {
 
@@ -29,11 +28,11 @@ public class ScoreTest {
 
             sut = new Score();
 
-            sut.addiction = ScorePoint.Point5;
-            sut.loadTime = ScorePoint.Point4;
-            sut.music = ScorePoint.Point3;
-            sut.operability = ScorePoint.Point2;
-            sut.story = ScorePoint.Point1;
+            sut.setAddiction(ScorePoint.Point5);
+            sut.setLoadTime(ScorePoint.Point4);
+            sut.setMusic(ScorePoint.Point3);
+            sut.setOperability(ScorePoint.Point2);
+            sut.setStory(ScorePoint.Point1);
         }
 
         @Test
@@ -54,11 +53,11 @@ public class ScoreTest {
 
             sut = new Score();
 
-            sut.addiction = ScorePoint.NotInput;
-            sut.loadTime = ScorePoint.NotInput;
-            sut.music = ScorePoint.NotInput;
-            sut.operability = ScorePoint.NotInput;
-            sut.story = ScorePoint.NotInput;
+            sut.setAddiction(ScorePoint.NotInput);
+            sut.setLoadTime(ScorePoint.NotInput);
+            sut.setMusic(ScorePoint.NotInput);
+            sut.setOperability(ScorePoint.NotInput);
+            sut.setStory(ScorePoint.NotInput);
         }
 
         @Test
@@ -78,7 +77,7 @@ public class ScoreTest {
         @Test
         public void 熱中度に点数を設定すると必須入力エラーにならない() {
 
-            sut.addiction = ScorePoint.Point4;
+            sut.setAddiction(ScorePoint.Point4);
 
             final ValidateErrors actualErrors = sut.validate();
 
@@ -88,7 +87,7 @@ public class ScoreTest {
         @Test
         public void ロード時間に点数を設定すると必須入力エラーにならない() {
 
-            sut.loadTime = ScorePoint.Point3;
+            sut.setLoadTime(ScorePoint.Point3);
 
             final ValidateErrors actualErrors = sut.validate();
 
@@ -98,7 +97,7 @@ public class ScoreTest {
         @Test
         public void 音楽に点数を設定すると必須入力エラーにならない() {
 
-            sut.music = ScorePoint.Point2;
+            sut.setMusic(ScorePoint.Point2);
 
             final ValidateErrors actualErrors = sut.validate();
 
@@ -108,7 +107,7 @@ public class ScoreTest {
         @Test
         public void 操作性に点数を設定すると必須入力エラーにならない() {
 
-            sut.operability = ScorePoint.Point1;
+            sut.setOperability(ScorePoint.Point1);
 
             final ValidateErrors actualErrors = sut.validate();
 
@@ -118,7 +117,7 @@ public class ScoreTest {
         @Test
         public void ストーリーに点数を設定すると必須入力エラーにならない() {
 
-            sut.story = ScorePoint.Point1;
+            sut.setStory(ScorePoint.Point1);
 
             final ValidateErrors actualErrors = sut.validate();
 
@@ -135,11 +134,11 @@ public class ScoreTest {
 
             sut = new Score();
 
-            sut.addiction = ScorePoint.Point1;
-            sut.loadTime = ScorePoint.Point0;
-            sut.music = ScorePoint.Point5;
-            sut.operability = ScorePoint.Point4;
-            sut.story = ScorePoint.NotInput;
+            sut.setAddiction(ScorePoint.Point1);
+            sut.setLoadTime(ScorePoint.Point0);
+            sut.setMusic(ScorePoint.Point5);
+            sut.setOperability(ScorePoint.Point4);
+            sut.setStory(ScorePoint.NotInput);
         }
 
         @Test
@@ -160,11 +159,11 @@ public class ScoreTest {
 
             sut = new Score();
 
-            sut.addiction = ScorePoint.Exclued;
-            sut.loadTime = ScorePoint.Point0;
-            sut.music = ScorePoint.Exclued;
-            sut.operability = ScorePoint.Exclued;
-            sut.story = ScorePoint.Exclued;
+            sut.setAddiction(ScorePoint.Exclued);
+            sut.setLoadTime(ScorePoint.Point0);
+            sut.setMusic(ScorePoint.Exclued);
+            sut.setOperability(ScorePoint.Exclued);
+            sut.setStory(ScorePoint.Exclued);
         }
 
         @Test
@@ -185,11 +184,11 @@ public class ScoreTest {
 
             sut = new Score();
 
-            sut.addiction = ScorePoint.Exclued;
-            sut.loadTime = ScorePoint.Exclued;
-            sut.music = ScorePoint.Exclued;
-            sut.operability = ScorePoint.Exclued;
-            sut.story = ScorePoint.Exclued;
+            sut.setAddiction(ScorePoint.Exclued);
+            sut.setLoadTime(ScorePoint.Exclued);
+            sut.setMusic(ScorePoint.Exclued);
+            sut.setOperability(ScorePoint.Exclued);
+            sut.setStory(ScorePoint.Exclued);
         }
 
         @Test

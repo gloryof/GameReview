@@ -57,8 +57,8 @@ public class LoginTest {
             assertThat(viewable.getModel(), is(instanceOf(LoginView.class)));
             final LoginView actualView = (LoginView) viewable.getModel();
 
-            assertThat(actualView.loginId, is(nullValue()));
-            assertThat(actualView.password, is(nullValue()));
+            assertThat(actualView.getLoginId(), is(nullValue()));
+            assertThat(actualView.getPassword(), is(nullValue()));
         }
     }
 
@@ -84,8 +84,8 @@ public class LoginTest {
         public void 入力チェックエラーがあった場合_ログイン画面に戻る() throws URISyntaxException {
 
             final LoginView paramView = new LoginView();
-            paramView.loginId = "";
-            paramView.password = "";
+            paramView.setLoginId("");
+            paramView.setPassword("");
 
             authStub.certifyComplete = false;
             final Response actualResponse = sut.login(paramView);
@@ -101,8 +101,8 @@ public class LoginTest {
         public void 認証に失敗した場合_ログイン画面に戻る() throws URISyntaxException {
 
             final LoginView paramView = new LoginView();
-            paramView.loginId = "user-id-test";
-            paramView.password = "password-test";
+            paramView.setLoginId("user-id-test");
+            paramView.setPassword("password-test");
 
             authStub.certifyComplete = false;
             final Response actualResponse = sut.login(paramView);
@@ -117,8 +117,8 @@ public class LoginTest {
         public void 認証に成功した場合_管理画面にリダイレクトされる() throws URISyntaxException {
 
             final LoginView paramView = new LoginView();
-            paramView.loginId = "user-id-test";
-            paramView.password = "password-test";
+            paramView.setLoginId("user-id-test");
+            paramView.setPassword("password-test");
 
             authStub.certifyComplete = true;
 
@@ -141,11 +141,11 @@ public class LoginTest {
 
             final LoginView actualView = (LoginView) viewable.getModel();
 
-            assertThat(actualView.loginId, is(paramView.loginId));
-            assertThat(actualView.password, is(nullValue()));
-            assertThat(actualView.errors.hasError(), is(true));
+            assertThat(actualView.getLoginId(), is(paramView.getLoginId()));
+            assertThat(actualView.getPassword(), is(nullValue()));
+            assertThat(actualView.getErrors().hasError(), is(true));
 
-            final ValidateErrors actualErrors = actualView.errors;
+            final ValidateErrors actualErrors = actualView.getErrors();
             final ValidateErrorsHelper helper = new ValidateErrorsHelper(actualErrors);
             helper.assertErrors(errorList);
         }

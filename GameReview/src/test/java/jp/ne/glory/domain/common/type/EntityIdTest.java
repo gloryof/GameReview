@@ -1,12 +1,10 @@
 package jp.ne.glory.domain.common.type;
 
-import jp.ne.glory.domain.game.value.GameId;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class EntityIdTest {
 
@@ -30,13 +28,13 @@ public class EntityIdTest {
         @Test
         public void valueには1が設定されている() {
 
-            assertThat(sut.value, is(1L));
+            assertThat(sut.getValue(), is(1L));
         }
 
         @Test
         public void isSetValueにはtrueが設定されている() {
 
-            assertThat(sut.isSetValue, is(true));
+            assertThat(sut.isSetValue(), is(true));
         }
 
         @Test
@@ -71,13 +69,13 @@ public class EntityIdTest {
         @Test
         public void valueには0が設定されている() {
 
-            assertThat(sut.value, is(0L));
+            assertThat(sut.getValue(), is(0L));
         }
 
         @Test
         public void isSetValueにはtrueが設定されている() {
 
-            assertThat(sut.isSetValue, is(true));
+            assertThat(sut.isSetValue(), is(true));
         }
 
         @Test
@@ -112,13 +110,13 @@ public class EntityIdTest {
         @Test
         public void valueには0が設定されている() {
 
-            assertThat(sut.value, is(0L));
+            assertThat(sut.getValue(), is(0L));
         }
 
         @Test
         public void isSetValueにはfalseが設定されている() {
 
-            assertThat(sut.isSetValue, is(false));
+            assertThat(sut.isSetValue(), is(false));
         }
 
         @Test

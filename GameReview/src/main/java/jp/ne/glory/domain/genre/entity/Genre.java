@@ -2,6 +2,7 @@ package jp.ne.glory.domain.genre.entity;
 
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.genre.value.GenreName;
+import lombok.Getter;
 
 /**
  * ジャンル.
@@ -12,11 +13,17 @@ public class Genre {
     /** ラベル */
     public static final String LABEL = "ジャンル";
  
-    /** ジャンルID. */
-    public final GenreId id;
+    /**
+     * ジャンルID.
+     */
+    @Getter
+    private final GenreId id;
 
-    /** ジャンル名. */
-    public final GenreName name;
+    /**
+     * ジャンル名.
+     */
+    @Getter
+    private final GenreName name;
 
     /**
      * コンストラクタ.
@@ -35,6 +42,6 @@ public class Genre {
      */
     public boolean isRegistered() {
         
-        return id.isSetValue;
+        return id.isSetValue();
     }    
 }

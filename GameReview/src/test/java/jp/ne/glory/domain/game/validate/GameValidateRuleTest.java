@@ -8,7 +8,6 @@ package jp.ne.glory.domain.game.validate;
 
 import java.util.ArrayList;
 import java.util.List;
-import jp.ne.glory.test.validate.ValidateErrorsHelper;
 import jp.ne.glory.domain.common.error.ErrorInfo;
 import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
@@ -19,6 +18,7 @@ import jp.ne.glory.domain.game.value.SiteUrl;
 import jp.ne.glory.domain.game.value.Title;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.value.GenreId;
+import jp.ne.glory.test.validate.ValidateErrorsHelper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,9 +39,9 @@ public class GameValidateRuleTest {
             final Title title = new Title("テストタイトル");
 
             final Game game = new Game(gameId, title);
-            game.url = new SiteUrl("http://test.co.jp/index");
-            game.genreId = new GenreId(10L);
-            game.ceroRating = CeroRating.A;
+            game.setUrl(new SiteUrl("http://test.co.jp/index"));
+            game.setGenreId(new GenreId(10L));
+            game.setCeroRating(CeroRating.A);
 
             sut = new GameValidateRule(game);
         }

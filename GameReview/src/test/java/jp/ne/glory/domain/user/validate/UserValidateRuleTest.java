@@ -33,10 +33,10 @@ public class UserValidateRuleTest {
 
             final User user = new User(new UserId(1L));
 
-            user.authorities.add(Authority.ReviewPost);
-            user.loginId = new LoginId("test");
-            user.userName = new UserName("テストユーザ");
-            user.password = new Password("19CB2A070DDBE8157E17C5DDA0EA38E8AA16FAE1725C1F7AC22747D870368579");
+            user.getAuthorities().add(Authority.ReviewPost);
+            user.setLoginId(new LoginId("test"));
+            user.setUserName(new UserName("テストユーザ"));
+            user.setPassword(new Password("19CB2A070DDBE8157E17C5DDA0EA38E8AA16FAE1725C1F7AC22747D870368579"));
 
             sut = new UserValidateRule(user);
         }

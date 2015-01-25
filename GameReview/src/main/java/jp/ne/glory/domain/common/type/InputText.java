@@ -9,6 +9,7 @@ import jp.ne.glory.domain.common.annotation.param.ValidCharcterType;
 import jp.ne.glory.domain.common.error.ErrorInfo;
 import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
+import lombok.Getter;
 
 
 /**
@@ -20,8 +21,11 @@ import jp.ne.glory.domain.common.error.ValidateErrors;
 @Required(isActive = false)
 public abstract class InputText implements Validatable {
 
-    /** 値. */
-    public final String value;
+    /**
+     * 値.
+     */
+    @Getter
+    private final String value;
 
     /** 必須入力設定. */
     private final Required requiredSetting;

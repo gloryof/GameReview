@@ -1,7 +1,5 @@
 package jp.ne.glory.application.user;
 
-import jp.ne.glory.application.user.UserRegisterResult;
-import jp.ne.glory.application.user.UserRegister;
 import java.util.Arrays;
 import java.util.Optional;
 import jp.ne.glory.domain.common.error.ValidateErrors;
@@ -40,17 +38,17 @@ public class UserRegisterTest {
         public void 正常な値が入力されていれば保存される() {
 
             final User user = new User();
-            Arrays.stream(Authority.values()).forEach(v -> user.authorities.add(v));
-            user.loginId = new LoginId("test-user");
-            user.userName = new UserName("シュンツ");
-            user.password = new Password("test");
+            Arrays.stream(Authority.values()).forEach(v -> user.getAuthorities().add(v));
+            user.setLoginId(new LoginId("test-user"));
+            user.setUserName(new UserName("シュンツ"));
+            user.setPassword(new Password("test"));
 
             final UserRegisterResult result = sut.register(user);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(false));
 
-            final Optional<User> savedUser = repoStub.findBy(result.registeredUserId);
+            final Optional<User> savedUser = repoStub.findBy(result.getRegisteredUserId());
 
             assertThat(savedUser.isPresent(), is(true));
         }
@@ -62,7 +60,7 @@ public class UserRegisterTest {
 
             final UserRegisterResult result = sut.register(user);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(true));
         }
     }
@@ -84,17 +82,17 @@ public class UserRegisterTest {
         public void 正常な値が入力されていれば保存される() {
 
             final User user = new User(new UserId(100L));
-            Arrays.stream(Authority.values()).forEach(v -> user.authorities.add(v));
-            user.loginId = new LoginId("test-user");
-            user.userName = new UserName("シュンツ");
-            user.password = new Password("test");
+            Arrays.stream(Authority.values()).forEach(v -> user.getAuthorities().add(v));
+            user.setLoginId(new LoginId("test-user"));
+            user.setUserName(new UserName("シュンツ"));
+            user.setPassword(new Password("test"));
 
             final UserRegisterResult result = sut.finishEdit(user);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(false));
 
-            final Optional<User> savedUser = repoStub.findBy(result.registeredUserId);
+            final Optional<User> savedUser = repoStub.findBy(result.getRegisteredUserId());
 
             assertThat(savedUser.isPresent(), is(true));
         }
@@ -106,7 +104,7 @@ public class UserRegisterTest {
 
             final UserRegisterResult result = sut.finishEdit(user);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(true));
         }
 
@@ -114,13 +112,13 @@ public class UserRegisterTest {
         public void IDが設定されていない場合エラーになる() {
 
             final User user = new User();
-            Arrays.stream(Authority.values()).forEach(v -> user.authorities.add(v));
-            user.loginId = new LoginId("test-user");
-            user.userName = new UserName("シュンツ");
+            Arrays.stream(Authority.values()).forEach(v -> user.getAuthorities().add(v));
+            user.setLoginId(new LoginId("test-user"));
+            user.setUserName(new UserName("シュンツ"));
 
             final UserRegisterResult result = sut.finishEdit(user);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(true));
         }
     }

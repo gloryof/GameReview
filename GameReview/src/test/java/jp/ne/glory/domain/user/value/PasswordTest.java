@@ -19,7 +19,7 @@ public class PasswordTest {
             final Password actual = Password.empty();
 
             assertThat(actual, is(not(nullValue())));
-            assertThat(actual.value, is(""));
+            assertThat(actual.getValue(), is(""));
         }
     }
 

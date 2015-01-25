@@ -1,7 +1,6 @@
 
 package jp.ne.glory.application.genre;
 
-import jp.ne.glory.application.genre.GenreList;
 import java.util.List;
 import java.util.stream.IntStream;
 import jp.ne.glory.domain.genre.entity.Genre;
@@ -53,8 +52,8 @@ public class GenreListTest {
                 final Genre actual = actualList.get(i);
                 final Genre expected = exepectedList.get(i);
 
-                assertThat(actual.id.isSame(expected.id), is(true));
-                assertThat(actual.name.value.equals(expected.name.value), is(true));
+                assertThat(actual.getId().isSame(expected.getId()), is(true));
+                assertThat(actual.getName().getValue().equals(expected.getName().getValue()), is(true));
             });
         }
     }

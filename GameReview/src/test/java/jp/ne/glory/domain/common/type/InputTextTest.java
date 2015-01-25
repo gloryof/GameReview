@@ -8,16 +8,14 @@ import jp.ne.glory.domain.common.annotation.param.ValidCharcterType;
 import jp.ne.glory.domain.common.error.ErrorInfo;
 import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import static jp.ne.glory.test.validate.ValidateMatcher.validatedBy;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Enclosed.class)
 public class InputTextTest {
@@ -80,7 +78,7 @@ public class InputTextTest {
         @Test
         public void valueには初期値が設定されている() {
 
-            assertThat(sut.value, is(INIT_VALUE));
+            assertThat(sut.getValue(), is(INIT_VALUE));
         }
 
         @Test
@@ -107,7 +105,7 @@ public class InputTextTest {
         @Test
         public void valueにはブランクが設定されている() {
 
-            assertThat(sut.value, is(""));
+            assertThat(sut.getValue(), is(""));
         }
 
         @Test
@@ -140,7 +138,7 @@ public class InputTextTest {
         @Test
         public void valueにはブランクが設定されている() {
 
-            assertThat(sut.value, is(""));
+            assertThat(sut.getValue(), is(""));
         }
 
         @Test

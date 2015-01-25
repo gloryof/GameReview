@@ -13,6 +13,8 @@ import jp.ne.glory.domain.review.value.GoodPoint;
 import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.Score;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * レビュー.
@@ -24,31 +26,44 @@ public class Review {
     public static final String LABEL = "レビュー";
 
     /** ID. */
-    public final ReviewId id;
+    @Getter
+    private final ReviewId id;
 
     /**
      * ゲームID
      */
-    public GameId gameId;
+    @Getter
+    @Setter
+    private GameId gameId;
 
     /**
      * 良い点.
      */
-    public GoodPoint gooodPoint = GoodPoint.empty();
+    @Getter
+    @Setter
+    private GoodPoint goodPoint = GoodPoint.empty();
 
     /** 悪い点. */
-    public BadPoint badPoint = BadPoint.empty();
+    @Getter
+    @Setter
+    private BadPoint badPoint = BadPoint.empty();
 
     /** コメント. */
-    public Comment comment = Comment.empty();
+    @Getter
+    @Setter
+    private Comment comment = Comment.empty();
 
     /** スコア. */
-    public Score score = new Score();
+    @Getter
+    @Setter
+    private Score score = new Score();
 
     /**
      * 投稿日時.
      */
-    public PostDateTime postTime = PostDateTime.empty();
+    @Getter
+    @Setter
+    private PostDateTime postTime = PostDateTime.empty();
 
     /**
      * コンストラクタ.
@@ -65,6 +80,6 @@ public class Review {
      */
     public boolean isRegistered() {
         
-        return id.isSetValue;
+        return id.isSetValue();
     }
 }

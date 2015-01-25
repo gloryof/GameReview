@@ -1,14 +1,14 @@
 package jp.ne.glory.domain.genre.entity;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.genre.value.GenreName;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Enclosed.class)
 public class GenreTest {
@@ -29,8 +29,8 @@ public class GenreTest {
         @Test
         public void コンストラクタで設定した値がプロパティに設定されている() {
 
-            assertThat(sut.id.isSame(INIT_ID), is(true));
-            assertThat(sut.name.value, is(INIT_NAME.value));
+            assertThat(sut.getId().isSame(INIT_ID), is(true));
+            assertThat(sut.getName().getValue(), is(INIT_NAME.getValue()));
         }
         
         @Test
@@ -56,8 +56,8 @@ public class GenreTest {
         @Test
         public void 全てに初期値が設定されている() {
 
-            assertThat(sut.id.isSame(INIT_ID), is(true));
-            assertThat(sut.name.value, is(INIT_NAME.value));
+            assertThat(sut.getId().isSame(INIT_ID), is(true));
+            assertThat(sut.getName().getValue(), is(INIT_NAME.getValue()));
         }
 
         @Test

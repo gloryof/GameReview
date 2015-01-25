@@ -1,19 +1,16 @@
 package jp.ne.glory.domain.game.value;
 
 import java.util.List;
-import jp.ne.glory.test.util.TestUtil;
-
-import static jp.ne.glory.test.validate.ValidateMatcher.validatedBy;
-
 import jp.ne.glory.domain.common.error.ErrorInfo;
 import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
+import jp.ne.glory.test.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
+
+import static jp.ne.glory.test.validate.ValidateMatcher.validatedBy;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class SiteUrlTest {
 
@@ -24,7 +21,7 @@ public class SiteUrlTest {
 
             final SiteUrl actual = SiteUrl.empty();
 
-            assertThat(actual.value, is(""));
+            assertThat(actual.getValue(), is(""));
         }
     }
 

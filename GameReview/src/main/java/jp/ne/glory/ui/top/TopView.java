@@ -2,6 +2,7 @@ package jp.ne.glory.ui.top;
 
 import jp.ne.glory.ui.genre.GenreSearchView;
 import jp.ne.glory.ui.review.ReviewView;
+import lombok.Getter;
 
 /**
  * トップ画面情報.
@@ -13,12 +14,14 @@ public class TopView {
     /**
      * ジャンル検索.
      */
-    public final GenreSearchView genreSearch;
+    @Getter
+    private final GenreSearchView genreSearch;
 
     /**
      * レビュー.
      */
-    public final ReviewView review;
+    @Getter
+    private final ReviewView review;
 
     /**
      * コンストラクタ.

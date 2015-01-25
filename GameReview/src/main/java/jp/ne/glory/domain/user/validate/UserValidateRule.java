@@ -55,10 +55,10 @@ public class UserValidateRule {
 
         final ValidateErrors errors = new ValidateErrors();
 
-        errors.addAll(user.loginId.validate());
-        errors.addAll(user.userName.validate());
-        errors.addAll(user.authorities.validate());
-        errors.addAll(user.password.validate());
+        errors.addAll(user.getLoginId().validate());
+        errors.addAll(user.getUserName().validate());
+        errors.addAll(user.getAuthorities().validate());
+        errors.addAll(user.getPassword().validate());
 
         return errors;
     }

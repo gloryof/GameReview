@@ -66,10 +66,10 @@ public class ReviewValidateRule {
 
         final ValidateErrors errors = new ValidateErrors();
 
-        errors.addAll(review.gooodPoint.validate());
-        errors.addAll(review.badPoint.validate());
-        errors.addAll(review.comment.validate());
-        errors.addAll(review.score.validate());
+        errors.addAll(review.getGoodPoint().validate());
+        errors.addAll(review.getBadPoint().validate());
+        errors.addAll(review.getComment().validate());
+        errors.addAll(review.getScore().validate());
 
         final ValidateError gameValidateError = validateRelationGame();
         if (gameValidateError != null) {
@@ -93,12 +93,12 @@ public class ReviewValidateRule {
             return new ValidateError(ErrorInfo.NotInputInfo, Game.LABEL);
         }
 
-        if (review.gameId == null) {
+        if (review.getGameId() == null) {
 
             return new ValidateError(ErrorInfo.NotSettingRelation, Game.LABEL);
         }
 
-        if (!review.gameId.isSame(game.id)) {
+        if (!review.getGameId().isSame(game.getId())) {
 
             return new ValidateError(ErrorInfo.MismatchRelation, Game.LABEL);
         }

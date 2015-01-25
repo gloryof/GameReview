@@ -26,15 +26,15 @@ public class GenreRepositoryImpl implements GenreRepository {
     static {
 
         final Genre action = new Genre(new GenreId(sequence), new GenreName("アクション"));
-        genreMap.put(action.id.value, action);
+        genreMap.put(action.getId().getValue(), action);
         sequence++;
 
         final Genre rpg = new Genre(new GenreId(sequence), new GenreName("RPG"));
-        genreMap.put(rpg.id.value, rpg);
+        genreMap.put(rpg.getId().getValue(), rpg);
         sequence++;
 
         final Genre simulation = new Genre(new GenreId(sequence), new GenreName("シミュレーション"));
-        genreMap.put(simulation.id.value, simulation);
+        genreMap.put(simulation.getId().getValue(), simulation);
         sequence++;
     }
 
@@ -42,23 +42,23 @@ public class GenreRepositoryImpl implements GenreRepository {
     public GenreId save(Genre genre) {
 
         final Genre saveGenre;
-        if (genre.id == null) {
+        if (genre.getId() == null) {
 
-            saveGenre = new Genre(new GenreId(sequence), genre.name);
+            saveGenre = new Genre(new GenreId(sequence), genre.getName());
             sequence++;
         } else {
 
             saveGenre = genre;
         }
-        genreMap.put(saveGenre.id.value, saveGenre);
+        genreMap.put(saveGenre.getId().getValue(), saveGenre);
 
-        return saveGenre.id;
+        return saveGenre.getId();
     }
 
     @Override
     public Optional<Genre> findBy(GenreId genreId) {
 
-        return Optional.ofNullable(genreMap.get(genreId.value));
+        return Optional.ofNullable(genreMap.get(genreId.getValue()));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class GenreRepositoryImpl implements GenreRepository {
         return genreMap.entrySet()
                 .stream()
                 .map(entry -> entry.getValue())
-                .sorted((b, n) -> b.id.value.compareTo(n.id.value))
+                .sorted((b, n) -> b.getId().getValue().compareTo(n.getId().getValue()))
                 .collect(Collectors.toList());
     }
 

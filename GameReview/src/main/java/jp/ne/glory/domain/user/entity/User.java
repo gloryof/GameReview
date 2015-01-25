@@ -5,6 +5,8 @@ import jp.ne.glory.domain.user.value.LoginId;
 import jp.ne.glory.domain.user.value.Password;
 import jp.ne.glory.domain.user.value.UserId;
 import jp.ne.glory.domain.user.value.UserName;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * ユーザ.
@@ -15,22 +17,32 @@ public class User {
     /** ラベル. */
     public static final String LABEL = "ユーザ";
 
-    /** ユーザID. */
-    public final UserId userId;
+    /**
+     * ユーザID.
+     */
+    @Getter
+    private final UserId userId;
 
     /** 権限. */
-    public final Authorities authorities;
+    @Getter
+    private final Authorities authorities;
 
     /** ログインID. */
-    public LoginId loginId = LoginId.empty();
+    @Getter
+    @Setter
+    private LoginId loginId = LoginId.empty();
 
     /** ユーザ名. */
-    public UserName userName = UserName.empty();
+    @Getter
+    @Setter
+    private UserName userName = UserName.empty();
 
     /**
      * パスワード.
      */
-    public Password password = Password.empty();
+    @Getter
+    @Setter
+    private Password password = Password.empty();
 
     /**
      * コンストラクタ.
@@ -56,6 +68,6 @@ public class User {
      */
     public boolean isRegistered() {
         
-        return userId.isSetValue;
+        return userId.isSetValue();
     }
 }

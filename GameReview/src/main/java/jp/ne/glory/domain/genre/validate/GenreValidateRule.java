@@ -64,7 +64,7 @@ public class GenreValidateRule {
 
         final ValidateErrors errors = new ValidateErrors();
 
-        errors.addAll(genre.name.validate());
+        errors.addAll(genre.getName().validate());
 
         return errors;
     }

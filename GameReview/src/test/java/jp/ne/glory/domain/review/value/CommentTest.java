@@ -1,19 +1,17 @@
 package jp.ne.glory.domain.review.value;
 
 import java.util.List;
-
-import static jp.ne.glory.test.validate.ValidateMatcher.validatedBy;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
 import jp.ne.glory.domain.common.error.ErrorInfo;
 import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import org.junit.Before;
-
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
+
+import static jp.ne.glory.test.validate.ValidateMatcher.validatedBy;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Enclosed.class)
 public class CommentTest  {
@@ -25,7 +23,7 @@ public class CommentTest  {
 
             final Comment actual = Comment.empty();
 
-            assertThat(actual.value, is(""));
+            assertThat(actual.getValue(), is(""));
         }
     }
 

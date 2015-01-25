@@ -3,6 +3,7 @@ package jp.ne.glory.ui.review;
 import java.util.List;
 import java.util.stream.Collectors;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResults;
+import lombok.Getter;
 
 /**
  * レビューリスト画面情報.
@@ -14,7 +15,8 @@ public class ReviewListView {
     /**
      * レビューリスト.
      */
-    public final List<ReviewBean> reviews;
+    @Getter
+    private final List<ReviewBean> reviews;
 
     /**
      * コンストラクタ.
@@ -23,9 +25,9 @@ public class ReviewListView {
      */
     public ReviewListView(final ReviewSearchResults results) {
 
-        reviews = results.results
+        reviews = results.getResults()
                 .stream()
-                .map(v -> new ReviewBean(v.review, v.game, v.genre))
+                .map(v -> new ReviewBean(v.getReview(), v.getGame(), v.getGenre()))
                 .collect(Collectors.toList());
     }
 }

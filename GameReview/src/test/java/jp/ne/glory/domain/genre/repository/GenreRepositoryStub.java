@@ -18,23 +18,23 @@ public class GenreRepositoryStub implements GenreRepository {
     public GenreId save(Genre genre) {
 
         final Genre saveGenre;
-        if (genre.id == null) {
+        if (genre.getId() == null) {
 
-            saveGenre = new Genre(new GenreId(sequence), genre.name);
+            saveGenre = new Genre(new GenreId(sequence), genre.getName());
             sequence++;
         } else {
 
             saveGenre = genre;
         }
-        genreMap.put(saveGenre.id.value, saveGenre);
+        genreMap.put(saveGenre.getId().getValue(), saveGenre);
 
-        return saveGenre.id;
+        return saveGenre.getId();
     }
 
     @Override
     public Optional<Genre> findBy(GenreId genreId) {
 
-        return Optional.ofNullable(genreMap.get(genreId.value));
+        return Optional.ofNullable(genreMap.get(genreId.getValue()));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class GenreRepositoryStub implements GenreRepository {
         return genreMap.entrySet()
                 .stream()
                 .map(entry -> entry.getValue())
-                .sorted((b, n) -> b.id.value.compareTo(n.id.value))
+                .sorted((b, n) -> b.getId().getValue().compareTo(n.getId().getValue()))
                 .collect(Collectors.toList());
     }
 

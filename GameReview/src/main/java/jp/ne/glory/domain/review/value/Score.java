@@ -7,6 +7,8 @@ import jp.ne.glory.domain.common.error.ErrorInfo;
 import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.common.type.Validatable;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * スコア.
@@ -17,20 +19,32 @@ public class Score implements Validatable {
     /** ラベル. */
     public static final String LABEL = "スコア";
 
-    /** 熱中度 */
-    public ScorePoint addiction =  ScorePoint.NotInput;
+    /**
+     * 熱中度
+     */
+    @Getter
+    @Setter
+    private ScorePoint addiction = ScorePoint.NotInput;
 
     /** ストーリー. */
-    public ScorePoint story = ScorePoint.NotInput;
+    @Getter
+    @Setter
+    private ScorePoint story = ScorePoint.NotInput;
 
     /** 操作性. */
-    public ScorePoint operability = ScorePoint.NotInput;
+    @Getter
+    @Setter
+    private ScorePoint operability = ScorePoint.NotInput;
 
     /** ロード時間. */
-    public ScorePoint loadTime = ScorePoint.NotInput;
+    @Getter
+    @Setter
+    private ScorePoint loadTime = ScorePoint.NotInput;
 
     /** 音楽 */
-    public ScorePoint music =  ScorePoint.NotInput;
+    @Getter
+    @Setter
+    private ScorePoint music = ScorePoint.NotInput;
 
     /**
      * 入力情報の検証を行う.

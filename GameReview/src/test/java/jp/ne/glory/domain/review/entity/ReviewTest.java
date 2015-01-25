@@ -34,22 +34,22 @@ public class ReviewTest {
 
             sut = new Review(INIT_ID);
 
-            sut.gooodPoint = new GoodPoint("良い点：テスト");
-            sut.badPoint = new BadPoint("悪い点：テスト");
-            sut.comment = new Comment("コメント：テスト");
-            sut.score = new Score();
-            sut.score.story = ScorePoint.Point5;
-            sut.score.operability = ScorePoint.Point4;
-            sut.score.addiction = ScorePoint.Point3;
-            sut.score.music = ScorePoint.Point2;
-            sut.score.loadTime = ScorePoint.Point1;
-            sut.postTime = new PostDateTime(new DateTimeValue(LocalDateTime.now()));
+            sut.setGoodPoint(new GoodPoint("良い点：テスト"));
+            sut.setBadPoint(new BadPoint("悪い点：テスト"));
+            sut.setComment(new Comment("コメント：テスト"));
+            sut.setScore(new Score());
+            sut.getScore().setStory(ScorePoint.Point5);
+            sut.getScore().setOperability(ScorePoint.Point4);
+            sut.getScore().setAddiction(ScorePoint.Point3);
+            sut.getScore().setMusic(ScorePoint.Point2);
+            sut.getScore().setLoadTime(ScorePoint.Point1);
+            sut.setPostTime(new PostDateTime(new DateTimeValue(LocalDateTime.now())));
         }
 
         @Test
         public void コンストラクタで設定した値がプロパティに設定されている() {
 
-            assertThat(sut.id.isSame(INIT_ID), is(true));
+            assertThat(sut.getId().isSame(INIT_ID), is(true));
         }
         
         @Test
@@ -75,16 +75,16 @@ public class ReviewTest {
         @Test
         public void 全てに初期値が設定されている() {
 
-            assertThat(sut.id.isSame(INIT_ID), is(true));
-            assertThat(sut.gooodPoint.value, is(GoodPoint.empty().value));
-            assertThat(sut.badPoint.value, is(BadPoint.empty().value));
-            assertThat(sut.comment.value, is(Comment.empty().value));
-            assertThat(sut.score, is(not(nullValue())));
-            assertThat(sut.score.addiction, is(ScorePoint.NotInput));
-            assertThat(sut.score.loadTime, is(ScorePoint.NotInput));
-            assertThat(sut.score.music, is(ScorePoint.NotInput));
-            assertThat(sut.score.operability, is(ScorePoint.NotInput));
-            assertThat(sut.score.story, is(ScorePoint.NotInput));
+            assertThat(sut.getId().isSame(INIT_ID), is(true));
+            assertThat(sut.getGoodPoint().getValue(), is(GoodPoint.empty().getValue()));
+            assertThat(sut.getBadPoint().getValue(), is(BadPoint.empty().getValue()));
+            assertThat(sut.getComment().getValue(), is(Comment.empty().getValue()));
+            assertThat(sut.getScore(), is(not(nullValue())));
+            assertThat(sut.getScore().getAddiction(), is(ScorePoint.NotInput));
+            assertThat(sut.getScore().getLoadTime(), is(ScorePoint.NotInput));
+            assertThat(sut.getScore().getMusic(), is(ScorePoint.NotInput));
+            assertThat(sut.getScore().getOperability(), is(ScorePoint.NotInput));
+            assertThat(sut.getScore().getStory(), is(ScorePoint.NotInput));
         }
 
         @Test

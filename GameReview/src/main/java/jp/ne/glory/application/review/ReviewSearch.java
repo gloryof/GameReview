@@ -59,9 +59,9 @@ public class ReviewSearch {
     public ReviewSearchResults searchNewReviews(final int lotPerCount, final int lotNumber) {
 
         final ReviewSearchCondition condition = new ReviewSearchCondition();
-        condition.lotNumber = lotNumber;
-        condition.lotPerCount = lotPerCount;
-        condition.orderType = ReviewSearchOrderType.PostTimeDesc;
+        condition.setLotNumber(lotNumber);
+        condition.setLotPerCount(lotPerCount);
+        condition.setOrderType(ReviewSearchOrderType.PostTimeDesc);
 
         final List<ReviewSearchResult> resultList = repository.search(condition);
         final int resultCount = repository.getSearchCount(condition);
@@ -83,10 +83,10 @@ public class ReviewSearch {
     public ReviewSearchResults searchReviewByGenre(final GenreId genreId, final int lotPerCount, final int lotNumber) {
 
         final ReviewSearchCondition condition = new ReviewSearchCondition();
-        condition.lotNumber = lotNumber;
-        condition.lotPerCount = lotPerCount;
-        condition.genreIds.add(genreId);
-        condition.orderType = ReviewSearchOrderType.PostTimeDesc;
+        condition.setLotNumber(lotNumber);
+        condition.setLotPerCount(lotPerCount);
+        condition.getGenreIds().add(genreId);
+        condition.setOrderType(ReviewSearchOrderType.PostTimeDesc);
 
         final List<ReviewSearchResult> resultList = repository.search(condition);
         final int resultCount = repository.getSearchCount(condition);
@@ -103,10 +103,10 @@ public class ReviewSearch {
     public ReviewSearchResults searchByReviewId(final ReviewId reviewId) {
 
         final ReviewSearchCondition condition = new ReviewSearchCondition();
-        condition.lotNumber = 1;
-        condition.lotPerCount = 1;
-        condition.reviewIds.add(reviewId);
-        condition.orderType = ReviewSearchOrderType.PostTimeDesc;
+        condition.setLotNumber(1);
+        condition.setLotPerCount(1);
+        condition.getReviewIds().add(reviewId);
+        condition.setOrderType(ReviewSearchOrderType.PostTimeDesc);
 
         final List<ReviewSearchResult> resultList = repository.search(condition);
         final int resultCount = repository.getSearchCount(condition);

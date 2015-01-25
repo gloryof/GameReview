@@ -63,7 +63,7 @@ public class ReviewSearchDataGenerator {
 
         final Review review = new Review(new ReviewId(number));
 
-        review.postTime = new PostDateTime(new DateTimeValue(LocalDateTime.now()));
+        review.setPostTime(new PostDateTime(new DateTimeValue(LocalDateTime.now())));
 
         return review;
     }

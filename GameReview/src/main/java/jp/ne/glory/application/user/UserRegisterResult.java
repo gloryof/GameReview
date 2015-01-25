@@ -2,6 +2,7 @@ package jp.ne.glory.application.user;
 
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.user.value.UserId;
+import lombok.Getter;
 
 /**
  * ユーザ情報登録の結果.
@@ -13,12 +14,14 @@ public class UserRegisterResult {
     /**
      * 入力チェック結果.
      */
-    public final ValidateErrors errors;
+    @Getter
+    private final ValidateErrors errors;
 
     /**
      * 登録されたユーザID.
      */
-    public final UserId registeredUserId;
+    @Getter
+    private final UserId registeredUserId;
 
     /**
      * コンストラクタ.

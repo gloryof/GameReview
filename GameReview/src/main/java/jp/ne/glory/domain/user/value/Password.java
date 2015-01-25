@@ -43,12 +43,12 @@ public class Password extends InputText {
             return false;
         }
 
-        if (value.isEmpty()) {
+        if (getValue().isEmpty()) {
 
             return false;
         }
 
-        return Objects.equals(value, password.value);
+        return Objects.equals(getValue(), password.getValue());
     }
 
     /**

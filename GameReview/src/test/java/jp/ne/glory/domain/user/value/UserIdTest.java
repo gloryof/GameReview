@@ -6,12 +6,12 @@
 
 package jp.ne.glory.domain.user.value;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.is;
-
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Enclosed.class)
 public class UserIdTest {
@@ -22,8 +22,8 @@ public class UserIdTest {
 
             final UserId actual  = UserId.notNumberingValue();
 
-            assertThat(actual.value, is(0L));
-            assertThat(actual.isSetValue, is(false));
+            assertThat(actual.getValue(), is(0L));
+            assertThat(actual.isSetValue(), is(false));
         }
     }
 }

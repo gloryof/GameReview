@@ -1,6 +1,7 @@
 package jp.ne.glory.domain.review.value.search;
 
 import java.util.List;
+import lombok.Getter;
 
 /**
  * レビュー検索結果リスト.
@@ -12,17 +13,20 @@ public class ReviewSearchResults {
     /**
      * 検索条件.
      */
-    public final ReviewSearchCondition condition;
+    @Getter
+    private final ReviewSearchCondition condition;
 
     /**
      * レビュー検索リスト.
      */
-    public final List<ReviewSearchResult> results;
+    @Getter
+    private final List<ReviewSearchResult> results;
 
     /**
      * 全件数.
      */
-    public final int allCount;
+    @Getter
+    private final int allCount;
 
     /**
      * コンストラクタ.

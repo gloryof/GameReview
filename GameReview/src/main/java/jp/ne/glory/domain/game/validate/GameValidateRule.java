@@ -67,17 +67,17 @@ public class GameValidateRule {
 
         final ValidateErrors errors = new ValidateErrors();
 
-        errors.addAll(game.title.validate());
-        errors.addAll(game.url.validate());
+        errors.addAll(game.getTitle().validate());
+        errors.addAll(game.getUrl().validate());
 
-        final CeroRating checkCero = Optional.ofNullable(game.ceroRating).orElse(CeroRating.Empty);
+        final CeroRating checkCero = Optional.ofNullable(game.getCeroRating()).orElse(CeroRating.Empty);
         if (CeroRating.Empty.equals(checkCero)) {
 
             errors.add(new ValidateError(ErrorInfo.Required, CeroRating.LABEL));
         }
 
-        final GenreId checkGenre = Optional.ofNullable(game.genreId).orElse(GenreId.notNumberingValue());
-        if (!checkGenre.isSetValue) {
+        final GenreId checkGenre = Optional.ofNullable(game.getGenreId()).orElse(GenreId.notNumberingValue());
+        if (!checkGenre.isSetValue()) {
             
             errors.add(new ValidateError(ErrorInfo.Required, Genre.LABEL));
         }

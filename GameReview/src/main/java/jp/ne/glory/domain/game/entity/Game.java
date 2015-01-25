@@ -6,6 +6,8 @@ import jp.ne.glory.domain.game.value.GameId;
 import jp.ne.glory.domain.game.value.SiteUrl;
 import jp.ne.glory.domain.game.value.Title;
 import jp.ne.glory.domain.genre.value.GenreId;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * ゲーム.
@@ -16,20 +18,30 @@ public class Game {
     /** ラベル. */
     public static final String LABEL = "ゲーム";
 
-    /** ゲームID. */
-    public final GameId id;
+    /**
+     * ゲームID.
+     */
+    @Getter
+    private final GameId id;
 
     /** タイトル. */
-    public final Title title;
+    @Getter
+    private final Title title;
 
     /** 公式サイトのURL. */
-    public SiteUrl url;
+    @Getter
+    @Setter
+    private SiteUrl url;
 
     /** CEROレーティング. */
-    public CeroRating ceroRating;
+    @Getter
+    @Setter
+    private CeroRating ceroRating;
 
     /** ジャンルID. */
-    public GenreId genreId;
+    @Getter
+    @Setter
+    private GenreId genreId;
 
     /**
      * コンストラクタ.<br>
@@ -53,7 +65,7 @@ public class Game {
      */
     public boolean isRegistered() {
         
-        return id.isSetValue;
+        return id.isSetValue();
     }
 
 }

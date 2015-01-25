@@ -39,7 +39,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
             final GameId gameId = new GameId(200 + v);
 
             final Review review = new Review(reviewId);
-            review.postTime = new PostDateTime(new DateTimeValue(LocalDateTime.now()));
+            review.setPostTime(new PostDateTime(new DateTimeValue(LocalDateTime.now())));
 
             final Game game = new Game(gameId, new Title("テスト" + v));
             final long genreId = (v % 3) + 1;
@@ -77,9 +77,9 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                 .filter(v -> isMatch(condition, v))
                 .collect(Collectors.toList());
 
-        if (1 < condition.targetCount) {
+        if (1 < condition.getTargetCount()) {
 
-            returnList = returnList.subList(0, condition.targetCount);
+            returnList = returnList.subList(0, condition.getTargetCount());
         }
 
         return returnList;
@@ -92,36 +92,31 @@ public class ReviewRepositoryImpl implements ReviewRepository {
             return false;
         }
 
-        if (!isMatchGenreIdStub(condition, result)) {
-
-            return false;
-        }
-
-        return true;
+        return (!isMatchGenreIdStub(condition, result));
     }
 
     private boolean isMatchReviewIdStub(final ReviewSearchCondition condition, final ReviewSearchResult result) {
 
-        final List<ReviewId> reviewIds = condition.reviewIds;
+        final List<ReviewId> reviewIds = condition.getReviewIds();
         if (reviewIds.isEmpty()) {
 
             return true;
         }
 
-        final Optional<ReviewId> option = reviewIds.stream().filter(v -> v.isSame(result.review.id)).findAny();
+        final Optional<ReviewId> option = reviewIds.stream().filter(v -> v.isSame(result.getReview().getId())).findAny();
 
         return option.isPresent();
     }
 
     private boolean isMatchGenreIdStub(final ReviewSearchCondition condition, final ReviewSearchResult result) {
 
-        final List<GenreId> genreIds = condition.genreIds;
+        final List<GenreId> genreIds = condition.getGenreIds();
         if (genreIds.isEmpty()) {
 
             return true;
         }
 
-        final Optional<GenreId> option = genreIds.stream().filter(v -> v.isSame(result.genre.id)).findAny();
+        final Optional<GenreId> option = genreIds.stream().filter(v -> v.isSame(result.getGenre().getId())).findAny();
 
         return option.isPresent();
     }

@@ -4,6 +4,7 @@ import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.review.entity.Review;
 import jp.ne.glory.domain.review.value.Score;
+import lombok.Getter;
 
 /**
  * レビュー画面情報.
@@ -15,57 +16,68 @@ public class ReviewBean {
     /**
      * レビューID
      */
-    public final Long reviewId;
+    @Getter
+    private final Long reviewId;
 
     /**
      * タイトル.
      */
-    public final String title;
+    @Getter
+    private final String title;
 
     /**
      * ジャンル名
      */
-    public final String genreName;
+    @Getter
+    private final String genreName;
 
     /**
      * 熱中度
      */
-    public final String addictionScore;
+    @Getter
+    private final String addictionScore;
 
     /**
      * ストーリー.
      */
-    public final String storyScore;
+    @Getter
+    private final String storyScore;
 
     /**
      * 操作性.
      */
-    public final String operabilityScore;
+    @Getter
+    private final String operabilityScore;
 
     /**
      * ロード時間.
      */
-    public final String loadTimeScore;
+    @Getter
+    private final String loadTimeScore;
 
     /**
      * 音楽
      */
-    public final String musicScore;
+    @Getter
+    private final String musicScore;
 
     /**
      * 良い点.
      */
-    public final String goodPoint;
+    @Getter
+    private final String goodPoint;
 
     /**
      * 悪い点.
      */
-    public final String badPoint;
+    @Getter
+    private final String badPoint;
 
     /**
      * コメント.
      */
-    public final String comment;
+    @Getter
+    private final String comment;
 
     /**
      * コンストラクタ.
@@ -76,19 +88,19 @@ public class ReviewBean {
      */
     public ReviewBean(final Review review, final Game game, final Genre genre) {
 
-        reviewId = review.id.value;
-        title = game.title.value;
-        genreName = genre.name.value;
+        reviewId = review.getId().getValue();
+        title = game.getTitle().getValue();
+        genreName = genre.getName().getValue();
 
-        final Score score = review.score;
-        addictionScore = score.addiction.label;
-        storyScore = score.story.label;
-        loadTimeScore = score.loadTime.label;
-        operabilityScore = score.operability.label;
-        musicScore = score.music.label;
+        final Score score = review.getScore();
+        addictionScore = score.getAddiction().label;
+        storyScore = score.getStory().label;
+        loadTimeScore = score.getLoadTime().label;
+        operabilityScore = score.getOperability().label;
+        musicScore = score.getMusic().label;
 
-        goodPoint = review.gooodPoint.value;
-        badPoint = review.badPoint.value;
-        comment = review.comment.value;
+        goodPoint = review.getGoodPoint().getValue();
+        badPoint = review.getBadPoint().getValue();
+        comment = review.getComment().getValue();
     }
 }

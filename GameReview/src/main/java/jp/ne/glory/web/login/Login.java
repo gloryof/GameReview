@@ -100,15 +100,15 @@ public class Login {
         if (errors.hasError()) {
 
             final LoginView loginFailedView = new LoginView();
-            loginFailedView.loginId = view.loginId;
-            loginFailedView.errors.addAll(errors);
+            loginFailedView.setLoginId(view.getLoginId());
+            loginFailedView.getErrors().addAll(errors);
 
             final Viewable viewable = new Viewable(PagePaths.LOGIN, loginFailedView);
 
             return Response.ok(viewable).build();
         }
 
-        final LoginId loginId = new LoginId(view.loginId);
+        final LoginId loginId = new LoginId(view.getLoginId());
         certify.createAuthentication(loginId);
 
         URI uri = UriBuilder.fromResource(Top.class).build();
@@ -124,8 +124,8 @@ public class Login {
 
         final ValidateErrors errors = new ValidateErrors();
 
-        final LoginId loginId = new LoginId(view.loginId);
-        final Password notEncryptedPassword = new Password(view.password);
+        final LoginId loginId = new LoginId(view.getLoginId());
+        final Password notEncryptedPassword = new Password(view.getPassword());
 
         final LoginValidateRule rule = new LoginValidateRule(loginId, notEncryptedPassword);
         errors.addAll(rule.validate());
@@ -135,7 +135,7 @@ public class Login {
             return errors;
         }
 
-        final Password encryptedPassword = encryption.encrypt(view.password);
+        final Password encryptedPassword = encryption.encrypt(view.getPassword());
         if (!auth.isCertify(loginId, encryptedPassword)) {
 
             errors.add(new ValidateError(ErrorInfo.LoginFailed));

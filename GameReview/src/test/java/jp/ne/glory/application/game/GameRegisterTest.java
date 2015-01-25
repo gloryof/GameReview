@@ -1,7 +1,5 @@
 package jp.ne.glory.application.game;
 
-import jp.ne.glory.application.game.GameRegister;
-import jp.ne.glory.application.game.GameRegisterResult;
 import java.util.Optional;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.game.entity.Game;
@@ -38,16 +36,16 @@ public class GameRegisterTest {
         public void 正常な値が入力されていれば保存される() {
 
             final Game game = new Game(GameId.notNumberingValue(), new Title("タイトル"));
-            game.url = new SiteUrl("http://test.co.jp/index");
-            game.genreId = new GenreId(10L);
-            game.ceroRating = CeroRating.A;
+            game.setUrl(new SiteUrl("http://test.co.jp/index"));
+            game.setGenreId(new GenreId(10L));
+            game.setCeroRating(CeroRating.A);
 
             final GameRegisterResult result = sut.register(game);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(false));
 
-            final Optional<Game> savedUser = repoStub.findBy(result.registeredGameId);
+            final Optional<Game> savedUser = repoStub.findBy(result.getRegisteredGameId());
 
             assertThat(savedUser.isPresent(), is(true));
         }
@@ -59,7 +57,7 @@ public class GameRegisterTest {
 
             final GameRegisterResult result = sut.register(game);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(true));
         }
     }
@@ -80,16 +78,16 @@ public class GameRegisterTest {
         public void 正常な値が入力されていれば保存される() {
 
             final Game game = new Game(new GameId(100L), new Title("タイトル"));
-            game.url = new SiteUrl("http://test.co.jp/index");
-            game.genreId = new GenreId(10L);
-            game.ceroRating = CeroRating.A;
+            game.setUrl(new SiteUrl("http://test.co.jp/index"));
+            game.setGenreId(new GenreId(10L));
+            game.setCeroRating(CeroRating.A);
 
             final GameRegisterResult result = sut.finishEdit(game);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(false));
 
-            final Optional<Game> savedUser = repoStub.findBy(result.registeredGameId);
+            final Optional<Game> savedUser = repoStub.findBy(result.getRegisteredGameId());
 
             assertThat(savedUser.isPresent(), is(true));
         }
@@ -101,7 +99,7 @@ public class GameRegisterTest {
 
             final GameRegisterResult result = sut.finishEdit(game);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(true));
         }
 
@@ -109,13 +107,13 @@ public class GameRegisterTest {
         public void IDが設定されていない場合エラーになる() {
 
             final Game game = new Game(GameId.notNumberingValue(), Title.empty());
-            game.url = new SiteUrl("http://test.co.jp/index");
-            game.genreId = new GenreId(10L);
-            game.ceroRating = CeroRating.A;
+            game.setUrl(new SiteUrl("http://test.co.jp/index"));
+            game.setGenreId(new GenreId(10L));
+            game.setCeroRating(CeroRating.A);
 
             final GameRegisterResult result = sut.finishEdit(game);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(true));
         }
     }

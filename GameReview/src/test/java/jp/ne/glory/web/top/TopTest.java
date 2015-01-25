@@ -54,21 +54,21 @@ public class TopTest {
             assertThat(viewable.getModel(), is(instanceOf(TopView.class)));
             final TopView actualView = (TopView) viewable.getModel();
 
-            final ReviewView actualReviews = actualView.review;
-            assertThat(actualReviews.reviews.size(), is(WebPageConst.PAGE_PER_REVIEWS));
+            final ReviewView actualReviews = actualView.getReview();
+            assertThat(actualReviews.getReviews().size(), is(WebPageConst.PAGE_PER_REVIEWS));
 
             final Map<Long, Genre> stubGenres = genreListStub.getAllGenres()
                     .stream()
-                    .collect(Collectors.toMap(v -> v.id.value, v -> v));
+                    .collect(Collectors.toMap(v -> v.getId().getValue(), v -> v));
 
-            final GenreSearchView actualGenreSearch = actualView.genreSearch;
-            actualGenreSearch.genres
+            final GenreSearchView actualGenreSearch = actualView.getGenreSearch();
+            actualGenreSearch.getGenres()
                     .stream()
                     .forEach(v -> {
-                        final Genre stubGenre = stubGenres.get(v.id);
+                final Genre stubGenre = stubGenres.get(v.getId());
 
-                        assertThat(v.id, is(stubGenre.id.value));
-                        assertThat(v.title, is(stubGenre.name.value));
+                assertThat(v.getId(), is(stubGenre.getId().getValue()));
+                assertThat(v.getTitle(), is(stubGenre.getName().getValue()));
                     });
         }
     }

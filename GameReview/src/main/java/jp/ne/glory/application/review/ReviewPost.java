@@ -61,7 +61,7 @@ public class ReviewPost {
      */
     public ReviewPostResult post(final Review review) {
 
-        final Optional<Game> game = gameRepository.findBy(review.gameId);
+        final Optional<Game> game = gameRepository.findBy(review.getGameId());
         final Supplier<ValidateErrors> checkFunc = () -> {
 
             final ReviewValidateRule rule = crateReviewRule(review, game);
@@ -105,7 +105,7 @@ public class ReviewPost {
      */
     public ReviewPostResult repost(final Review review) {
 
-        final Optional<Game> game = gameRepository.findBy(review.gameId);
+        final Optional<Game> game = gameRepository.findBy(review.getGameId());
         final Supplier<ValidateErrors> checkFunc = () -> {
 
             final ReviewValidateRule rule = crateReviewRule(review, game);

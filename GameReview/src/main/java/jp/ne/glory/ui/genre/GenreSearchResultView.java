@@ -1,6 +1,7 @@
 package jp.ne.glory.ui.genre;
 
 import jp.ne.glory.ui.review.ReviewListView;
+import lombok.Getter;
 
 /**
  * ジャンル検索結果画面.
@@ -12,12 +13,14 @@ public class GenreSearchResultView {
     /**
      * ジャンル検索.
      */
-    public final GenreSearchView genreSearch;
+    @Getter
+    private final GenreSearchView genreSearch;
 
     /**
      * レビュー.
      */
-    public final ReviewListView reviewList;
+    @Getter
+    private final ReviewListView reviewList;
 
     /**
      * コンストラクタ.

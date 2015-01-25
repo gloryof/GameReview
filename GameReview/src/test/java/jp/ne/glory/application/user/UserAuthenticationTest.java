@@ -26,12 +26,12 @@ public class UserAuthenticationTest {
             repositoryStub = new UserRepositoryStub();
 
             final User user1 = new User(new UserId(11L));
-            user1.loginId = new LoginId("test");
-            user1.password = new Password("password");
+            user1.setLoginId(new LoginId("test"));
+            user1.setPassword(new Password("password"));
 
             final User user2 = new User(new UserId(12L));
-            user2.loginId = new LoginId("hoge");
-            user2.password = new Password("fuga");
+            user2.setLoginId(new LoginId("hoge"));
+            user2.setPassword(new Password("fuga"));
 
             repositoryStub.save(user1);
             repositoryStub.save(user2);

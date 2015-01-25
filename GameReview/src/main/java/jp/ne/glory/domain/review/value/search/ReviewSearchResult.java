@@ -3,6 +3,7 @@ package jp.ne.glory.domain.review.value.search;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.review.entity.Review;
+import lombok.Getter;
 
 /**
  * レビュー検索結果.
@@ -14,17 +15,20 @@ public class ReviewSearchResult {
     /**
      * レビュー.
      */
-    public final Review review;
+    @Getter
+    private final Review review;
 
     /**
      * ゲーム.
      */
-    public final Game game;
+    @Getter
+    private final Game game;
 
     /**
      * ジャンル
      */
-    public final Genre genre;
+    @Getter
+    private final Genre genre;
 
     /**
      * コンストラクタ.

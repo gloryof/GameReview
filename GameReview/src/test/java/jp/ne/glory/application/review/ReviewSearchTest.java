@@ -1,6 +1,5 @@
 package jp.ne.glory.application.review;
 
-import jp.ne.glory.application.review.ReviewSearch;
 import java.util.List;
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.review.repository.ReviewRepositoryStub;
@@ -49,18 +48,18 @@ public class ReviewSearchTest {
 
             final ReviewSearchResults actualResult = sut.searchNewReviews(expectedPagePerCount, expectedLotNumber);
 
-            final ReviewSearchCondition actualCondition = actualResult.condition;
-            final List<ReviewSearchResult> actualList = actualResult.results;
+            final ReviewSearchCondition actualCondition = actualResult.getCondition();
+            final List<ReviewSearchResult> actualList = actualResult.getResults();
 
             assertThat(actualCondition, is(not(nullValue())));
-            assertThat(actualCondition.targetCount, is(0));
-            assertThat(actualCondition.lotPerCount, is(expectedPagePerCount));
-            assertThat(actualCondition.lotNumber, is(expectedLotNumber));
-            assertThat(actualCondition.orderType, is(ReviewSearchOrderType.PostTimeDesc));
+            assertThat(actualCondition.getTargetCount(), is(0));
+            assertThat(actualCondition.getLotPerCount(), is(expectedPagePerCount));
+            assertThat(actualCondition.getLotNumber(), is(expectedLotNumber));
+            assertThat(actualCondition.getOrderType(), is(ReviewSearchOrderType.PostTimeDesc));
 
             assertThat(actualList.size(), is(expectedPagePerCount));
 
-            assertThat(actualResult.allCount, is(expectedAllCount));
+            assertThat(actualResult.getAllCount(), is(expectedAllCount));
             assertThat(actualResult.hasNetLot(), is(false));
             assertThat(actualResult.hasPrevLot(), is(false));
         }
@@ -94,20 +93,20 @@ public class ReviewSearchTest {
             final GenreId genreId = new GenreId(2L);
             final ReviewSearchResults actualResult = sut.searchReviewByGenre(genreId, expectedPagePerCount, expectedLotNumber);
 
-            final ReviewSearchCondition actualCondition = actualResult.condition;
-            final List<ReviewSearchResult> actualList = actualResult.results;
+            final ReviewSearchCondition actualCondition = actualResult.getCondition();
+            final List<ReviewSearchResult> actualList = actualResult.getResults();
 
-            actualList.forEach(v -> assertThat(v.genre.id.value.equals(genreId.value), is(true)));
+            actualList.forEach(v -> assertThat(v.getGenre().getId().getValue().equals(genreId.getValue()), is(true)));
 
             assertThat(actualCondition, is(not(nullValue())));
-            assertThat(actualCondition.targetCount, is(0));
-            assertThat(actualCondition.lotPerCount, is(expectedPagePerCount));
-            assertThat(actualCondition.lotNumber, is(expectedLotNumber));
-            assertThat(actualCondition.orderType, is(ReviewSearchOrderType.PostTimeDesc));
+            assertThat(actualCondition.getTargetCount(), is(0));
+            assertThat(actualCondition.getLotPerCount(), is(expectedPagePerCount));
+            assertThat(actualCondition.getLotNumber(), is(expectedLotNumber));
+            assertThat(actualCondition.getOrderType(), is(ReviewSearchOrderType.PostTimeDesc));
 
             assertThat(actualList.size(), is(expectedPagePerCount));
 
-            assertThat(actualResult.allCount, is(expectedAllCount));
+            assertThat(actualResult.getAllCount(), is(expectedAllCount));
             assertThat(actualResult.hasNetLot(), is(false));
             assertThat(actualResult.hasPrevLot(), is(false));
         }
@@ -141,18 +140,18 @@ public class ReviewSearchTest {
             final ReviewId expectedReviewId = new ReviewId(1l);
             final ReviewSearchResults actualResult = sut.searchByReviewId(expectedReviewId);
 
-            final ReviewSearchCondition actualCondition = actualResult.condition;
-            final List<ReviewSearchResult> actualList = actualResult.results;
+            final ReviewSearchCondition actualCondition = actualResult.getCondition();
+            final List<ReviewSearchResult> actualList = actualResult.getResults();
 
             assertThat(actualCondition, is(not(nullValue())));
-            assertThat(actualCondition.targetCount, is(0));
-            assertThat(actualCondition.lotPerCount, is(expectedPagePerCount));
-            assertThat(actualCondition.lotNumber, is(expectedLotNumber));
-            assertThat(actualCondition.orderType, is(ReviewSearchOrderType.PostTimeDesc));
+            assertThat(actualCondition.getTargetCount(), is(0));
+            assertThat(actualCondition.getLotPerCount(), is(expectedPagePerCount));
+            assertThat(actualCondition.getLotNumber(), is(expectedLotNumber));
+            assertThat(actualCondition.getOrderType(), is(ReviewSearchOrderType.PostTimeDesc));
 
             assertThat(actualList.size(), is(expectedPagePerCount));
 
-            assertThat(actualResult.allCount, is(expectedAllCount));
+            assertThat(actualResult.getAllCount(), is(expectedAllCount));
             assertThat(actualResult.hasNetLot(), is(false));
             assertThat(actualResult.hasPrevLot(), is(false));
         }

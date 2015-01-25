@@ -1,8 +1,6 @@
 
 package jp.ne.glory.application.genre;
 
-import jp.ne.glory.application.genre.GenreRegisterResult;
-import jp.ne.glory.application.genre.GenreRegister;
 import java.util.Optional;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.genre.entity.Genre;
@@ -37,10 +35,10 @@ public class GenreRegisterTest {
 
             final GenreRegisterResult result = sut.register(genre);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(false));
 
-            final Optional<Genre> savedUser = repoStub.findBy(result.registeredGenreId);
+            final Optional<Genre> savedUser = repoStub.findBy(result.getRegisteredGenreId());
 
             assertThat(savedUser.isPresent(), is(true));
         }
@@ -52,7 +50,7 @@ public class GenreRegisterTest {
 
             final GenreRegisterResult result = sut.register(genre);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(true));
         }
     }
@@ -77,10 +75,10 @@ public class GenreRegisterTest {
 
             final GenreRegisterResult result = sut.finishEdit(genre);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(false));
 
-            final Optional<Genre> savedUser = repoStub.findBy(result.registeredGenreId);
+            final Optional<Genre> savedUser = repoStub.findBy(result.getRegisteredGenreId());
 
             assertThat(savedUser.isPresent(), is(true));
         }
@@ -92,7 +90,7 @@ public class GenreRegisterTest {
 
             final GenreRegisterResult result = sut.finishEdit(genre);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(true));
         }
 
@@ -103,7 +101,7 @@ public class GenreRegisterTest {
 
             final GenreRegisterResult result = sut.finishEdit(genre);
 
-            final ValidateErrors errors = result.errors;
+            final ValidateErrors errors = result.getErrors();
             assertThat(errors.hasError(), is(true));
         }
     }

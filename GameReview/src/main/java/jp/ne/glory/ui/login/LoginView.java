@@ -2,6 +2,8 @@ package jp.ne.glory.ui.login;
 
 import javax.ws.rs.FormParam;
 import jp.ne.glory.domain.common.error.ValidateErrors;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * ログインビュー.
@@ -14,16 +16,21 @@ public class LoginView {
      * ログインID.
      */
     @FormParam("loginId")
-    public String loginId;
+    @Getter
+    @Setter
+    private String loginId;
 
     /**
      * パスワード.
      */
     @FormParam("password")
-    public String password;
+    @Getter
+    @Setter
+    private String password;
 
     /**
      * 入力チェック結果.
      */
-    public final ValidateErrors errors = new ValidateErrors();
+    @Getter
+    private final ValidateErrors errors = new ValidateErrors();
 }

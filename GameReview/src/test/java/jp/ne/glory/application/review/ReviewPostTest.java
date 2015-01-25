@@ -1,7 +1,5 @@
 package jp.ne.glory.application.review;
 
-import jp.ne.glory.application.review.ReviewPost;
-import jp.ne.glory.application.review.ReviewPostResult;
 import java.util.Optional;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.game.entity.Game;
@@ -30,28 +28,28 @@ public class ReviewPostTest {
 
         private static Review copy(final Review review) {
 
-            final Review copiedReview = new Review(new ReviewId(review.id.value));
+            final Review copiedReview = new Review(new ReviewId(review.getId().getValue()));
 
-            copiedReview.badPoint = new BadPoint(review.badPoint.value);
-            copiedReview.comment = new Comment(review.comment.value);
-            copiedReview.gameId = new GameId(review.gameId.value);
-            copiedReview.gooodPoint = new GoodPoint(review.gooodPoint.value);
-            copiedReview.score.addiction = review.score.addiction;
-            copiedReview.score.loadTime = review.score.loadTime;
-            copiedReview.score.music = review.score.music;
-            copiedReview.score.operability = review.score.operability;
-            copiedReview.score.story = review.score.story;
+            copiedReview.setBadPoint(new BadPoint(review.getBadPoint().getValue()));
+            copiedReview.setComment(new Comment(review.getComment().getValue()));
+            copiedReview.setGameId(new GameId(review.getGameId().getValue()));
+            copiedReview.setGoodPoint(new GoodPoint(review.getGoodPoint().getValue()));
+            copiedReview.getScore().setAddiction(review.getScore().getAddiction());
+            copiedReview.getScore().setLoadTime(review.getScore().getLoadTime());
+            copiedReview.getScore().setMusic(review.getScore().getMusic());
+            copiedReview.getScore().setOperability(review.getScore().getOperability());
+            copiedReview.getScore().setStory(review.getScore().getStory());
 
             return copiedReview;
         }
 
         private static Game copy(final Game game) {
 
-            final Game copiedGame = new Game(game.id, game.title);
+            final Game copiedGame = new Game(game.getId(), game.getTitle());
 
-            copiedGame.ceroRating = game.ceroRating;
-            copiedGame.genreId = game.genreId;
-            copiedGame.url = game.url;
+            copiedGame.setCeroRating(game.getCeroRating());
+            copiedGame.setGenreId(game.getGenreId());
+            copiedGame.setUrl(game.getUrl());
 
             return copiedGame;
         }
@@ -70,11 +68,11 @@ public class ReviewPostTest {
 
             final Review review = new Review(new ReviewId(12L));
 
-            review.badPoint = new BadPoint("悪い点テスト");
-            review.comment = new Comment("コメントテスト");
-            review.gooodPoint = new GoodPoint("良い点テスト");
-            review.score.addiction = ScorePoint.Point5;
-            review.gameId = gameId;
+            review.setBadPoint(new BadPoint("悪い点テスト"));
+            review.setComment(new Comment("コメントテスト"));
+            review.setGoodPoint(new GoodPoint("良い点テスト"));
+            review.getScore().setAddiction(ScorePoint.Point5);
+            review.setGameId(gameId);
 
             return review;
         }
@@ -88,7 +86,7 @@ public class ReviewPostTest {
 
             final Review review = createBaseReview(ReviewId.notNumberingValue(), gameId);
 
-            review.comment = Comment.empty();
+            review.setComment(Comment.empty());
 
             return review;
         }
@@ -102,8 +100,8 @@ public class ReviewPostTest {
 
             final Game game = new Game(gameId, new Title("タイトル"));
 
-            game.ceroRating = CeroRating.A;
-            game.genreId = new GenreId(12L);
+            game.setCeroRating(CeroRating.A);
+            game.setGenreId(new GenreId(12L));
 
             return game;
         }
@@ -140,41 +138,41 @@ public class ReviewPostTest {
         @Test
         public void 正常に値が設定されていれば投稿される() {
 
-            final Review review = TestTool.createBaseReview(game.id);
+            final Review review = TestTool.createBaseReview(game.getId());
 
             final ReviewPostResult actualResult = sut.post(review);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(false));
 
-            final Optional<Review> postedReview = reviewRepStub.findBy(actualResult.postedReviewId);
+            final Optional<Review> postedReview = reviewRepStub.findBy(actualResult.getPostedReviewId());
             assertThat(postedReview.isPresent(), is(true));
         }
 
         @Test
         public void 入力値に不正がある場合はエラーになる() {
 
-            final Review review = TestTool.createInvalidReview(game.id);
+            final Review review = TestTool.createInvalidReview(game.getId());
 
             final ReviewPostResult actualResult = sut.post(review);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(true));
 
-            final ReviewId actualReviewId = actualResult.postedReviewId;
-            assertThat(actualReviewId.isSetValue, is(false));
+            final ReviewId actualReviewId = actualResult.getPostedReviewId();
+            assertThat(actualReviewId.isSetValue(), is(false));
         }
 
         @Test
         public void ゲームとの紐付きが不正な場合はエラーになる() {
 
-            final GameId invalidGameId = new GameId(game.id.value + 1);
+            final GameId invalidGameId = new GameId(game.getId().getValue() + 1);
             final Review review = TestTool.createBaseReview(invalidGameId);
 
             final ReviewPostResult actualResult = sut.post(review);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(true));
 
-            final ReviewId actualReviewId = actualResult.postedReviewId;
-            assertThat(actualReviewId.isSetValue, is(false));
+            final ReviewId actualReviewId = actualResult.getPostedReviewId();
+            assertThat(actualReviewId.isSetValue(), is(false));
         }
 
         @Test
@@ -183,11 +181,11 @@ public class ReviewPostTest {
             final Review review = TestTool.createBaseReview(GameId.notNumberingValue());
 
             final ReviewPostResult actualResult = sut.post(review);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(true));
 
-            final ReviewId actualReviewId = actualResult.postedReviewId;
-            assertThat(actualReviewId.isSetValue, is(false));
+            final ReviewId actualReviewId = actualResult.getPostedReviewId();
+            assertThat(actualReviewId.isSetValue(), is(false));
         }
     }
 
@@ -212,15 +210,15 @@ public class ReviewPostTest {
             final Game game = TestTool.createBaseGame();
 
             final ReviewPostResult actualResult = sut.postWithGame(review, game);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(false));
 
-            final Optional<Review> postedReviewOption = reviewRepStub.findBy(actualResult.postedReviewId);
+            final Optional<Review> postedReviewOption = reviewRepStub.findBy(actualResult.getPostedReviewId());
             assertThat(postedReviewOption.isPresent(), is(true));
 
             final Review postedReview = postedReviewOption.get();
 
-            final Optional<Game> savedGameOption = gameRepStub.findBy(postedReview.gameId);
+            final Optional<Game> savedGameOption = gameRepStub.findBy(postedReview.getGameId());
             assertThat(savedGameOption.isPresent(), is(true));
         }
 
@@ -231,11 +229,11 @@ public class ReviewPostTest {
             final Game game = TestTool.createBaseGame();
 
             final ReviewPostResult actualResult = sut.postWithGame(review, game);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(true));
 
-            final ReviewId actualReviewId = actualResult.postedReviewId;
-            assertThat(actualReviewId.isSetValue, is(false));
+            final ReviewId actualReviewId = actualResult.getPostedReviewId();
+            assertThat(actualReviewId.isSetValue(), is(false));
         }
 
         @Test
@@ -245,11 +243,11 @@ public class ReviewPostTest {
             final Game game = TestTool.createInvalidGame();
 
             final ReviewPostResult actualResult = sut.postWithGame(review, game);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(true));
 
-            final ReviewId actualReviewId = actualResult.postedReviewId;
-            assertThat(actualReviewId.isSetValue, is(false));
+            final ReviewId actualReviewId = actualResult.getPostedReviewId();
+            assertThat(actualReviewId.isSetValue(), is(false));
         }
 
         @Test
@@ -258,11 +256,11 @@ public class ReviewPostTest {
             final Review review = TestTool.createBaseReview();
 
             final ReviewPostResult actualResult = sut.postWithGame(review, null);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(true));
 
-            final ReviewId actualReviewId = actualResult.postedReviewId;
-            assertThat(actualReviewId.isSetValue, is(false));
+            final ReviewId actualReviewId = actualResult.getPostedReviewId();
+            assertThat(actualReviewId.isSetValue(), is(false));
         }
     }
 
@@ -284,7 +282,7 @@ public class ReviewPostTest {
             gameRepStub.save(game);
 
             reviewId = new ReviewId(12L);
-            final Review review = TestTool.createBaseReview(reviewId, game.id);
+            final Review review = TestTool.createBaseReview(reviewId, game.getId());
             reviewRepStub.save(review);
         }
 
@@ -294,52 +292,52 @@ public class ReviewPostTest {
             final Review review = TestTool.copy(reviewRepStub.findBy(reviewId).get());
 
             final Comment editedComment = new Comment("編集後コメント");
-            review.comment = editedComment;
+            review.setComment(editedComment);
 
             final ReviewPostResult actualResult = sut.repost(review);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(false));
 
-            final Optional<Review> repostedReviewOption = reviewRepStub.findBy(actualResult.postedReviewId);
+            final Optional<Review> repostedReviewOption = reviewRepStub.findBy(actualResult.getPostedReviewId());
             assertThat(repostedReviewOption.isPresent(), is(true));
 
             final Review repostedReview = repostedReviewOption.get();
-            assertThat(reviewId.isSame(repostedReview.id), is(true));
-            assertThat(repostedReview.comment.value, is(editedComment.value));
+            assertThat(reviewId.isSame(repostedReview.getId()), is(true));
+            assertThat(repostedReview.getComment().getValue(), is(editedComment.getValue()));
         }
 
         @Test
         public void 入力値に不正がある場合はエラーになる() {
 
             final Review review = TestTool.copy(reviewRepStub.findBy(reviewId).get());
-            final Comment beforeComment = review.comment;
-            review.comment = Comment.empty();
+            final Comment beforeComment = review.getComment();
+            review.setComment(Comment.empty());
 
             final ReviewPostResult actualResult = sut.repost(review);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(true));
 
-            final ReviewId actualReviewId = actualResult.postedReviewId;
-            assertThat(actualReviewId.isSetValue, is(false));
+            final ReviewId actualReviewId = actualResult.getPostedReviewId();
+            assertThat(actualReviewId.isSetValue(), is(false));
 
             final Review afterErrorReview = reviewRepStub.findBy(reviewId).get();
-            assertThat(beforeComment.value, is(afterErrorReview.comment.value));
+            assertThat(beforeComment.getValue(), is(afterErrorReview.getComment().getValue()));
         }
 
         @Test
         public void ゲームとの紐付きが不正な場合はエラーになる() {
 
             final Review review = TestTool.copy(reviewRepStub.findBy(reviewId).get());
-            final GameId beforeGameId = review.gameId;
-            review.gameId  = new GameId(review.id.value + 1);
+            final GameId beforeGameId = review.getGameId();
+            review.setGameId(new GameId(review.getId().getValue() + 1));
 
             final ReviewPostResult actualResult = sut.repost(review);
 
-            final ReviewId actualReviewId = actualResult.postedReviewId;
-            assertThat(actualReviewId.isSetValue, is(false));
+            final ReviewId actualReviewId = actualResult.getPostedReviewId();
+            assertThat(actualReviewId.isSetValue(), is(false));
 
             final Review afterErrorReview = reviewRepStub.findBy(reviewId).get();
-            assertThat(beforeGameId.isSame(afterErrorReview.gameId), is(true));
+            assertThat(beforeGameId.isSame(afterErrorReview.getGameId()), is(true));
         }
     }
 
@@ -363,7 +361,7 @@ public class ReviewPostTest {
             gameRepStub.save(game);
 
             reviewId = new ReviewId(12L);
-            final Review review = TestTool.createBaseReview(reviewId, game.id);
+            final Review review = TestTool.createBaseReview(reviewId, game.getId());
             reviewRepStub.save(review);
         }
 
@@ -374,27 +372,27 @@ public class ReviewPostTest {
             final Game game = TestTool.copy(gameRepStub.findBy(gameId).get());
 
             final Comment changedComment = new Comment("変更後コメント");
-            review.comment = changedComment;
+            review.setComment(changedComment);
 
             final SiteUrl changedUrl = new SiteUrl("http://changed.test.co.jp");
-            game.url = changedUrl;
+            game.setUrl(changedUrl);
 
             final ReviewPostResult actualResult = sut.postWithGame(review, game);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(false));
 
-            final Optional<Review> postedReviewOption = reviewRepStub.findBy(actualResult.postedReviewId);
+            final Optional<Review> postedReviewOption = reviewRepStub.findBy(actualResult.getPostedReviewId());
             assertThat(postedReviewOption.isPresent(), is(true));
 
             final Review postedReview = postedReviewOption.get();
-            assertThat(reviewId.isSame(postedReview.id), is(true));
-            assertThat(postedReview.comment.value, is(changedComment.value));
+            assertThat(reviewId.isSame(postedReview.getId()), is(true));
+            assertThat(postedReview.getComment().getValue(), is(changedComment.getValue()));
 
-            final Optional<Game> savedGameOption = gameRepStub.findBy(postedReview.gameId);
+            final Optional<Game> savedGameOption = gameRepStub.findBy(postedReview.getGameId());
             assertThat(savedGameOption.isPresent(), is(true));
 
             final Game savedGame = savedGameOption.get();
-            assertThat(savedGame.url.value, is(changedUrl.value));
+            assertThat(savedGame.getUrl().getValue(), is(changedUrl.getValue()));
         }
 
         @Test
@@ -403,21 +401,21 @@ public class ReviewPostTest {
             final Review review = TestTool.copy(reviewRepStub.findBy(reviewId).get());
             final Game game = TestTool.copy(gameRepStub.findBy(gameId).get());
 
-            final Comment beforeComment = review.comment;
-            review.comment = Comment.empty();
+            final Comment beforeComment = review.getComment();
+            review.setComment(Comment.empty());
 
             final ReviewPostResult actualResult = sut.repostWithGame(review, game);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(true));
 
-            final ReviewId actualReviewId = actualResult.postedReviewId;
-            assertThat(actualReviewId.isSetValue, is(false));
+            final ReviewId actualReviewId = actualResult.getPostedReviewId();
+            assertThat(actualReviewId.isSetValue(), is(false));
 
             final Optional<Review> afterErrorReviewOption = reviewRepStub.findBy(reviewId);
             assertThat(afterErrorReviewOption.isPresent(), is(true));
 
             final Review afterErrorReview = afterErrorReviewOption.get();
-            assertThat(afterErrorReview.comment.value, is(beforeComment.value));
+            assertThat(afterErrorReview.getComment().getValue(), is(beforeComment.getValue()));
         }
 
         @Test
@@ -426,21 +424,21 @@ public class ReviewPostTest {
             final Review review = TestTool.copy(reviewRepStub.findBy(reviewId).get());
             final Game game = TestTool.copy(gameRepStub.findBy(gameId).get());
 
-            final SiteUrl beforeSiteUrl = game.url;
-            game.url = new SiteUrl("テスト");
+            final SiteUrl beforeSiteUrl = game.getUrl();
+            game.setUrl(new SiteUrl("テスト"));
 
             final ReviewPostResult actualResult = sut.repostWithGame(review, game);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(true));
 
-            final ReviewId actualReviewId = actualResult.postedReviewId;
-            assertThat(actualReviewId.isSetValue, is(false));
+            final ReviewId actualReviewId = actualResult.getPostedReviewId();
+            assertThat(actualReviewId.isSetValue(), is(false));
 
             final Optional<Game> afterErrorGameOption = gameRepStub.findBy(gameId);
             assertThat(afterErrorGameOption.isPresent(), is(true));
 
             final Game afterErrorGame = afterErrorGameOption.get();
-            assertThat(afterErrorGame.url.value, is(beforeSiteUrl.value));
+            assertThat(afterErrorGame.getUrl().getValue(), is(beforeSiteUrl.getValue()));
         }
 
         @Test
@@ -450,11 +448,11 @@ public class ReviewPostTest {
             final Game game = TestTool.copy(gameRepStub.findBy(gameId).get());
 
             final ReviewPostResult actualResult = sut.repostWithGame(review, null);
-            final ValidateErrors actualErrors = actualResult.errors;
+            final ValidateErrors actualErrors = actualResult.getErrors();
             assertThat(actualErrors.hasError(), is(true));
 
-            final ReviewId actualReviewId = actualResult.postedReviewId;
-            assertThat(actualReviewId.isSetValue, is(false));
+            final ReviewId actualReviewId = actualResult.getPostedReviewId();
+            assertThat(actualReviewId.isSetValue(), is(false));
         }
     }
 }

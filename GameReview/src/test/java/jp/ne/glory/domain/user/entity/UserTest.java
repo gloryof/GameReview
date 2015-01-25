@@ -27,16 +27,16 @@ public class UserTest {
         public void setUp() {
 
             sut = new User(USER_ID_VALUE);
-            Arrays.stream(Authority.values()).forEach(v -> sut.authorities.add(v));
-            sut.loginId = new LoginId("test-user");
-            sut.userName = new UserName("シュンツ");
-            sut.password = new Password("19CB2A070DDBE8157E17C5DDA0EA38E8AA16FAE1725C1F7AC22747D870368579");
+            Arrays.stream(Authority.values()).forEach(v -> sut.getAuthorities().add(v));
+            sut.setLoginId(new LoginId("test-user"));
+            sut.setUserName(new UserName("シュンツ"));
+            sut.setPassword(new Password("19CB2A070DDBE8157E17C5DDA0EA38E8AA16FAE1725C1F7AC22747D870368579"));
         }
 
         @Test
         public void 設定したユーザIDが設定されている() {
 
-            assertThat(sut.userId.isSame(USER_ID_VALUE), is(true));
+            assertThat(sut.getUserId().isSame(USER_ID_VALUE), is(true));
         }
         
         @Test
@@ -60,13 +60,13 @@ public class UserTest {
         @Test
         public void 全ての値が初期値() {
 
-            assertThat(sut.userId.isSetValue, is(false));
+            assertThat(sut.getUserId().isSetValue(), is(false));
             Arrays.stream(Authority.values())
                 .forEach(
-                        v -> assertThat(sut.authorities.hasAuthority(v), is(false))
-                );
-            assertThat(sut.loginId.value, is(LoginId.empty().value));
-            assertThat(sut.userName.value, is(UserName.empty().value));
+                            v -> assertThat(sut.getAuthorities().hasAuthority(v), is(false))
+                    );
+            assertThat(sut.getLoginId().getValue(), is(LoginId.empty().getValue()));
+            assertThat(sut.getUserName().getValue(), is(UserName.empty().getValue()));
         }
         
         @Test

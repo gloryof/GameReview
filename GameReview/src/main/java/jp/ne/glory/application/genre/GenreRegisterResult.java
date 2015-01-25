@@ -2,6 +2,7 @@ package jp.ne.glory.application.genre;
 
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.genre.value.GenreId;
+import lombok.Getter;
 
 /**
  * ジャンル登録結果.
@@ -13,12 +14,14 @@ public class GenreRegisterResult {
     /**
      * 入力チェック結果.
      */
-    public final ValidateErrors errors;
+    @Getter
+    private final ValidateErrors errors;
 
     /**
      * 登録されたジャンルID.
      */
-    public final GenreId registeredGenreId;
+    @Getter
+    private final GenreId registeredGenreId;
 
     /**
      * コンストラクタ.

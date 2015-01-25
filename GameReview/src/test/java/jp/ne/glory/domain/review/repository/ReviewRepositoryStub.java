@@ -28,13 +28,13 @@ public class ReviewRepositoryStub implements ReviewRepository {
     public ReviewId save(Review review) {
 
         final Review saveReview;
-        if (review.id == null) {
+        if (review.getId() == null) {
 
             saveReview = new Review(new ReviewId(sequence));
-            saveReview.badPoint = review.badPoint;
-            saveReview.comment = review.comment;
-            saveReview.gooodPoint = review.gooodPoint;
-            saveReview.score = review.score;
+            saveReview.setBadPoint(review.getBadPoint());
+            saveReview.setComment(review.getComment());
+            saveReview.setGoodPoint(review.getGoodPoint());
+            saveReview.setScore(review.getScore());
 
             sequence++;
         } else {
@@ -45,27 +45,27 @@ public class ReviewRepositoryStub implements ReviewRepository {
         final Game stubGame = new Game(GameId.notNumberingValue(), new Title("テスト"));
         final Genre stubGenre = new Genre(new GenreId(2l), new GenreName("テストジャンル"));
         final ReviewSearchResult result = new ReviewSearchResult(saveReview, stubGame, stubGenre);
-        reviewMap.put(saveReview.id.value, result);
+        reviewMap.put(saveReview.getId().getValue(), result);
 
-        return saveReview.id;
+        return saveReview.getId();
     }
 
     public void addResult(final ReviewSearchResult result) {
 
-        reviewMap.put(result.review.id.value, result);
+        reviewMap.put(result.getReview().getId().getValue(), result);
     }
 
     @Override
     public Optional<Review> findBy(ReviewId reviewId) {
 
-        final ReviewSearchResult result = reviewMap.get(reviewId.value);
+        final ReviewSearchResult result = reviewMap.get(reviewId.getValue());
 
         if (result == null) {
 
             return Optional.empty();
         }
 
-        return Optional.ofNullable(result.review);
+        return Optional.ofNullable(result.getReview());
     }
 
     @Override
@@ -74,19 +74,19 @@ public class ReviewRepositoryStub implements ReviewRepository {
         List<ReviewSearchResult> resultList = getSearchResult(condition, true);
         
         resultList.sort((x, y) -> {
-            LocalDateTime xPostTime = x.review.postTime.getValue().getValue();
-            LocalDateTime yPostTime = y.review.postTime.getValue().getValue();
+            LocalDateTime xPostTime = x.getReview().getPostTime().getValue().getValue();
+            LocalDateTime yPostTime = y.getReview().getPostTime().getValue().getValue();
 
             return xPostTime.compareTo(yPostTime);
         });
 
-        if (0 < condition.targetCount) {
+        if (0 < condition.getTargetCount()) {
 
-            resultList = resultList.subList(0, condition.targetCount);
+            resultList = resultList.subList(0, condition.getTargetCount());
         }
 
-        final int first = (condition.lotNumber - 1) * condition.lotPerCount;
-        final int last = condition.lotNumber * condition.lotPerCount;
+        final int first = (condition.getLotNumber() - 1) * condition.getLotPerCount();
+        final int last = condition.getLotNumber() * condition.getLotPerCount();
 
         return resultList.subList(first, last);
     }
@@ -99,9 +99,9 @@ public class ReviewRepositoryStub implements ReviewRepository {
     private List<ReviewSearchResult> getSearchResult(final ReviewSearchCondition condition, final boolean limitedCount) {
 
         long maxCount = Long.MAX_VALUE;
-        if (limitedCount && 0 < condition.targetCount) {
+        if (limitedCount && 0 < condition.getTargetCount()) {
 
-            maxCount = condition.targetCount;
+            maxCount = condition.getTargetCount();
         }
 
         final List<ReviewSearchResult> resultList = reviewMap.entrySet().stream()
@@ -115,17 +115,17 @@ public class ReviewRepositoryStub implements ReviewRepository {
 
     private boolean isMatchSearchCondition(final ReviewSearchResult result, final ReviewSearchCondition condition) {
 
-        final List<ReviewId> reviewIds = condition.reviewIds;
-        final List<GenreId> genreIds = condition.genreIds;
+        final List<ReviewId> reviewIds = condition.getReviewIds();
+        final List<GenreId> genreIds = condition.getGenreIds();
 
         if (!reviewIds.isEmpty()) {
 
             final Set<Long> idSet = reviewIds
                     .stream()
-                    .map(v -> v.value)
+                    .map(v -> v.getValue())
                     .collect(Collectors.toSet());
 
-            if (!idSet.contains(result.review.id.value)) {
+            if (!idSet.contains(result.getReview().getId().getValue())) {
 
                 return false;
             }
@@ -135,10 +135,10 @@ public class ReviewRepositoryStub implements ReviewRepository {
 
             final Set<Long> idSet = genreIds
                     .stream()
-                    .map(v -> v.value)
+                    .map(v -> v.getValue())
                     .collect(Collectors.toSet());
 
-            if (!idSet.contains(result.genre.id.value)) {
+            if (!idSet.contains(result.getGenre().getId().getValue())) {
 
                 return false;
             }

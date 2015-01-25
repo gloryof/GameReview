@@ -58,6 +58,6 @@ public class UserAuthentication {
         }
 
         final User user = optional.get();
-        return user.password.isMatch(password);
+        return user.getPassword().isMatch(password);
     }
 }

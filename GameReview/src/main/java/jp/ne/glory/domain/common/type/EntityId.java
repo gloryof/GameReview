@@ -1,6 +1,7 @@
 package jp.ne.glory.domain.common.type;
 
 import java.util.Optional;
+import lombok.Getter;
 
 /**
  * エンティティのID
@@ -8,11 +9,15 @@ import java.util.Optional;
  */
 public class EntityId {
     
-    /** 値. */
-    public final Long value;
+    /**
+     * 値.
+     */
+    @Getter
+    private final Long value;
 
     /** 値が設定されているかのフラグ */
-    public final boolean isSetValue;
+    @Getter
+    private final boolean setValue;
 
     /**
      * 値を設定する
@@ -22,7 +27,7 @@ public class EntityId {
 
         final Optional<Long> optionalValue = Optional.ofNullable(paramValue);
         value = optionalValue.orElse(0L);
-        isSetValue = optionalValue.isPresent();
+        setValue = optionalValue.isPresent();
     }
 
     /**
@@ -39,7 +44,7 @@ public class EntityId {
             return false;
         }
 
-        if (isSetValue != paramValue.isSetValue) {
+        if (setValue != paramValue.isSetValue()) {
 
             return false;
         }

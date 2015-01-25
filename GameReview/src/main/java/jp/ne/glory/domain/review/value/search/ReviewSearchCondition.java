@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.review.value.ReviewId;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * レビュー検索条件.
@@ -16,34 +18,56 @@ public class ReviewSearchCondition {
      * 対象件数.<br>
      * 1未満の場合は全件数が対象となる
      */
-    public int targetCount = 0;
+    @Getter
+    @Setter
+    private int targetCount = 0;
 
     /**
      * 1ロット内の件数.<br>
      * 1未満の場合は全件数が対象となる
      */
-    public int lotPerCount = 0;
+    @Getter
+    @Setter
+    private int lotPerCount = 0;
 
     /**
      * ロット番号.<br>
      * 取得対象となるロットの番号を指定する。<br>
      * デフォルトは1。
      */
-    public int lotNumber = 1;
+    @Getter
+    @Setter
+    private int lotNumber = 1;
 
     /**
      * 検索順序タイプ.<br>
      * デフォルトは投稿日時の降順。
      */
-    public ReviewSearchOrderType orderType = ReviewSearchOrderType.PostTimeDesc;
+    @Getter
+    @Setter
+    private ReviewSearchOrderType orderType = ReviewSearchOrderType.PostTimeDesc;
 
     /**
      * レビューID.
      */
-    public final List<ReviewId> reviewIds = new ArrayList<>();
+    @Getter
+    @Setter
+    private final List<ReviewId> reviewIds;
 
     /**
      * ジャンルID.
      */
-    public final List<GenreId> genreIds = new ArrayList<>();
+    @Getter
+    @Setter
+    private final List<GenreId> genreIds;
+
+    /**
+     * コンストラクタ.
+     */
+    public ReviewSearchCondition() {
+
+        this.reviewIds = new ArrayList<>();
+        this.genreIds = new ArrayList<>();
+    }
+
 }
