@@ -1,4 +1,4 @@
-package jp.ne.glory.web.framework;
+package jp.ne.glory.web.framework.thymeleaf;
 
 import java.io.IOException;
 import java.io.OutputStream;

@@ -13,6 +13,7 @@ public interface CertifyControl {
      * 認証情報を作成する.
      *
      * @param loginId ログインID
+     * @return 認証情報
      */
-    void createAuthentication(final LoginId loginId);
+    CertifySession createAuthentication(final LoginId loginId);
 }

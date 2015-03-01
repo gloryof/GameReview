@@ -51,14 +51,12 @@ public class ReviewSearchCondition {
      * レビューID.
      */
     @Getter
-    @Setter
     private final List<ReviewId> reviewIds;
 
     /**
      * ジャンルID.
      */
     @Getter
-    @Setter
     private final List<GenreId> genreIds;
 
     /**

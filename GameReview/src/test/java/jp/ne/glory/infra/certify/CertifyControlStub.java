@@ -7,9 +7,11 @@ public class CertifyControlStub implements CertifyControl {
     public boolean isCertify = false;
 
     @Override
-    public void createAuthentication(final LoginId loginId) {
+    public CertifySession createAuthentication(final LoginId loginId) {
 
         isCertify = true;
+
+        return new CertifySession();
     }
 
 }
