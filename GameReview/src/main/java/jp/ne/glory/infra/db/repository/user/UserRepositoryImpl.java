@@ -2,8 +2,10 @@ package jp.ne.glory.infra.db.repository.user;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepository;
@@ -29,6 +31,13 @@ public class UserRepositoryImpl implements UserRepository {
         user.setUserName(new UserName("テストユーザ"));
 
         userMap.put(user.getUserId().getValue(), user);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userMap.entrySet().stream()
+                .sorted((v1, v2) -> v1.getKey() < v2.getKey() ? -1 : 1)
+                .map(v -> v.getValue()).collect(Collectors.toList());
     }
 
     @Override

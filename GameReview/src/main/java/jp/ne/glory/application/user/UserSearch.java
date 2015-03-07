@@ -1,5 +1,6 @@
 package jp.ne.glory.application.user;
 
+import java.util.List;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -24,6 +25,7 @@ public class UserSearch {
      * コンストラクタ.<br>
      * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
      */
+    @Deprecated
     protected UserSearch() {
 
         this.repository = null;
@@ -41,6 +43,16 @@ public class UserSearch {
     }
 
     /**
+     * 全てのユーザを取得する.
+     *
+     * @return ユーザリスト
+     */
+    public List<User> getAll() {
+
+        return repository.findAll();
+    }
+
+    /**
      * ログインIDでユーザを検索する.
      *
      * @param loginId ログインID
@@ -50,4 +62,5 @@ public class UserSearch {
 
         return repository.findBy(loginId);
     }
+
 }

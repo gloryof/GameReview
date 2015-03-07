@@ -1,5 +1,6 @@
 package jp.ne.glory.domain.user.repository;
 
+import java.util.List;
 import java.util.Optional;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.value.LoginId;
@@ -11,6 +12,13 @@ import jp.ne.glory.domain.user.value.UserId;
  * @author Junki Yamada
  */
 public interface UserRepository {
+
+    /**
+     * 全てのユーザを取得する.
+     *
+     * @return ユーザリスト
+     */
+    List<User> findAll();
 
     /**
      * ユーザを保存する.

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head th:include="/common/base/metaInfo :: commonHeader (title='管理者TOP')" >
+        <title>ユーザ一覧</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
+        <link rel="stylesheet" th:href="@{/css/base.css}" />
+    </head>
+    <body>
+        <section class="search-condition">
+            <form th:action="@{/admin/users/search}">
+                <button>クリア</button>
+                <dl>
+                    <dt>ログインID</dt>
+                    <dd><input type="text" /></dd>
+                    <dt>ユーザ名</dt>
+                    <dd><input type="text" /></dd>
+                </dl>
+                <button>検索</button>
+            </form>
+        </section>
+        <section class="search-result">
+            <table class="bs-list">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>ログインID</th>
+                        <th>ユーザ名</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="userInfo,stats : ${it.users}" data-user-id="${userInfo.userId}">
+                        <td th:text="${stats.count}">1</td>
+                        <td th:text="${userInfo.loginId}">ログインIDテスト</td>
+                        <td th:text="${userInfo.userName}">ユーザ名</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </body>
+</html>

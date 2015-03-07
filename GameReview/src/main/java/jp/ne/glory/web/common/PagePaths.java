@@ -26,4 +26,9 @@ public final class PagePaths {
      * 管理画面TOP.
      */
     public static final String ADMIN_TOP = "/admin/top";
+
+    /**
+     * ユーザ一覧.
+     */
+    public static final String USER_LIST = "/admin/users/list";
 }

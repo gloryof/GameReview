@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head th:include="/common/base/metaInfo :: commonHeader (title='管理者TOP')" >
-        <title th:text="${title}">テストタイトル</title>
+        <title>管理画面TOP</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" th:href="@{/css/normalize.css}" />
         <link rel="stylesheet" th:href="@{/css/base.css}" />
     </head>
     <body>
         <dl>
-            <dt>
-            <a href="">レビューの管理</a>
-            </dt>
-            <dd></dd>
+            <dt><a href="">レビューの管理</a></dt>
+            <dd>レビューの登録/編集/削除を行う。</dd>
             <dt>ジャンルの管理</dt>
-            <dd></dd>
+            <dd>ゲームジャンルの登録/編集/削除を行う。</dd>
+            <dt>ゲームの管理</dt>
+            <dd>ゲームの登録/編集/削除を行う。</dd>
+            <dt><a th:href="@{/admin/users}">ユーザの管理</a></dt>
+            <dd>ユーザの登録/編集/削除を行う。</dd>
         </dl>
     </body>
 </html>

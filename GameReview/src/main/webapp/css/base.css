@@ -8,7 +8,7 @@ ul {
     padding-left : 0px;
 }
 
-table {
+table.bs-list {
     border-collapse: collapse;
     background-color: #ffffff;
     margin-top : 8px;
@@ -16,21 +16,22 @@ table {
     width: 100%;
 }
 
-tr {
+table.bs-list > thead > tr,
+table.bs-list > tbody > tr {
     border : solid 1px #000000;
 }
 
-tr:nth-child(even) {
+table.bs-list > tbody > tr:nth-child(even) {
     background-color : #e0ffff;
 }
 
-th {
+table.bs-list > thead > tr > th {
     border : solid 1px #000000;
     background-color : #dcdcdc;
     padding : 4px;
 }
 
-td {
+table.bs-list > tbody > tr > td {
     border : solid 1px #000000;
     padding : 4px;
 }
