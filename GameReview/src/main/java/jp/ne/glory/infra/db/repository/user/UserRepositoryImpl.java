@@ -14,6 +14,7 @@ import jp.ne.glory.domain.user.value.LoginId;
 import jp.ne.glory.domain.user.value.Password;
 import jp.ne.glory.domain.user.value.UserId;
 import jp.ne.glory.domain.user.value.UserName;
+import jp.ne.glory.domain.user.value.search.UserSearchCondition;
 
 @RequestScoped
 public class UserRepositoryImpl implements UserRepository {
@@ -79,4 +80,41 @@ public class UserRepositoryImpl implements UserRepository {
                 .findAny();
     }
 
+    @Override
+    public List<User> search(UserSearchCondition condition) {
+        return userMap.entrySet()
+                .stream()
+                .map(e -> e.getValue())
+                .filter(v -> isMatchCondition(condition, v))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public int getSearchCount(UserSearchCondition condition) {
+        return search(condition).size();
+    }
+
+    private boolean isMatchCondition(final UserSearchCondition condition, final User user) {
+
+        final LoginId loginId = condition.getLoginId();
+        final UserName userName = condition.getUserName();
+
+        if (loginId != null) {
+
+            if (!loginId.getValue().equals(user.getLoginId().getValue())) {
+
+                return false;
+            }
+        }
+
+        if (userName != null) {
+
+            if (!userName.getValue().equals(user.getUserName().getValue())) {
+
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

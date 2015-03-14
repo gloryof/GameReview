@@ -10,6 +10,8 @@ import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.value.Authority;
 import jp.ne.glory.domain.user.value.LoginId;
 import jp.ne.glory.domain.user.value.UserId;
+import jp.ne.glory.domain.user.value.UserName;
+import jp.ne.glory.domain.user.value.search.UserSearchCondition;
 
 public class UserRepositoryStub implements UserRepository {
 
@@ -63,4 +65,62 @@ public class UserRepositoryStub implements UserRepository {
                 .findAny();
     }
 
+    @Override
+    public List<User> search(UserSearchCondition condition) {
+
+        final List<User> allList = searchAll(condition);
+
+        if (condition.getLotPerCount() < 1) {
+
+            return allList;
+        }
+
+        final int tempStartIndex = (condition.getLotNumber() - 1) * condition.getLotPerCount();
+
+        final int startIndex = tempStartIndex < 1 ? 0 : tempStartIndex - 1;
+        final int tempEndIndex = startIndex + condition.getLotPerCount();
+
+        final int listLastIndex = allList.size() - 1;
+        final int endIndex = listLastIndex < tempEndIndex ? listLastIndex : tempEndIndex;
+
+        return allList.subList(startIndex, endIndex);
+    }
+
+    @Override
+    public int getSearchCount(UserSearchCondition condition) {
+        return searchAll(condition).size();
+    }
+
+    private boolean isMatchCondition(final UserSearchCondition condition, final User user) {
+
+        final LoginId loginId = condition.getLoginId();
+        final UserName userName = condition.getUserName();
+
+        if (loginId != null && !loginId.getValue().isEmpty()) {
+
+            if (!loginId.getValue().equals(user.getLoginId().getValue())) {
+
+                return false;
+            }
+        }
+
+        if (userName != null && !userName.getValue().isEmpty()) {
+
+            if (!userName.getValue().equals(user.getUserName().getValue())) {
+
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private List<User> searchAll(UserSearchCondition condition) {
+
+        return userMap.entrySet()
+                .stream()
+                .map(e -> e.getValue())
+                .filter(v -> isMatchCondition(condition, v))
+                .collect(Collectors.toList());
+    }
 }

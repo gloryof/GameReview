@@ -61,6 +61,7 @@ public class ReviewSearch {
         final ReviewSearchCondition condition = new ReviewSearchCondition();
         condition.setLotNumber(lotNumber);
         condition.setLotPerCount(lotPerCount);
+        condition.setTargetCount(lotPerCount);
         condition.setOrderType(ReviewSearchOrderType.PostTimeDesc);
 
         final List<ReviewSearchResult> resultList = repository.search(condition);
@@ -109,7 +110,7 @@ public class ReviewSearch {
         condition.setOrderType(ReviewSearchOrderType.PostTimeDesc);
 
         final List<ReviewSearchResult> resultList = repository.search(condition);
-        final int resultCount = repository.getSearchCount(condition);
+        final int resultCount = resultList.size();
 
         return new ReviewSearchResults(condition, resultList, resultCount);
     }

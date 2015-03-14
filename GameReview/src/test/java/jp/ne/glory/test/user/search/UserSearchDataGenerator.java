@@ -14,7 +14,7 @@ public class UserSearchDataGenerator {
 
     public static List<User> creaeteUsers(final int count) {
 
-        return IntStream.rangeClosed(0, count).asLongStream()
+        return IntStream.range(0, count).asLongStream()
                 .mapToObj(v -> createUser(v))
                 .collect(Collectors.toList());
     }
@@ -24,7 +24,7 @@ public class UserSearchDataGenerator {
         final User user = new User(new UserId(userId));
         user.setUserName(new UserName("ユーザ" + userId));
         user.setPassword(new Password("password" + userId));
-        user.setLoginId(new LoginId("test-password-" + userId));
+        user.setLoginId(new LoginId("test-user-" + userId));
         user.getAuthorities().add(Authority.ConfigChange);
 
         return user;

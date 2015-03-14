@@ -52,7 +52,7 @@ public class ReviewSearchTest {
             final List<ReviewSearchResult> actualList = actualResult.getResults();
 
             assertThat(actualCondition, is(not(nullValue())));
-            assertThat(actualCondition.getTargetCount(), is(0));
+            assertThat(actualCondition.getTargetCount(), is(expectedPagePerCount));
             assertThat(actualCondition.getLotPerCount(), is(expectedPagePerCount));
             assertThat(actualCondition.getLotNumber(), is(expectedLotNumber));
             assertThat(actualCondition.getOrderType(), is(ReviewSearchOrderType.PostTimeDesc));
@@ -60,7 +60,7 @@ public class ReviewSearchTest {
             assertThat(actualList.size(), is(expectedPagePerCount));
 
             assertThat(actualResult.getAllCount(), is(expectedAllCount));
-            assertThat(actualResult.hasNetLot(), is(false));
+            assertThat(actualResult.hasNextLot(), is(true));
             assertThat(actualResult.hasPrevLot(), is(false));
         }
     }
@@ -107,7 +107,7 @@ public class ReviewSearchTest {
             assertThat(actualList.size(), is(expectedPagePerCount));
 
             assertThat(actualResult.getAllCount(), is(expectedAllCount));
-            assertThat(actualResult.hasNetLot(), is(false));
+            assertThat(actualResult.hasNextLot(), is(true));
             assertThat(actualResult.hasPrevLot(), is(false));
         }
     }
@@ -152,7 +152,7 @@ public class ReviewSearchTest {
             assertThat(actualList.size(), is(expectedPagePerCount));
 
             assertThat(actualResult.getAllCount(), is(expectedAllCount));
-            assertThat(actualResult.hasNetLot(), is(false));
+            assertThat(actualResult.hasNextLot(), is(false));
             assertThat(actualResult.hasPrevLot(), is(false));
         }
     }
