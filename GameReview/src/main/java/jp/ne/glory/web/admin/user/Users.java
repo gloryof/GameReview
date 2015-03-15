@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import jp.ne.glory.application.user.UserSearch;
 import jp.ne.glory.infra.certify.CertifyTarget;
@@ -52,7 +53,7 @@ public class Users {
     /**
      * ユーザ一覧の初期表示.
      *
-     * @return
+     * @return　ユーザ一覧
      */
     @GET
     public Viewable view() {
@@ -64,5 +65,12 @@ public class Users {
         userList.setUsers(users);
 
         return new Viewable(PagePaths.USER_LIST, userList);
+    }
+
+    @POST
+    @Path("search")
+    public Viewable search() {
+
+        return null;
     }
 }

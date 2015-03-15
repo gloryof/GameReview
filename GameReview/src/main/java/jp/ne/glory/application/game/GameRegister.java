@@ -4,7 +4,8 @@ import java.util.function.Function;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.repository.GameRepository;
-import jp.ne.glory.domain.game.validate.GameValidateRule;
+import jp.ne.glory.domain.game.validate.GameEditValidateRule;
+import jp.ne.glory.domain.game.validate.GameModifyCommonValidateRule;
 import jp.ne.glory.domain.game.value.GameId;
 
 /**
@@ -47,8 +48,8 @@ public class GameRegister {
     public GameRegisterResult register(final Game game) {
 
         final Function<Game, ValidateErrors> checkFunc = (v -> {
-            final GameValidateRule rule = new GameValidateRule(v);
-            return rule.validateForRegister();
+            final GameModifyCommonValidateRule rule = new GameModifyCommonValidateRule(v);
+            return rule.validate();
         });
 
         return save(game, checkFunc);
@@ -63,8 +64,8 @@ public class GameRegister {
     public GameRegisterResult finishEdit(final Game game) {
 
         final Function<Game, ValidateErrors> checkFunc = (v -> {
-            final GameValidateRule rule = new GameValidateRule(v);
-            return rule.validateForEdit();
+            final GameEditValidateRule rule = new GameEditValidateRule(v);
+            return rule.validate();
         });
 
         return save(game, checkFunc);

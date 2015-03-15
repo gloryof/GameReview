@@ -30,7 +30,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class ReviewValidateRuleTest {
+public class ReviewEditValidateRuleTest {
 
     private static Review createBaseReveiw(final Long reviewIdValue) {
 
@@ -60,7 +60,7 @@ public class ReviewValidateRuleTest {
 
     public static class 全ての値が正常に設定されている場合 {
 
-        private ReviewValidateRule sut = null;
+        private ReviewEditValidateRule sut = null;
 
         @Before
         public void setUp() {
@@ -72,21 +72,13 @@ public class ReviewValidateRuleTest {
             game.setCeroRating(CeroRating.A);
             game.setUrl(new SiteUrl("http://test.co.jp"));
 
-            sut = new ReviewValidateRule(review, game);
+            sut = new ReviewEditValidateRule(review, game);
         }
 
         @Test
-        public void validateForPostを実行しても入力チェックエラーにならない() {
+        public void validateを実行しても入力チェックエラーにならない() {
 
-            final ValidateErrors actualErrors = sut.validateForPost();
-
-            assertThat(actualErrors.hasError(), is(false));
-        }
-
-        @Test
-        public void validateForRepostを実行しても入力チェックエラーにならない() {
-
-            final ValidateErrors actualErrors = sut.validateForRepost();
+            final ValidateErrors actualErrors = sut.validate();
 
             assertThat(actualErrors.hasError(), is(false));
         }
@@ -94,35 +86,20 @@ public class ReviewValidateRuleTest {
 
     public static class ゲームが未登録でゲーム情報が未設定の場合 {
 
-        private ReviewValidateRule sut = null;
+        private ReviewEditValidateRule sut = null;
 
         @Before
         public void setUp() {
 
             final Review review = createBaseReveiw(123L);
 
-            sut = new ReviewValidateRule(review, null);
+            sut = new ReviewEditValidateRule(review, null);
         }
 
         @Test
-        public void validateForPostでゲーム情報が未登録のエラーになる() {
+        public void validateでゲーム情報が未登録のエラーになる() {
 
-            final ValidateErrors actual = sut.validateForPost();
-
-            assertThat(actual.hasError(), is(true));
-
-            final List<ValidateError> errorList = new ArrayList<>();
-
-            errorList.add(new ValidateError(ErrorInfo.NotInputInfo, Game.LABEL));
-
-            final ValidateErrorsHelper helper = new ValidateErrorsHelper(actual);
-            helper.assertErrors(errorList);
-        }
-
-        @Test
-        public void validateForRepostでゲーム情報が未登録のエラーになる() {
-
-            final ValidateErrors actual = sut.validateForRepost();
+            final ValidateErrors actual = sut.validate();
 
             assertThat(actual.hasError(), is(true));
 
@@ -137,7 +114,7 @@ public class ReviewValidateRuleTest {
 
     public static class ゲームIDと異なるゲームが紐付いている場合 {
 
-        private ReviewValidateRule sut = null;
+        private ReviewEditValidateRule sut = null;
 
         @Before
         public void setUp() {
@@ -149,28 +126,13 @@ public class ReviewValidateRuleTest {
             game.setCeroRating(CeroRating.A);
             game.setUrl(new SiteUrl("http://test.co.jp"));
 
-            sut = new ReviewValidateRule(review, game);
+            sut = new ReviewEditValidateRule(review, game);
         }
 
         @Test
-        public void validateForPostでゲーム情報の紐付けミスマッチエラーになる() {
+        public void validateでゲーム情報が紐付けミスマッチエラーになる() {
 
-            final ValidateErrors actual = sut.validateForPost();
-
-            assertThat(actual.hasError(), is(true));
-
-            final List<ValidateError> errorList = new ArrayList<>();
-
-            errorList.add(new ValidateError(ErrorInfo.MismatchRelation, Game.LABEL));
-
-            final ValidateErrorsHelper helper = new ValidateErrorsHelper(actual);
-            helper.assertErrors(errorList);
-        }
-
-        @Test
-        public void validateForRepostでゲーム情報が紐付けミスマッチエラーになる() {
-
-            final ValidateErrors actual = sut.validateForRepost();
+            final ValidateErrors actual = sut.validate();
 
             assertThat(actual.hasError(), is(true));
 
@@ -185,7 +147,7 @@ public class ReviewValidateRuleTest {
 
     public static class ゲームIDが未設定の場合 {
 
-        private ReviewValidateRule sut = null;
+        private ReviewEditValidateRule sut = null;
 
         @Before
         public void setUp() {
@@ -197,28 +159,13 @@ public class ReviewValidateRuleTest {
             game.setCeroRating(CeroRating.A);
             game.setUrl(new SiteUrl("http://test.co.jp"));
 
-            sut = new ReviewValidateRule(review, game);
+            sut = new ReviewEditValidateRule(review, game);
         }
 
         @Test
-        public void validateForPostでゲーム情報の紐付け未設定エラーになる() {
+        public void validateでゲーム情報が紐付け未設定エラーになる() {
 
-            final ValidateErrors actual = sut.validateForPost();
-
-            assertThat(actual.hasError(), is(true));
-
-            final List<ValidateError> errorList = new ArrayList<>();
-
-            errorList.add(new ValidateError(ErrorInfo.NotSettingRelation, Game.LABEL));
-
-            final ValidateErrorsHelper helper = new ValidateErrorsHelper(actual);
-            helper.assertErrors(errorList);
-        }
-
-        @Test
-        public void validateForRepostでゲーム情報が紐付け未設定エラーになる() {
-
-            final ValidateErrors actual = sut.validateForRepost();
+            final ValidateErrors actual = sut.validate();
 
             assertThat(actual.hasError(), is(true));
 
@@ -233,7 +180,7 @@ public class ReviewValidateRuleTest {
 
     public static class 全ての項目が未設定の場合 {
 
-        private ReviewValidateRule sut = null;
+        private ReviewEditValidateRule sut = null;
 
         @Before
         public void setUp() {
@@ -241,32 +188,13 @@ public class ReviewValidateRuleTest {
             final Review review = new Review(ReviewId.notNumberingValue());
             final Game game = new Game(GameId.notNumberingValue(), Title.empty());
 
-            sut = new ReviewValidateRule(review, game);
+            sut = new ReviewEditValidateRule(review, game);
         }
 
         @Test
-        public void validateForPostで必須項目がエラーチェックになる() {
+        public void validateで全ての必須項目がエラーチェックになる() {
 
-            final ValidateErrors actual = sut.validateForPost();
-
-            assertThat(actual.hasError(), is(true));
-
-            final List<ValidateError> errorList = new ArrayList<>();
-
-            errorList.add(new ValidateError(ErrorInfo.Required, GoodPoint.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.Required, BadPoint.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.Required, Comment.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.RequiredSelectOne, Score.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.NotSettingRelation, Game.LABEL));
-
-            final ValidateErrorsHelper helper = new ValidateErrorsHelper(actual);
-            helper.assertErrors(errorList);
-        }
-
-        @Test
-        public void validateForRepostで全ての必須項目がエラーチェックになる() {
-
-            final ValidateErrors actual = sut.validateForRepost();
+            final ValidateErrors actual = sut.validate();
 
             assertThat(actual.hasError(), is(true));
 

@@ -22,11 +22,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Enclosed.class)
-public class UserValidateRuleTest {
+public class UserModifyCommonValidateRuleTest {
 
     public static class 全ての値が正常に設定されている場合 {
 
-        private UserValidateRule sut = null;
+        private UserModifyCommonValidateRule sut = null;
 
         @Before
         public void setUp() {
@@ -38,21 +38,13 @@ public class UserValidateRuleTest {
             user.setUserName(new UserName("テストユーザ"));
             user.setPassword(new Password("19CB2A070DDBE8157E17C5DDA0EA38E8AA16FAE1725C1F7AC22747D870368579"));
 
-            sut = new UserValidateRule(user);
+            sut = new UserModifyCommonValidateRule(user);
         }
 
         @Test
-        public void validateForRegisterを実行しても入力チェックエラーにならない() {
+        public void validateを実行しても入力チェックエラーにならない() {
 
-            final ValidateErrors actualErrors = sut.validateForRegister();
-
-            assertThat(actualErrors.hasError(), is(false));
-        }
-
-        @Test
-        public void validateForEditを実行しても入力チェックエラーにならない() {
-
-            final ValidateErrors actualErrors = sut.validateForEdit();
+            final ValidateErrors actualErrors = sut.validate();
 
             assertThat(actualErrors.hasError(), is(false));
         }
@@ -60,42 +52,23 @@ public class UserValidateRuleTest {
 
     public static class 全ての項目が未設定の場合 {
 
-        private UserValidateRule sut = null;
+        private UserModifyCommonValidateRule sut = null;
 
         @Before
         public void setUp() {
 
-            sut = new UserValidateRule(new User());
+            sut = new UserModifyCommonValidateRule(new User());
         }
 
         @Test
-        public void validateForRegisterで必須項目がエラーチェックになる() {
+        public void validateで必須項目がエラーチェックになる() {
 
-            final ValidateErrors actual = sut.validateForRegister();
+            final ValidateErrors actual = sut.validate();
 
             assertThat(actual.hasError(), is(true));
 
             final List<ValidateError> errorList = new ArrayList<>();
 
-            errorList.add(new ValidateError(ErrorInfo.Required, UserName.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.Required, LoginId.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.RequiredSelectOne, Authorities.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.Required, Password.LABEL));
-
-            final ValidateErrorsHelper helper = new ValidateErrorsHelper(actual);
-            helper.assertErrors(errorList);
-        }
-
-        @Test
-        public void validateForEditで全ての必須項目がエラーチェックになる() {
-
-            final ValidateErrors actual = sut.validateForEdit();
-
-            assertThat(actual.hasError(), is(true));
-
-            final List<ValidateError> errorList = new ArrayList<>();
-
-            errorList.add(new ValidateError(ErrorInfo.NotRegister, User.LABEL));
             errorList.add(new ValidateError(ErrorInfo.Required, UserName.LABEL));
             errorList.add(new ValidateError(ErrorInfo.Required, LoginId.LABEL));
             errorList.add(new ValidateError(ErrorInfo.RequiredSelectOne, Authorities.LABEL));

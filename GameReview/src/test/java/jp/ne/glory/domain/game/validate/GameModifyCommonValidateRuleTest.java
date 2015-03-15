@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package jp.ne.glory.domain.game.validate;
 
 import java.util.ArrayList;
@@ -26,11 +20,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 
-public class GameValidateRuleTest {
+public class GameModifyCommonValidateRuleTest {
 
     public static class 全ての値が正常に設定されている場合 {
         
-        private GameValidateRule sut = null;
+        private GameModifyCommonValidateRule sut = null;
 
         @Before
         public void setUp() {
@@ -43,21 +37,13 @@ public class GameValidateRuleTest {
             game.setGenreId(new GenreId(10L));
             game.setCeroRating(CeroRating.A);
 
-            sut = new GameValidateRule(game);
+            sut = new GameModifyCommonValidateRule(game);
         }
 
         @Test
-        public void validateForRegisterを実行しても入力チェックエラーにならない() {
+        public void validateを実行しても入力チェックエラーにならない() {
 
-            final ValidateErrors actualErrors = sut.validateForRegister();
-
-            assertThat(actualErrors.hasError(), is(false));
-        }
-
-        @Test
-        public void validateForEditを実行しても入力チェックエラーにならない() {
-
-            final ValidateErrors actualErrors = sut.validateForEdit();
+            final ValidateErrors actualErrors = sut.validate();
 
             assertThat(actualErrors.hasError(), is(false));
         }
@@ -65,7 +51,7 @@ public class GameValidateRuleTest {
 
     public static class 全ての項目が未設定の場合 {
         
-        private GameValidateRule sut = null;
+        private GameModifyCommonValidateRule sut = null;
 
         @Before
         public void setUp() {
@@ -75,36 +61,18 @@ public class GameValidateRuleTest {
 
             final Game game = new Game(gameId, title);
 
-            sut = new GameValidateRule(game);
+            sut = new GameModifyCommonValidateRule(game);
         }
 
         @Test
-        public void validateForRegisterで必須項目がエラーチェックになる() {
+        public void validateで必須項目がエラーチェックになる() {
 
-            final ValidateErrors actual = sut.validateForRegister();
+            final ValidateErrors actual = sut.validate();
 
             assertThat(actual.hasError(), is(true));
 
             final List<ValidateError> errorList = new ArrayList<>();
 
-            errorList.add(new ValidateError(ErrorInfo.Required, Title.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.Required, CeroRating.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.Required, Genre.LABEL));
-
-            final ValidateErrorsHelper helper = new ValidateErrorsHelper(actual);
-            helper.assertErrors(errorList);
-        }
-
-        @Test
-        public void validateForEditで全ての必須項目がエラーチェックになる() {
-
-            final ValidateErrors actual = sut.validateForEdit();
-
-            assertThat(actual.hasError(), is(true));
-
-            final List<ValidateError> errorList = new ArrayList<>();
-
-            errorList.add(new ValidateError(ErrorInfo.NotRegister, Game.LABEL));
             errorList.add(new ValidateError(ErrorInfo.Required, Title.LABEL));
             errorList.add(new ValidateError(ErrorInfo.Required, CeroRating.LABEL));
             errorList.add(new ValidateError(ErrorInfo.Required, Genre.LABEL));

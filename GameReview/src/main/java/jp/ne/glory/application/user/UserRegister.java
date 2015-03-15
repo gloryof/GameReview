@@ -5,7 +5,8 @@ import javax.enterprise.context.RequestScoped;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepository;
-import jp.ne.glory.domain.user.validate.UserValidateRule;
+import jp.ne.glory.domain.user.validate.UserEditValidateRule;
+import jp.ne.glory.domain.user.validate.UserModifyCommonValidateRule;
 import jp.ne.glory.domain.user.value.UserId;
 
 /**
@@ -50,8 +51,8 @@ public class UserRegister {
 
         final Function<User, ValidateErrors> checkFunc = (v -> {
 
-            final UserValidateRule rule = new UserValidateRule(v);
-            return rule.validateForRegister();
+            final UserModifyCommonValidateRule rule = new UserModifyCommonValidateRule(v);
+            return rule.validate();
         });
 
         return save(user, checkFunc);
@@ -67,8 +68,8 @@ public class UserRegister {
 
         final Function<User, ValidateErrors> checkFunc = (v -> {
 
-            final UserValidateRule rule = new UserValidateRule(v);
-            return rule.validateForEdit();
+            final UserEditValidateRule rule = new UserEditValidateRule(v);
+            return rule.validate();
         });
 
         return save(user, checkFunc);

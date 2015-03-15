@@ -1,6 +1,7 @@
 package jp.ne.glory.domain.user.validate;
 
 import jp.ne.glory.domain.common.error.ValidateErrors;
+import jp.ne.glory.domain.common.validate.ValidateRule;
 import jp.ne.glory.domain.user.value.LoginId;
 import jp.ne.glory.domain.user.value.Password;
 
@@ -9,7 +10,7 @@ import jp.ne.glory.domain.user.value.Password;
  *
  * @author Junki Yamada
  */
-public class LoginValidateRule {
+public class LoginValidateRule implements ValidateRule {
 
     /**
      * ログインID.
@@ -34,10 +35,11 @@ public class LoginValidateRule {
     }
 
     /**
-     * コンストラクタ.
+     * 入力チェックを行う.
      *
      * @return 入力チェック結果
      */
+    @Override
     public ValidateErrors validate() {
 
         final ValidateErrors errors = new ValidateErrors();

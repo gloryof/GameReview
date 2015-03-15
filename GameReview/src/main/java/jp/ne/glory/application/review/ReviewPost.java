@@ -4,12 +4,15 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import javax.enterprise.context.RequestScoped;
 import jp.ne.glory.domain.common.error.ValidateErrors;
+import jp.ne.glory.domain.common.validate.ValidateRule;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.repository.GameRepository;
-import jp.ne.glory.domain.game.validate.GameValidateRule;
+import jp.ne.glory.domain.game.validate.GameEditValidateRule;
+import jp.ne.glory.domain.game.validate.GameModifyCommonValidateRule;
 import jp.ne.glory.domain.review.entity.Review;
 import jp.ne.glory.domain.review.repository.ReviewRepository;
-import jp.ne.glory.domain.review.validate.ReviewValidateRule;
+import jp.ne.glory.domain.review.validate.ReviewEditValidateRule;
+import jp.ne.glory.domain.review.validate.ReviewModifyCommonValidateRule;
 import jp.ne.glory.domain.review.value.ReviewId;
 
 /**
@@ -64,8 +67,8 @@ public class ReviewPost {
         final Optional<Game> game = gameRepository.findBy(review.getGameId());
         final Supplier<ValidateErrors> checkFunc = () -> {
 
-            final ReviewValidateRule rule = crateReviewRule(review, game);
-            return rule.validateForPost();
+            final ValidateRule rule = crateReviewRule(review, game);
+            return rule.validate();
         };
 
         return executePosting(review, checkFunc);
@@ -83,12 +86,12 @@ public class ReviewPost {
         final Supplier<ValidateErrors> checkFunc = () -> {
 
             final Optional<Game> gameOption = Optional.ofNullable(game);
-            final ReviewValidateRule rule = crateReviewRule(review, gameOption);
-            final ValidateErrors errors = rule.validateForPost();
+            final ValidateRule rule = crateReviewRule(review, gameOption);
+            final ValidateErrors errors = rule.validate();
 
             gameOption.ifPresent(v -> {
-                final GameValidateRule gameRule = new GameValidateRule(v);
-                errors.addAll(gameRule.validateForRegister());
+                final GameModifyCommonValidateRule gameRule = new GameModifyCommonValidateRule(v);
+                errors.addAll(gameRule.validate());
             });
 
             return errors;
@@ -108,8 +111,8 @@ public class ReviewPost {
         final Optional<Game> game = gameRepository.findBy(review.getGameId());
         final Supplier<ValidateErrors> checkFunc = () -> {
 
-            final ReviewValidateRule rule = crateReviewRule(review, game);
-            return rule.validateForRepost();
+            final ValidateRule rule = crateReviewRule(review, game);
+            return rule.validate();
         };
 
         return executePosting(review, checkFunc);
@@ -127,12 +130,12 @@ public class ReviewPost {
         final Supplier<ValidateErrors> checkFunc = () -> {
 
             final Optional<Game> gameOption = Optional.ofNullable(game);
-            final ReviewValidateRule rule = crateReviewRule(review, gameOption);
-            final ValidateErrors errors = rule.validateForRepost();
+            final ValidateRule rule = crateReviewRule(review, gameOption);
+            final ValidateErrors errors = rule.validate();
 
             gameOption.ifPresent(v -> {
-                final GameValidateRule gameRule = new GameValidateRule(v);
-                errors.addAll(gameRule.validateForEdit());
+                final GameEditValidateRule gameRule = new GameEditValidateRule(v);
+                errors.addAll(gameRule.validate());
             });
 
             return errors;
@@ -148,14 +151,14 @@ public class ReviewPost {
      * @param game ゲーム（Optional）
      * @return 入力ルールオブジェクト
      */
-    private ReviewValidateRule crateReviewRule(final Review review, final Optional<Game> game) {
+    private ValidateRule crateReviewRule(final Review review, final Optional<Game> game) {
 
         if (game.isPresent()) {
 
-            return new ReviewValidateRule(review, game.get());
+            return new ReviewEditValidateRule(review, game.get());
         }
 
-        return new ReviewValidateRule(review, null);
+        return new ReviewModifyCommonValidateRule(review, null);
     }
 
     /**

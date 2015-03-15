@@ -3,14 +3,16 @@ package jp.ne.glory.domain.review.validate;
 import jp.ne.glory.domain.common.error.ErrorInfo;
 import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
+import jp.ne.glory.domain.common.validate.ValidateRule;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.review.entity.Review;
 
 /**
- * レビューの入力に関するルール.
+ * レビューの編集に関する共通ルール.
+ *
  * @author Junki Yamada
  */
-public class ReviewValidateRule {
+public class ReviewModifyCommonValidateRule implements ValidateRule {
 
     /** チェック対象レビュー. */
     private final Review review;
@@ -25,44 +27,18 @@ public class ReviewValidateRule {
      * @param paramReview レビュー
      * @param paramGame ゲーム
      */
-    public ReviewValidateRule(final Review paramReview, final Game paramGame) {
+    public ReviewModifyCommonValidateRule(final Review paramReview, final Game paramGame) {
 
         review = paramReview;
         game = paramGame;
     }
 
     /**
-     * 登録時の入力チェックを行う.
-     * @return エラー情報
-     */
-    public ValidateErrors validateForPost() {
-
-        return validateCommon();
-    }
-
-    /**
-     * 編集時の入力チェックを行う.
-     * @return エラー情報
-     */
-    public ValidateErrors validateForRepost() {
-
-        final ValidateErrors errors = new ValidateErrors();
-
-        if (!review.isRegistered()) {
-
-            errors.add(new ValidateError(ErrorInfo.NotRegister, Review.LABEL));
-        }
-
-        errors.addAll(validateCommon());
-
-        return errors;
-    }
-
-    /**
      * 入力情報の検証を行う.
      * @return 検証結果
      */
-    private ValidateErrors validateCommon() {
+    @Override
+    public ValidateErrors validate() {
 
         final ValidateErrors errors = new ValidateErrors();
 

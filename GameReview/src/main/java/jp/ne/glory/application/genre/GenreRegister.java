@@ -4,7 +4,8 @@ import java.util.function.Function;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.repository.GenreRepository;
-import jp.ne.glory.domain.genre.validate.GenreValidateRule;
+import jp.ne.glory.domain.genre.validate.GenreEditValidateRule;
+import jp.ne.glory.domain.genre.validate.GenreModfyCommonValidateRule;
 import jp.ne.glory.domain.genre.value.GenreId;
 
 /**
@@ -47,8 +48,8 @@ public class GenreRegister {
     public GenreRegisterResult register(final Genre genre) {
 
         final Function<Genre, ValidateErrors> checkFunc = (v -> {
-            final GenreValidateRule rule = new GenreValidateRule(v);
-            return rule.validateForRegister();
+            final GenreModfyCommonValidateRule rule = new GenreModfyCommonValidateRule(v);
+            return rule.validate();
         });
 
         return save(genre, checkFunc);
@@ -63,8 +64,8 @@ public class GenreRegister {
     public GenreRegisterResult finishEdit(final Genre genre) {
 
         final Function<Genre, ValidateErrors> checkFunc = (v -> {
-            final GenreValidateRule rule = new GenreValidateRule(v);
-            return rule.validateForEdit();
+            final GenreEditValidateRule rule = new GenreEditValidateRule(v);
+            return rule.validate();
         });
 
         return save(genre, checkFunc);

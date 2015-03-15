@@ -1,4 +1,3 @@
-
 package jp.ne.glory.web.admin.user;
 
 import java.util.List;

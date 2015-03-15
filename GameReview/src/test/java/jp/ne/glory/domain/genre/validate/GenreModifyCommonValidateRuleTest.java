@@ -13,33 +13,25 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
-public class GenreValidateRuleTest {
+public class GenreModifyCommonValidateRuleTest {
 
     public static class 全ての値に正常な値が設定されている場合 {
 
-        private GenreValidateRule sut = null;
+        private GenreModfyCommonValidateRule sut = null;
 
         @Before
         public void setUp() {
 
             final Genre genre = new Genre(new GenreId(100L), new GenreName("ジャンル名"));
-            sut = new GenreValidateRule(genre);
+            sut = new GenreModfyCommonValidateRule(genre);
         }
 
         @Test
-        public void validateForRegisterを実行しても入力チェックエラーにならない() {
+        public void validateを実行しても入力チェックエラーにならない() {
 
-            final ValidateErrors actualErrors = sut.validateForRegister();
-
-            assertThat(actualErrors.hasError(), is(false));
-        }
-
-        @Test
-        public void validateForEditを実行しても入力チェックエラーにならない() {
-
-            final ValidateErrors actualErrors = sut.validateForEdit();
+            final ValidateErrors actualErrors = sut.validate();
 
             assertThat(actualErrors.hasError(), is(false));
         }
@@ -47,19 +39,19 @@ public class GenreValidateRuleTest {
 
     public static class 全ての値が未設定の場合 {
 
-        private GenreValidateRule sut = null;
+        private GenreModfyCommonValidateRule sut = null;
 
         @Before
         public void setUp() {
 
             final Genre genre = new Genre(GenreId.notNumberingValue(), GenreName.empty());
-            sut = new GenreValidateRule(genre);
+            sut = new GenreModfyCommonValidateRule(genre);
         }
 
         @Test
-        public void validateForRegisterで必須項目がエラーチェックになる() {
+        public void validateで必須項目がエラーチェックになる() {
 
-            final ValidateErrors actual = sut.validateForRegister();
+            final ValidateErrors actual = sut.validate();
 
             assertThat(actual.hasError(), is(true));
 
@@ -70,22 +62,5 @@ public class GenreValidateRuleTest {
             final ValidateErrorsHelper helper = new ValidateErrorsHelper(actual);
             helper.assertErrors(errorList);
         }
-
-        @Test
-        public void validateForEditで全ての必須項目がエラーチェックになる() {
-
-            final ValidateErrors actual = sut.validateForEdit();
-
-            assertThat(actual.hasError(), is(true));
-
-            final List<ValidateError> errorList = new ArrayList<>();
-
-            errorList.add(new ValidateError(ErrorInfo.NotRegister, Genre.LABEL));
-            errorList.add(new ValidateError(ErrorInfo.Required, GenreName.LABEL));
-
-            final ValidateErrorsHelper helper = new ValidateErrorsHelper(actual);
-            helper.assertErrors(errorList);
-        }
-
     }
 }
