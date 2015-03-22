@@ -77,6 +77,11 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                 .filter(v -> isMatch(condition, v))
                 .collect(Collectors.toList());
 
+        if (returnList.size() < condition.getTargetCount()) {
+
+            return returnList;
+        }
+
         if (1 < condition.getTargetCount()) {
 
             returnList = returnList.subList(0, condition.getTargetCount());
