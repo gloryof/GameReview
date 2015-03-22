@@ -7,7 +7,7 @@ import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepositoryStub;
 import jp.ne.glory.test.user.search.UserSearchDataGenerator;
 import jp.ne.glory.ui.admin.user.UserBean;
-import jp.ne.glory.ui.admin.user.UserList;
+import jp.ne.glory.ui.admin.user.UserListView;
 import jp.ne.glory.ui.admin.user.UserSearchConditionBean;
 import jp.ne.glory.web.common.PagePaths;
 import org.glassfish.jersey.server.mvc.Viewable;
@@ -47,9 +47,9 @@ public class UsersTest {
             final Viewable viewable = sut.view();
 
             assertThat(viewable.getTemplateName(), is(PagePaths.USER_LIST));
-            assertThat(viewable.getModel(), is(instanceOf(UserList.class)));
+            assertThat(viewable.getModel(), is(instanceOf(UserListView.class)));
 
-            final UserList actualView = (UserList) viewable.getModel();
+            final UserListView actualView = (UserListView) viewable.getModel();
 
             final UserSearchConditionBean actualCondition = actualView.getCondition();
             assertThat(actualCondition.getLoginId(), is(nullValue()));
@@ -92,9 +92,9 @@ public class UsersTest {
             final Viewable viewable = sut.search(new UserSearchConditionBean());
 
             assertThat(viewable.getTemplateName(), is(PagePaths.USER_LIST));
-            assertThat(viewable.getModel(), is(instanceOf(UserList.class)));
+            assertThat(viewable.getModel(), is(instanceOf(UserListView.class)));
 
-            final UserList actualView = (UserList) viewable.getModel();
+            final UserListView actualView = (UserListView) viewable.getModel();
 
             final UserSearchConditionBean actualCondition = actualView.getCondition();
             assertThat(actualCondition.getLoginId(), is(nullValue()));
@@ -123,9 +123,9 @@ public class UsersTest {
             final Viewable viewable = sut.search(expectedCondition);
 
             assertThat(viewable.getTemplateName(), is(PagePaths.USER_LIST));
-            assertThat(viewable.getModel(), is(instanceOf(UserList.class)));
+            assertThat(viewable.getModel(), is(instanceOf(UserListView.class)));
 
-            final UserList actualView = (UserList) viewable.getModel();
+            final UserListView actualView = (UserListView) viewable.getModel();
 
             final UserSearchConditionBean actualCondition = actualView.getCondition();
             assertThat(actualCondition.getLoginId(), is(expectedCondition.getLoginId()));

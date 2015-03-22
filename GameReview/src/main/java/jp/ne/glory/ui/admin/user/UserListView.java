@@ -9,7 +9,7 @@ import lombok.Setter;
  *
  * @author Junki Yamada
  */
-public class UserList {
+public class UserListView {
 
     /**
      * ユーザ検索条件.

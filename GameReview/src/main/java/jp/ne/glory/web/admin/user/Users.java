@@ -12,7 +12,7 @@ import jp.ne.glory.application.user.UserSearch;
 import jp.ne.glory.domain.user.value.search.UserSearchResults;
 import jp.ne.glory.infra.certify.CertifyTarget;
 import jp.ne.glory.ui.admin.user.UserBean;
-import jp.ne.glory.ui.admin.user.UserList;
+import jp.ne.glory.ui.admin.user.UserListView;
 import jp.ne.glory.ui.admin.user.UserSearchConditionBean;
 import jp.ne.glory.web.common.PagePaths;
 import org.glassfish.jersey.server.mvc.Viewable;
@@ -60,7 +60,7 @@ public class Users {
     @GET
     public Viewable view() {
 
-        final UserList userList = new UserList();
+        final UserListView userList = new UserListView();
         final List<UserBean> users = userSearch.getAll().stream().map(UserBean::new).collect(Collectors.toList());
 
         userList.setUsers(users);
@@ -79,7 +79,7 @@ public class Users {
     @Path("search")
     public Viewable search(@BeanParam final UserSearchConditionBean searchCondition) {
 
-        final UserList userList = new UserList();
+        final UserListView userList = new UserListView();
 
         final UserSearchResults results = userSearch.search(searchCondition.createEntity());
         final List<UserBean> users = results.getResults().stream().map(UserBean::new).collect(Collectors.toList());
