@@ -99,7 +99,7 @@ public class UserRepositoryImpl implements UserRepository {
         final LoginId loginId = condition.getLoginId();
         final UserName userName = condition.getUserName();
 
-        if (loginId != null) {
+        if (loginId != null && !loginId.getValue().isEmpty()) {
 
             if (!loginId.getValue().equals(user.getLoginId().getValue())) {
 
@@ -107,7 +107,7 @@ public class UserRepositoryImpl implements UserRepository {
             }
         }
 
-        if (userName != null) {
+        if (userName != null && !userName.getValue().isEmpty()) {
 
             if (!userName.getValue().equals(user.getUserName().getValue())) {
 

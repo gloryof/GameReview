@@ -65,6 +65,12 @@ public class UserSearch {
         return repository.findBy(loginId);
     }
 
+    /**
+     * ユーザの検索を行う.
+     *
+     * @param condition 検索条件
+     * @return 検索結果
+     */
     public UserSearchResults search(final UserSearchCondition condition) {
 
         final List<User> userResulst = repository.search(condition);

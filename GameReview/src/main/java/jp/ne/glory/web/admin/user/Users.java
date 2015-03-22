@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import jp.ne.glory.application.user.UserSearch;
+import jp.ne.glory.domain.user.value.search.UserSearchResults;
 import jp.ne.glory.infra.certify.CertifyTarget;
 import jp.ne.glory.ui.admin.user.UserBean;
 import jp.ne.glory.ui.admin.user.UserList;
@@ -59,18 +61,32 @@ public class Users {
     public Viewable view() {
 
         final UserList userList = new UserList();
-
-        userList.setCondition(new UserSearchConditionBean());
         final List<UserBean> users = userSearch.getAll().stream().map(UserBean::new).collect(Collectors.toList());
+
         userList.setUsers(users);
+        userList.setCondition(new UserSearchConditionBean());
 
         return new Viewable(PagePaths.USER_LIST, userList);
     }
 
+    /**
+     * ユーザの検索を行う.
+     *
+     * @param searchCondition 検索条件
+     * @return ユーザ一覧
+     */
     @POST
     @Path("search")
-    public Viewable search() {
+    public Viewable search(@BeanParam final UserSearchConditionBean searchCondition) {
 
-        return null;
+        final UserList userList = new UserList();
+
+        final UserSearchResults results = userSearch.search(searchCondition.createEntity());
+        final List<UserBean> users = results.getResults().stream().map(UserBean::new).collect(Collectors.toList());
+
+        userList.setUsers(users);
+        userList.setCondition(searchCondition);
+
+        return new Viewable(PagePaths.USER_LIST, userList);
     }
 }

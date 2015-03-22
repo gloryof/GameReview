@@ -8,13 +8,13 @@
     </head>
     <body>
         <section class="search-condition">
-            <form th:action="@{/admin/users/search}">
+            <form th:action="@{/admin/users/search}" method="post">
                 <button>クリア</button>
                 <dl>
                     <dt>ログインID</dt>
-                    <dd><input type="text" /></dd>
+                    <dd><input type="text" name="loginId" th:value="${it.condition.loginId}" /></dd>
                     <dt>ユーザ名</dt>
-                    <dd><input type="text" /></dd>
+                    <dd><input type="text" name="userName" th:value="${it.condition.userName}" /></dd>
                 </dl>
                 <button>検索</button>
             </form>

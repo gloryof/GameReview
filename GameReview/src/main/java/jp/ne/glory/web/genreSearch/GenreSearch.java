@@ -8,8 +8,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import jp.ne.glory.application.genre.GenreList;
-import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.application.review.ReviewSearch;
+import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.ui.genre.GenreSearchResultView;
 import jp.ne.glory.ui.genre.GenreSearchView;
 import jp.ne.glory.ui.review.ReviewListView;
@@ -71,7 +71,6 @@ public class GenreSearch {
     @Produces(MediaType.TEXT_HTML)
     public Viewable view(@PathParam("id") final long paramGenreId) {
 
-        System.out.println("vie : " + paramGenreId);
         final GenreId genreId = new GenreId(paramGenreId);
         
         final ReviewListView reviewView
