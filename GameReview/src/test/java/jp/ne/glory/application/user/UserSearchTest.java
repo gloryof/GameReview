@@ -10,6 +10,7 @@ import jp.ne.glory.domain.user.repository.UserRepositoryStub;
 import jp.ne.glory.domain.user.value.Authorities;
 import jp.ne.glory.domain.user.value.Authority;
 import jp.ne.glory.domain.user.value.LoginId;
+import jp.ne.glory.domain.user.value.UserId;
 import jp.ne.glory.domain.user.value.search.UserSearchCondition;
 import jp.ne.glory.domain.user.value.search.UserSearchResults;
 import jp.ne.glory.test.user.search.UserSearchDataGenerator;
@@ -79,6 +80,26 @@ public class UserSearchTest {
             stub = new UserRepositoryStub();
             UserSearchDataGenerator.creaeteUsers(10).forEach(stub::save);
             sut = new UserSearch(stub);
+        }
+
+        @Test
+        public void ユーザIDで検索して結果があった場合_Userが返却される() {
+
+            final Optional<User> actualResult = sut.searchBy(new UserId(4l));
+
+            assertThat(actualResult.isPresent(), is(true));
+
+            final User actualUser = actualResult.get();
+
+            assertThat(actualUser.getUserId().getValue(), is(4l));
+        }
+
+        @Test
+        public void ユーザIDで検索して結果がなかった場合_Userが返却されない() {
+
+            final Optional<User> actualResult = sut.searchBy(new UserId(Long.MAX_VALUE));
+
+            assertThat(actualResult.isPresent(), is(false));
         }
 
         @Test

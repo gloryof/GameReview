@@ -31,4 +31,14 @@ public final class PagePaths {
      * ユーザ一覧.
      */
     public static final String USER_LIST = "/admin/users/list";
+
+    /**
+     * ユーザ詳細.
+     */
+    public static final String USER_DETAIL = "/admin/users/detail";
+
+    /**
+     * エラー画面（ユーザが見つからない）.
+     */
+    public static final String USER_NOT_FOUND = "/admin/users/notFound";
 }

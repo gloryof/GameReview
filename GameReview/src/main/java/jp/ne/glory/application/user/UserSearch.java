@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepository;
 import jp.ne.glory.domain.user.value.LoginId;
+import jp.ne.glory.domain.user.value.UserId;
 import jp.ne.glory.domain.user.value.search.UserSearchCondition;
 import jp.ne.glory.domain.user.value.search.UserSearchResults;
 
@@ -52,6 +53,17 @@ public class UserSearch {
     public List<User> getAll() {
 
         return repository.findAll();
+    }
+
+    /**
+     * ユーザIDでユーザを検索する.
+     *
+     * @param userId ログインID
+     * @return ユーザ
+     */
+    public Optional<User> searchBy(final UserId userId) {
+
+        return repository.findBy(userId);
     }
 
     /**

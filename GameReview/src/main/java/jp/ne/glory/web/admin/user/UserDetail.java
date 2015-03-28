@@ -1,0 +1,81 @@
+package jp.ne.glory.web.admin.user;
+
+import java.net.URI;
+import java.util.Optional;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import jp.ne.glory.application.user.UserSearch;
+import jp.ne.glory.domain.user.entity.User;
+import jp.ne.glory.domain.user.value.UserId;
+import jp.ne.glory.infra.certify.CertifyTarget;
+import jp.ne.glory.ui.admin.user.UserDetailView;
+import jp.ne.glory.web.common.PagePaths;
+import org.glassfish.jersey.server.mvc.Viewable;
+
+/**
+ * ユーザ詳細
+ *
+ * @author Junki Yamada
+ */
+@CertifyTarget
+@Path("/admin/user")
+@RequestScoped
+public class UserDetail {
+
+    /**
+     * ユーザ検索.
+     */
+    private final UserSearch userSearch;
+
+    /**
+     * コンストラクタ.
+     *
+     * @param userSearch ユーザ検索
+     */
+    @Inject
+    public UserDetail(final UserSearch userSearch) {
+
+        this.userSearch = userSearch;
+    }
+
+    /**
+     * ユーザIDをキーにユーザ詳細を表示する.
+     *
+     * @param userId ユーザID
+     * @return レスポンス
+     */
+    @Path("/{id}")
+    @GET
+    public Response view(@PathParam("id") final long userId) {
+
+        final Optional<User> result = userSearch.searchBy(new UserId(userId));
+
+        if (!result.isPresent()) {
+
+            final URI uri = UriBuilder.fromMethod(UserDetail.class, "notFound").build();
+            return Response.seeOther(uri).build();
+        }
+
+        final UserDetailView view = new UserDetailView(result.get());
+        final Viewable viewable = new Viewable(PagePaths.USER_DETAIL, view);
+
+        return Response.ok(viewable).build();
+    }
+
+    /**
+     * ユーザが見つからなかった場合の画面を表示する.
+     *
+     * @return エラー画面
+     */
+    @Path("/error/notFound")
+    @GET
+    public Viewable notFound() {
+
+        return new Viewable(PagePaths.USER_NOT_FOUND);
+    }
+}
