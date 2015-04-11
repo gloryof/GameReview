@@ -9,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
+import jp.ne.glory.application.user.UserRegister;
 import jp.ne.glory.application.user.UserSearch;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.value.UserId;
@@ -23,7 +24,7 @@ import org.glassfish.jersey.server.mvc.Viewable;
  * @author Junki Yamada
  */
 @CertifyTarget
-@Path("/admin/user")
+@Path("/admin/user/{id}")
 @RequestScoped
 public class UserDetail {
 
@@ -33,14 +34,32 @@ public class UserDetail {
     private final UserSearch userSearch;
 
     /**
+     * ユーザ登録.
+     */
+    private final UserRegister userRegister;
+
+    /**
+     * コンストラクタ.<br>
+     * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
+     */
+    @Deprecated
+    UserDetail() {
+
+        userSearch = null;
+        userRegister = null;
+    }
+
+    /**
      * コンストラクタ.
      *
      * @param userSearch ユーザ検索
+     * @param userRegister ユーザ登録
      */
     @Inject
-    public UserDetail(final UserSearch userSearch) {
+    public UserDetail(final UserSearch userSearch, final UserRegister userRegister) {
 
         this.userSearch = userSearch;
+        this.userRegister = userRegister;
     }
 
     /**
@@ -49,7 +68,6 @@ public class UserDetail {
      * @param userId ユーザID
      * @return レスポンス
      */
-    @Path("/{id}")
     @GET
     public Response view(@PathParam("id") final long userId) {
 
@@ -57,14 +75,10 @@ public class UserDetail {
 
         if (!result.isPresent()) {
 
-            final URI uri = UriBuilder.fromMethod(UserDetail.class, "notFound").build();
-            return Response.seeOther(uri).build();
+            return redirectNotFound();
         }
 
-        final UserDetailView view = new UserDetailView(result.get());
-        final Viewable viewable = new Viewable(PagePaths.USER_DETAIL, view);
-
-        return Response.ok(viewable).build();
+        return buildOkToDetail(result.get());
     }
 
     /**
@@ -77,5 +91,30 @@ public class UserDetail {
     public Viewable notFound() {
 
         return new Viewable(PagePaths.USER_NOT_FOUND);
+    }
+
+    /**
+     * ユーザが見つからない画面にリダイレクトする.
+     *
+     * @return リダイレクトレスポンス
+     */
+    private Response redirectNotFound() {
+
+        final URI uri = UriBuilder.fromMethod(UserDetail.class, "notFound").build();
+        return Response.seeOther(uri).build();
+    }
+    /**
+     * 詳細画面を表示する.<br>
+     * ステータスはOK
+     *
+     * @param user ユーザ
+     * @return OKレスポンス
+     */
+    private Response buildOkToDetail(final User user) {
+
+        final UserDetailView view = new UserDetailView(user);
+        final Viewable viewable = new Viewable(PagePaths.USER_DETAIL, view);
+
+        return Response.ok(viewable).build();
     }
 }

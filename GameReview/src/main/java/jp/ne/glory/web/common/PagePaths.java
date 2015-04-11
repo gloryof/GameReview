@@ -35,7 +35,12 @@ public final class PagePaths {
     /**
      * ユーザ詳細.
      */
-    public static final String USER_DETAIL = "/admin/users/detail";
+    public static final String USER_DETAIL = "/admin/users/view";
+
+    /**
+     * ユーザ編集.
+     */
+    public static final String USER_EDIT = "/admin/users/edit";
 
     /**
      * エラー画面（ユーザが見つからない）.

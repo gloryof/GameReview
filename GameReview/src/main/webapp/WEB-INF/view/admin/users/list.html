@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='管理者TOP')" >
+    <head th:include="/common/base/metaInfo :: commonHeader (title='ユーザ一覧')" >
         <title>ユーザ一覧</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" th:href="@{/css/normalize.css}" />
@@ -29,9 +29,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="userInfo,stats : ${it.users}" data-user-id="${userInfo.userId}">
-                        <td th:text="${stats.count}">1</td>
-                        <td th:text="${userInfo.loginId}">ログインIDテスト</td>
+                    <tr th:each="userInfo,stats : ${it.users}">
+                        <td th:text="${stats.count}"></td>
+                        <td>
+                            <a th:href="@{/admin/user/{userId}(userId=${userInfo.userId})}" th:text="${userInfo.loginId}">ログインIDテスト</a>
+                        </td>
                         <td th:text="${userInfo.userName}">ユーザ名</td>
                     </tr>
                 </tbody>

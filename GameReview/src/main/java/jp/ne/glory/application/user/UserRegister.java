@@ -2,6 +2,7 @@ package jp.ne.glory.application.user;
 
 import java.util.function.Function;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepository;
@@ -36,6 +37,7 @@ public class UserRegister {
      *
      * @param paramRepository リポジトリ
      */
+    @Inject
     public UserRegister(final UserRepository paramRepository) {
 
         repository = paramRepository;

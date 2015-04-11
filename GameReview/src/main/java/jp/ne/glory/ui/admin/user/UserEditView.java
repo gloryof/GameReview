@@ -1,5 +1,7 @@
 package jp.ne.glory.ui.admin.user;
 
+import javax.ws.rs.FormParam;
+import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.value.LoginId;
 import jp.ne.glory.domain.user.value.Password;
@@ -8,11 +10,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * ユーザ詳細View.
+ * ユーザ編集View.
  *
  * @author Junki Yamada
  */
-public class UserDetailView {
+public class UserEditView {
 
     /**
      * ログインラベル.
@@ -37,6 +39,7 @@ public class UserDetailView {
      */
     @Getter
     @Setter
+    @FormParam("userId")
     private Long userId;
 
     /**
@@ -44,6 +47,7 @@ public class UserDetailView {
      */
     @Getter
     @Setter
+    @FormParam("loginId")
     private String loginId;
 
     /**
@@ -51,6 +55,7 @@ public class UserDetailView {
      */
     @Getter
     @Setter
+    @FormParam("userName")
     private String userName;
 
     /**
@@ -58,14 +63,28 @@ public class UserDetailView {
      */
     @Getter
     @Setter
+    @FormParam("password")
     private String password;
+
+    /**
+     * 入力チェック結果.
+     */
+    @Getter
+    private final ValidateErrors errors = new ValidateErrors();
+
+    /**
+     * コンストラクタ.
+     */
+    public UserEditView() {
+        super();
+    }
 
     /**
      * コンストラクタ.
      *
      * @param user ユーザ
      */
-    public UserDetailView(final User user) {
+    public UserEditView(final User user) {
 
         userId = user.getUserId().getValue();
         loginId = user.getLoginId().getValue();

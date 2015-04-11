@@ -30,6 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
         user.setLoginId(new LoginId("test-user"));
         user.setPassword(new Password("password"));
         user.setUserName(new UserName("テストユーザ"));
+        user.getAuthorities().add(Authority.ConfigChange);
 
         userMap.put(user.getUserId().getValue(), user);
     }
