@@ -18,6 +18,14 @@
                 <dd th:text="${it.userName}">ユーザ名</dd>
                 <dt th:text="${it.passwordLabel}">パスワード</dt>
                 <dd>-</dd>
+                <dt>権限</dt>
+                <dd>
+                    <ul>
+                        <li th:if="${it.noneAuthority}" th:text="${it.authorityNoneLabel}">権限なし</li>
+                        <li th:if="${it.reviewPostenable}" th:text="${it.authorityReviewPostLabel}">レビュー投稿</li>
+                        <li th:if="${it.configChangeable}" th:text="${it.authorityConfigChangeLabel}">設定変更</li>
+                    </ul>
+                </dd>
             </dl>
         </section>
         <section class="command">

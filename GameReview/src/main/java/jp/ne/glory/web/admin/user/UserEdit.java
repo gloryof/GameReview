@@ -1,7 +1,11 @@
 package jp.ne.glory.web.admin.user;
 
 import java.net.URI;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Predicate;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.BeanParam;
@@ -177,22 +181,9 @@ public class UserEdit {
 
             user.setPassword(encryption.encrypt(paramUserEdit.getPassword()));
         }
-
-
-        if (baseUser.getAuthorities().hasAuthority(Authority.None)) {
-
-            user.getAuthorities().add(Authority.None);
-        }
-
-        if (baseUser.getAuthorities().hasAuthority(Authority.ReviewPost)) {
-
-            user.getAuthorities().add(Authority.ReviewPost);
-        }
-
-        if (baseUser.getAuthorities().hasAuthority(Authority.ConfigChange)) {
-
-            user.getAuthorities().add(Authority.ConfigChange);
-        }
+        
+        final Set<Authority> newAuthorites = createAuthorities(paramUserEdit.getAuthorityValues());
+        newAuthorites.stream().forEach(v -> user.getAuthorities().add(v));
 
         return userRegister.finishEdit(user);
     }
@@ -226,5 +217,31 @@ public class UserEdit {
         final Viewable viewable = new Viewable(PagePaths.USER_EDIT, view);
 
         return Response.ok(viewable).build();
+    }
+
+    /**
+     * 権限セットを作成する.
+     *
+     * @param authorityValues 権限入力値
+     * @return 権限セット
+     */
+    private Set<Authority> createAuthorities(final List<String> authorityValues) {
+
+        final Set<Authority> returnSet = new HashSet<>();
+
+        if (authorityValues == null || authorityValues.isEmpty()) {
+
+            returnSet.add(Authority.None);
+            return returnSet;
+        }
+
+        final Predicate<String> isNumber = (String v) -> !(v == null || v.isEmpty());
+
+        authorityValues.stream()
+                .filter(isNumber)
+                .map(v -> Authority.getByAuthorityId(Integer.valueOf(v)))
+                .forEach(v -> returnSet.add(v));
+
+        return returnSet;
     }
 }

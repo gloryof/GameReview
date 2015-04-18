@@ -58,7 +58,51 @@ public class UserDetailTest {
             assertThat(actualView.getUserId(), is(5L));
             assertThat(actualView.getLoginId(), is("test-user-5"));
             assertThat(actualView.getUserName(), is("ユーザ5"));
-            assertThat(actualView.getPassword(), is(nullValue()));
+            assertThat(actualView.isConfigChangeable(), is(true));
+            assertThat(actualView.isReviewPostenable(), is(false));
+            assertThat(actualView.isNoneAuthority(), is(false));
+        }
+
+        @Test
+        public void レビュー権限投稿権限のみを持っている場合() {
+
+            final Response actualResponse = sut.view(6);
+
+            assertThat(actualResponse.getStatusInfo(), is(Response.Status.OK));
+            assertThat(actualResponse.getEntity(), is(instanceOf(Viewable.class)));
+
+            final Viewable viewable = (Viewable) actualResponse.getEntity();
+
+            assertThat(viewable.getTemplateName(), is(PagePaths.USER_DETAIL));
+            assertThat(viewable.getModel(), is(instanceOf(UserDetailView.class)));
+
+            final UserDetailView actualView = (UserDetailView) viewable.getModel();
+
+            assertThat(actualView.getUserId(), is(6L));
+            assertThat(actualView.isConfigChangeable(), is(false));
+            assertThat(actualView.isReviewPostenable(), is(true));
+            assertThat(actualView.isNoneAuthority(), is(false));
+        }
+
+        @Test
+        public void 権限を保持していない場合() {
+
+            final Response actualResponse = sut.view(4);
+
+            assertThat(actualResponse.getStatusInfo(), is(Response.Status.OK));
+            assertThat(actualResponse.getEntity(), is(instanceOf(Viewable.class)));
+
+            final Viewable viewable = (Viewable) actualResponse.getEntity();
+
+            assertThat(viewable.getTemplateName(), is(PagePaths.USER_DETAIL));
+            assertThat(viewable.getModel(), is(instanceOf(UserDetailView.class)));
+
+            final UserDetailView actualView = (UserDetailView) viewable.getModel();
+
+            assertThat(actualView.getUserId(), is(4L));
+            assertThat(actualView.isConfigChangeable(), is(false));
+            assertThat(actualView.isReviewPostenable(), is(false));
+            assertThat(actualView.isNoneAuthority(), is(true));
         }
 
         @Test

@@ -1,6 +1,7 @@
 package jp.ne.glory.web.admin.user;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -8,6 +9,7 @@ import jp.ne.glory.application.user.UserRegister;
 import jp.ne.glory.application.user.UserSearch;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepositoryStub;
+import jp.ne.glory.domain.user.value.Authority;
 import jp.ne.glory.domain.user.value.Password;
 import jp.ne.glory.domain.user.value.UserId;
 import jp.ne.glory.infra.encryption.EncryptionStub;
@@ -63,6 +65,28 @@ public class UserEditTest {
             assertThat(actualView.getLoginId(), is("test-user-5"));
             assertThat(actualView.getUserName(), is("ユーザ5"));
             assertThat(actualView.getPassword(), is(nullValue()));
+            assertThat(actualView.isConfigChangeable(), is(true));
+            assertThat(actualView.isReviewPostenable(), is(false));
+        }
+
+        @Test
+        public void レビュー権限投稿権限のみを持っている場合() {
+
+            final Response actualResponse = sut.view(6);
+
+            assertThat(actualResponse.getStatusInfo(), is(Response.Status.OK));
+            assertThat(actualResponse.getEntity(), is(instanceOf(Viewable.class)));
+
+            final Viewable viewable = (Viewable) actualResponse.getEntity();
+
+            assertThat(viewable.getTemplateName(), is(PagePaths.USER_EDIT));
+            assertThat(viewable.getModel(), is(instanceOf(UserEditView.class)));
+
+            final UserEditView actualView = (UserEditView) viewable.getModel();
+
+            assertThat(actualView.getUserId(), is(6L));
+            assertThat(actualView.isConfigChangeable(), is(false));
+            assertThat(actualView.isReviewPostenable(), is(true));
         }
 
         @Test
@@ -103,6 +127,10 @@ public class UserEditTest {
             expectedView.setPassword("change-password");
             expectedView.setUserName("変更後ユーザID");
 
+            final List<String> authorites = new ArrayList<>();
+            authorites.add(String.valueOf(Authority.ConfigChange.authorityId));
+            expectedView.setAuthorityValues(authorites);
+
             final Response actualResponse = sut.completeEdit(paramUserId, expectedView);
             final String templatePath = UriBuilder.fromResource(UserDetail.class).toTemplate();
             final URI uri = UriBuilder.fromUri(templatePath).resolveTemplate("id", paramUserId).build();
@@ -113,9 +141,54 @@ public class UserEditTest {
             final User actualUser = stub.findBy(new UserId(paramUserId)).get();
             assertThat(actualUser.getLoginId().getValue(), is(expectedView.getLoginId()));
             assertThat(actualUser.getUserName().getValue(), is(expectedView.getUserName()));
+            assertThat(actualUser.getAuthorities().hasAuthority(Authority.ConfigChange), is(true));
+            assertThat(actualUser.getAuthorities().hasAuthority(Authority.ReviewPost), is(false));
+            assertThat(actualUser.getAuthorities().hasAuthority(Authority.None), is(false));
 
             final Password passwordValue = encrypt.encrypt(expectedView.getPassword());
             assertThat(actualUser.getPassword().getValue(), is(passwordValue.getValue()));
+        }
+
+        @Test
+        public void レビュー投稿権限のみ保持している場合() {
+
+            final long paramUserId = 5L;
+            final UserEditView expectedView = new UserEditView();
+            expectedView.setUserId(paramUserId);
+            expectedView.setLoginId("change-login-id");
+            expectedView.setPassword("change-password");
+            expectedView.setUserName("変更後ユーザID");
+
+            final List<String> authorites = new ArrayList<>();
+            authorites.add(String.valueOf(Authority.ReviewPost.authorityId));
+            expectedView.setAuthorityValues(authorites);
+
+            final Response actualResponse = sut.completeEdit(paramUserId, expectedView);
+
+            final User actualUser = stub.findBy(new UserId(paramUserId)).get();
+            assertThat(actualUser.getAuthorities().hasAuthority(Authority.ConfigChange), is(false));
+            assertThat(actualUser.getAuthorities().hasAuthority(Authority.ReviewPost), is(true));
+            assertThat(actualUser.getAuthorities().hasAuthority(Authority.None), is(false));
+        }
+
+        @Test
+        public void 何も権限をつけなかった場合() {
+
+            final long paramUserId = 5L;
+            final UserEditView expectedView = new UserEditView();
+            expectedView.setUserId(paramUserId);
+            expectedView.setLoginId("change-login-id");
+            expectedView.setPassword("change-password");
+            expectedView.setUserName("変更後ユーザID");
+            expectedView.setConfigChangeable(false);
+            expectedView.setReviewPostenable(false);
+
+            final Response actualResponse = sut.completeEdit(paramUserId, expectedView);
+
+            final User actualUser = stub.findBy(new UserId(paramUserId)).get();
+            assertThat(actualUser.getAuthorities().hasAuthority(Authority.ConfigChange), is(expectedView.isConfigChangeable()));
+            assertThat(actualUser.getAuthorities().hasAuthority(Authority.ReviewPost), is(expectedView.isReviewPostenable()));
+            assertThat(actualUser.getAuthorities().hasAuthority(Authority.None), is(true));
         }
 
         @Test

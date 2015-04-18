@@ -25,7 +25,22 @@ public class UserSearchDataGenerator {
         user.setUserName(new UserName("ユーザ" + userId));
         user.setPassword(new Password("password" + userId));
         user.setLoginId(new LoginId("test-user-" + userId));
-        user.getAuthorities().add(Authority.ConfigChange);
+
+        switch ((int) userId % 4) {
+            case 1:
+                user.getAuthorities().add(Authority.ConfigChange);
+                break;
+            case 2:
+                user.getAuthorities().add(Authority.ReviewPost);
+                break;
+            case 3:
+                user.getAuthorities().add(Authority.ConfigChange);
+                user.getAuthorities().add(Authority.ReviewPost);
+                break;
+            default:
+                user.getAuthorities().add(Authority.None);
+                break;
+        }
 
         return user;
     }

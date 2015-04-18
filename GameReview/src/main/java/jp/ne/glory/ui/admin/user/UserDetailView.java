@@ -1,11 +1,11 @@
 package jp.ne.glory.ui.admin.user;
 
 import jp.ne.glory.domain.user.entity.User;
+import jp.ne.glory.domain.user.value.Authority;
 import jp.ne.glory.domain.user.value.LoginId;
 import jp.ne.glory.domain.user.value.Password;
 import jp.ne.glory.domain.user.value.UserName;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * ユーザ詳細View.
@@ -33,32 +33,58 @@ public class UserDetailView {
     private final String passwordLabel = Password.LABEL;
 
     /**
+     * 権限ラベル（設定変更）
+     */
+    @Getter
+    private final String authorityConfigChangeLabel = Authority.ConfigChange.name;
+
+    /**
+     * 権限ラベル（レビュー投稿）
+     */
+    @Getter
+    private final String authorityReviewPostLabel = Authority.ReviewPost.name;
+
+    /**
+     * 権限ラベル（権限なし）
+     */
+    @Getter
+    private final String authorityNoneLabel = Authority.None.name;
+
+    /**
      * ユーザID.
      */
     @Getter
-    @Setter
-    private Long userId;
+    private final Long userId;
 
     /**
      * ログインID.
      */
     @Getter
-    @Setter
-    private String loginId;
+    private final String loginId;
 
     /**
      * ユーザ名.
      */
     @Getter
-    @Setter
-    private String userName;
+    private final String userName;
 
     /**
-     * パスワード.
+     * 権限変更可能フラグ.
      */
     @Getter
-    @Setter
-    private String password;
+    private final boolean configChangeable;
+
+    /**
+     * レビュー投稿可能フラグ.
+     */
+    @Getter
+    private final boolean reviewPostenable;
+
+    /**
+     * 権限なしフラグ.
+     */
+    @Getter
+    private final boolean noneAuthority;
 
     /**
      * コンストラクタ.
@@ -70,5 +96,8 @@ public class UserDetailView {
         userId = user.getUserId().getValue();
         loginId = user.getLoginId().getValue();
         userName = user.getUserName().getValue();
+        configChangeable = user.getAuthorities().hasAuthority(Authority.ConfigChange);
+        reviewPostenable = user.getAuthorities().hasAuthority(Authority.ReviewPost);
+        noneAuthority = user.getAuthorities().hasAuthority(Authority.None);
     }
 }

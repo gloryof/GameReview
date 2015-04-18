@@ -5,6 +5,7 @@ import java.util.stream.IntStream;
 import jp.ne.glory.application.user.UserSearch;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepositoryStub;
+import jp.ne.glory.domain.user.value.Authority;
 import jp.ne.glory.test.user.search.UserSearchDataGenerator;
 import jp.ne.glory.ui.admin.user.UserBean;
 import jp.ne.glory.ui.admin.user.UserListView;
@@ -65,6 +66,9 @@ public class UsersTest {
                 assertThat(actualUser.getUserId(), is(expectedUser.getUserId().getValue()));
                 assertThat(actualUser.getLoginId(), is(expectedUser.getLoginId().getValue()));
                 assertThat(actualUser.getUserName(), is(expectedUser.getUserName().getValue()));
+                assertThat(actualUser.isConfigChangeable(), is(expectedUser.getAuthorities().hasAuthority(Authority.ConfigChange)));
+                assertThat(actualUser.isReviewPostenable(), is(expectedUser.getAuthorities().hasAuthority(Authority.ReviewPost)));
+                assertThat(actualUser.isNoneAuthority(), is(expectedUser.getAuthorities().hasAuthority(Authority.None)));
             });
         }
     }
@@ -110,6 +114,9 @@ public class UsersTest {
                 assertThat(actualUser.getUserId(), is(expectedUser.getUserId().getValue()));
                 assertThat(actualUser.getLoginId(), is(expectedUser.getLoginId().getValue()));
                 assertThat(actualUser.getUserName(), is(expectedUser.getUserName().getValue()));
+                assertThat(actualUser.isConfigChangeable(), is(expectedUser.getAuthorities().hasAuthority(Authority.ConfigChange)));
+                assertThat(actualUser.isReviewPostenable(), is(expectedUser.getAuthorities().hasAuthority(Authority.ReviewPost)));
+                assertThat(actualUser.isNoneAuthority(), is(expectedUser.getAuthorities().hasAuthority(Authority.None)));
             });
         }
 

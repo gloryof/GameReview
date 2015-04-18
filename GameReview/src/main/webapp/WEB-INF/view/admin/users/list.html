@@ -23,9 +23,14 @@
             <table class="bs-list">
                 <thead>
                     <tr>
-                        <th>No.</th>
-                        <th>ログインID</th>
-                        <th>ユーザ名</th>
+                        <th rowspan="2">No.</th>
+                        <th rowspan="2">ログインID</th>
+                        <th rowspan="2">ユーザ名</th>
+                        <th colspan="2">権限</th>
+                    </tr>
+                    <tr>
+                        <th th:text="${it.authorityConfigChangeLabel}">レビュー投稿</th>
+                        <th th:text="${it.authorityReviewPostLabel}">設定変更</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +40,12 @@
                             <a th:href="@{/admin/user/{userId}(userId=${userInfo.userId})}" th:text="${userInfo.loginId}">ログインIDテスト</a>
                         </td>
                         <td th:text="${userInfo.userName}">ユーザ名</td>
+                        <td>
+                            <span th:if="${userInfo.configChangeable}">○</span>
+                        </td>
+                        <td>
+                            <span th:if="${userInfo.reviewPostenable}">○</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>

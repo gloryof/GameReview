@@ -18,6 +18,25 @@
                     <dd><input type="text" th:value="${it.userName}" name="userName" /></dd>
                     <dt th:text="${it.passwordLabel}">パスワード</dt>
                     <dd><input type="password" name="password" placeholder="変更する場合はパスワードを入力してください" /></dd>
+                    <dt>権限</dt>
+                    <dd>
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="authorities" th:checked="${it.reviewPostenable}"
+                                           th:value="${it.authorityReviewPost.authorityId}" />
+                                    <span th:text="${it.authorityReviewPost.name}">レビュー投稿</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="authorities" th:checked="${it.configChangeable}"
+                                           th:value="${it.authorityConfigChange.authorityId}" />
+                                    <span th:text="${it.authorityConfigChange.name}">設定変更</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </dd>
                 </dl>
             </form>
         </section>
