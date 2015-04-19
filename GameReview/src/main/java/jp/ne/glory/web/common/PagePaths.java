@@ -46,4 +46,9 @@ public final class PagePaths {
      * エラー画面（ユーザが見つからない）.
      */
     public static final String USER_NOT_FOUND = "/admin/users/notFound";
+
+    /**
+     * ジャンル一覧.
+     */
+    public static final String GENRE_LIST = "/admin/genres/list";
 }

@@ -14,7 +14,7 @@ public class GenreBean {
      * タイトル.
      */
     @Getter
-    private final String title;
+    private final String name;
 
     /**
      * ID.
@@ -29,7 +29,7 @@ public class GenreBean {
      */
     public GenreBean(final Genre genre) {
 
-        title = genre.getName().getValue();
+        name = genre.getName().getValue();
         id = genre.getId().getValue();
     }
 }

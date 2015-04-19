@@ -74,7 +74,7 @@ public class ReviewDetailTest {
                 final Genre stubGenre = stubGenres.get(v.getId());
 
                 assertThat(v.getId(), is(stubGenre.getId().getValue()));
-                assertThat(v.getTitle(), is(stubGenre.getName().getValue()));
+                assertThat(v.getName(), is(stubGenre.getName().getValue()));
                     });
         }
     }

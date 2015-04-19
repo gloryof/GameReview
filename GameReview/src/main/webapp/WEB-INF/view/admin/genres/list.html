@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head th:include="/common/base/metaInfo :: commonHeader (title='ジャンル一覧')" >
+        <title>ジャンル一覧</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
+        <link rel="stylesheet" th:href="@{/css/base.css}" />
+    </head>
+    <body>
+        <section>
+            <form action="" method="post">
+                <button>クリア</button>
+                <dl>
+                    <dt th:text="${it.nameLabel}">ジャンル名</dt>
+                    <dd>
+                        <input type="text" name="genreName" th:value="${it.condition.genreName}" />
+                    </dd>
+                </dl>
+                <button>検索</button>
+            </form>
+        </section>
+        <section>
+            <table class="bs-list">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th th:text="${it.nameLabel}">ジャンル名</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="genreInfo,stats : ${it.genres}">
+                        <td th:text="${stats.count}"></td>
+                        <td>
+                            <a th:href="@{/admin/genre/{genreId}(genreId=${genreInfo.id})}" th:text="${genreInfo.name}">ジャンル名</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </body>
+</html>
