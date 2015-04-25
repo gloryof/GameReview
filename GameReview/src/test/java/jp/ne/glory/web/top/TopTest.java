@@ -3,7 +3,7 @@ package jp.ne.glory.web.top;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import jp.ne.glory.application.genre.GenreListStub;
+import jp.ne.glory.application.genre.GenreSearchStub;
 import jp.ne.glory.application.review.ReviewSearchStub;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
@@ -29,7 +29,7 @@ public class TopTest {
     public static class viewのテスト {
 
         private Top sut = null;
-        private GenreListStub genreListStub = null;
+        private GenreSearchStub genreListStub = null;
         private ReviewSearchStub reviewSearchStub = null;
 
         @Before
@@ -40,7 +40,7 @@ public class TopTest {
                     = ReviewSearchDataGenerator.createBaseSearchResults(10, testGenreDatas);
 
             reviewSearchStub = new ReviewSearchStub(testResultData);
-            genreListStub = new GenreListStub(testGenreDatas);
+            genreListStub = new GenreSearchStub(testGenreDatas);
             sut = new Top(reviewSearchStub, genreListStub);
         }
 

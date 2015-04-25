@@ -3,7 +3,7 @@ package jp.ne.glory.web.admin.genre;
 
 import java.util.List;
 import java.util.stream.IntStream;
-import jp.ne.glory.application.genre.GenreList;
+import jp.ne.glory.application.genre.GenreSearch;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.repository.GenreRepositoryStub;
 import jp.ne.glory.test.genre.list.GenreListDataGenerator;
@@ -38,7 +38,7 @@ public class GenresTest {
             genreList = GenreListDataGenerator.createGenreList(10);
             genreList.forEach(stub::save);
 
-            sut = new Genres(new GenreList(stub));
+            sut = new Genres(new GenreSearch(stub));
         }
 
         @Test
