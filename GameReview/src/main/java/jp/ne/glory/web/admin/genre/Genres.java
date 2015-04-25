@@ -6,7 +6,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import jp.ne.glory.application.genre.GenreList;
+import jp.ne.glory.application.genre.GenreSearch;
 import jp.ne.glory.infra.certify.CertifyTarget;
 import jp.ne.glory.ui.admin.genre.GenreListView;
 import jp.ne.glory.ui.admin.genre.GenreSearchConditionBean;
@@ -27,7 +27,7 @@ public class Genres {
     /**
      * ジャンルリスト.
      */
-    private final GenreList genreList;
+    private final GenreSearch genreSearch;
 
     /**
      * コンストラクタ.<br>
@@ -35,7 +35,7 @@ public class Genres {
      */
     @Deprecated
     Genres() {
-        this.genreList = null;
+        this.genreSearch = null;
     }
 
     /**
@@ -44,9 +44,9 @@ public class Genres {
      * @param genreList ジャンル検索
      */
     @Inject
-    public Genres(final GenreList genreList) {
+    public Genres(final GenreSearch genreList) {
 
-        this.genreList = genreList;
+        this.genreSearch = genreList;
     }
 
     /**
@@ -57,7 +57,7 @@ public class Genres {
     @GET
     public Viewable view() {
 
-        final List<GenreBean> genres = genreList.getAllGenres().stream()
+        final List<GenreBean> genres = genreSearch.getAllGenres().stream()
                 .map(GenreBean::new)
                 .collect(Collectors.toList());
 

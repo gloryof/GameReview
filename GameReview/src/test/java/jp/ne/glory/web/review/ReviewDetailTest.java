@@ -4,7 +4,7 @@ package jp.ne.glory.web.review;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import jp.ne.glory.application.genre.GenreListStub;
+import jp.ne.glory.application.genre.GenreSearchStub;
 import jp.ne.glory.application.review.ReviewSearchStub;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.review.entity.Review;
@@ -31,7 +31,7 @@ public class ReviewDetailTest {
     public static class viewのテスト {
 
         private ReviewDetail sut = null;
-        private GenreListStub genreListStub = null;
+        private GenreSearchStub genreSearchStub = null;
         private ReviewSearchStub reviewSearchStub = null;
 
         @Before
@@ -41,9 +41,9 @@ public class ReviewDetailTest {
                     = ReviewSearchDataGenerator.createBaseSearchResults(10, testGenreDatas);
 
             reviewSearchStub = new ReviewSearchStub(testResultData);
-            genreListStub = new GenreListStub(testGenreDatas);
+            genreSearchStub = new GenreSearchStub(testGenreDatas);
 
-            sut = new ReviewDetail(reviewSearchStub, genreListStub);
+            sut = new ReviewDetail(reviewSearchStub, genreSearchStub);
         }
 
         @Test
@@ -63,7 +63,7 @@ public class ReviewDetailTest {
             final ReviewView actualReviews = actualView.getReview();
             assertThat(actualReviews.getReviews().size(), is(1));
 
-            final Map<Long, Genre> stubGenres = genreListStub.getAllGenres()
+            final Map<Long, Genre> stubGenres = genreSearchStub.getAllGenres()
                     .stream()
                     .collect(Collectors.toMap(v -> v.getId().getValue(), v -> v));
 

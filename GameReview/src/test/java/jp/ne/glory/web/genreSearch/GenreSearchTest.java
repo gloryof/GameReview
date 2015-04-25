@@ -3,7 +3,7 @@ package jp.ne.glory.web.genreSearch;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import jp.ne.glory.application.genre.GenreListStub;
+import jp.ne.glory.application.genre.GenreSearchStub;
 import jp.ne.glory.application.review.ReviewSearchStub;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
@@ -29,8 +29,8 @@ public class GenreSearchTest {
 
     public static class viewのテスト {
 
-        private GenreSearch sut = null;
-        private GenreListStub genreListStub = null;
+        private GenreList sut = null;
+        private GenreSearchStub genreListStub = null;
         private ReviewSearchStub reviewSearchStub = null;
 
         @Before
@@ -41,8 +41,8 @@ public class GenreSearchTest {
                     = ReviewSearchDataGenerator.createBaseSearchResults(100, testGenreDatas);
 
             reviewSearchStub = new ReviewSearchStub(testResultData);
-            genreListStub = new GenreListStub(testGenreDatas);
-            sut = new GenreSearch(reviewSearchStub, genreListStub);
+            genreListStub = new GenreSearchStub(testGenreDatas);
+            sut = new GenreList(reviewSearchStub, genreListStub);
         }
 
         @Test

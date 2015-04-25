@@ -6,7 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import jp.ne.glory.application.genre.GenreList;
+import jp.ne.glory.application.genre.GenreSearch;
 import jp.ne.glory.application.review.ReviewSearch;
 import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.ui.genre.GenreSearchView;
@@ -29,9 +29,9 @@ public class ReviewDetail {
     private final ReviewSearch search;
 
     /**
-     * ジャンルリスト.
+     * ジャンル検索.
      */
-    private final GenreList genreList;
+    private final GenreSearch genreSearch;
 
     /**
      * コンストラクタ.<br>
@@ -41,20 +41,20 @@ public class ReviewDetail {
     @Deprecated
     ReviewDetail() {
         search = null;
-        genreList = null;
+        genreSearch = null;
     }
 
     /**
      * コンストラクタ.
      *
      * @param search レビュー検索
-     * @param genreList ジャンルリスト
+     * @param genreSearch ジャンル検索
      */
     @Inject
-    public ReviewDetail(final ReviewSearch search, final GenreList genreList) {
+    public ReviewDetail(final ReviewSearch search, final GenreSearch genreSearch) {
 
         this.search = search;
-        this.genreList = genreList;
+        this.genreSearch = genreSearch;
     }
 
     /**
@@ -70,7 +70,7 @@ public class ReviewDetail {
 
         final ReviewId reviewId = new ReviewId(paramReviewId);
         final ReviewView reviewView = new ReviewView(search.searchByReviewId(reviewId));
-        final GenreSearchView genreSearchView = new GenreSearchView(genreList.getAllGenres());
+        final GenreSearchView genreSearchView = new GenreSearchView(genreSearch.getAllGenres());
         final TopView topView = new TopView(genreSearchView, reviewView);
 
         return new Viewable(PagePaths.TOP, topView);

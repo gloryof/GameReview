@@ -6,7 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import jp.ne.glory.application.genre.GenreList;
+import jp.ne.glory.application.genre.GenreSearch;
 import jp.ne.glory.application.review.ReviewSearch;
 import jp.ne.glory.ui.genre.GenreSearchView;
 import jp.ne.glory.ui.review.ReviewView;
@@ -32,7 +32,7 @@ public class Top {
     /**
      * ジャンルリスト.
      */
-    private final GenreList genreList;
+    private final GenreSearch genreSearch;
 
     /**
      * コンストラクタ.<br>
@@ -42,20 +42,20 @@ public class Top {
     @Deprecated
     Top() {
         this.search = null;
-        this.genreList = null;
+        this.genreSearch = null;
     }
 
     /**
      * コンストラクタ.
      *
      * @param reviewSearch レビュー検索
-     * @param genreList ジャンルリスト
+     * @param genreSearch ジャンル検索
      */
     @Inject
-    public Top(final ReviewSearch reviewSearch, final GenreList genreList) {
+    public Top(final ReviewSearch reviewSearch, final GenreSearch genreSearch) {
 
         search = reviewSearch;
-        this.genreList = genreList;
+        this.genreSearch = genreSearch;
     }
 
     /**
@@ -68,7 +68,7 @@ public class Top {
     public Viewable view() {
 
         final ReviewView reviewView = new ReviewView(search.searchNewReviews(WebPageConst.PAGE_PER_REVIEWS, 1));
-        final GenreSearchView genreSearchView = new GenreSearchView(genreList.getAllGenres());
+        final GenreSearchView genreSearchView = new GenreSearchView(genreSearch.getAllGenres());
         final TopView topView = new TopView(genreSearchView, reviewView);
 
         return new Viewable(PagePaths.TOP, topView);
