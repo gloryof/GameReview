@@ -9,7 +9,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import jp.ne.glory.application.user.UserRegister;
 import jp.ne.glory.application.user.UserSearch;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.value.UserId;
@@ -47,10 +46,9 @@ public class UserDetail {
      * コンストラクタ.
      *
      * @param userSearch ユーザ検索
-     * @param userRegister ユーザ登録
      */
     @Inject
-    public UserDetail(final UserSearch userSearch, final UserRegister userRegister) {
+    public UserDetail(final UserSearch userSearch) {
 
         this.userSearch = userSearch;
     }

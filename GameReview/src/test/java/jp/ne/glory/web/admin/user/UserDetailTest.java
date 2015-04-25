@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.List;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import jp.ne.glory.application.user.UserRegister;
 import jp.ne.glory.application.user.UserSearch;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepositoryStub;
@@ -38,7 +37,7 @@ public class UserDetailTest {
             final List<User> userList = UserSearchDataGenerator.creaeteUsers(10);
             userList.forEach(stub::save);
 
-            sut = new UserDetail(new UserSearch(stub), new UserRegister(stub));
+            sut = new UserDetail(new UserSearch(stub));
         }
 
         @Test
@@ -130,7 +129,7 @@ public class UserDetailTest {
         public void setUp() {
 
             stub = new UserRepositoryStub();
-            sut = new UserDetail(new UserSearch(stub), new UserRegister(stub));
+            sut = new UserDetail(new UserSearch(stub));
         }
 
         @Test
