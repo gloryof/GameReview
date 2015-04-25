@@ -1,5 +1,6 @@
 package jp.ne.glory.web.admin.user;
 
+import java.net.URI;
 import java.util.List;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -108,10 +109,15 @@ public class UserDetailTest {
         @Test
         public void 指定したユーザIDが存在しない場合_エラー画面にリダイレクトされる() {
 
-            final Response actualResponse = sut.view(Long.MAX_VALUE);
+            final long paramUserId = Long.MAX_VALUE;
+            final Response actualResponse = sut.view(paramUserId);
+
+            final String base = UriBuilder.fromResource(UserDetail.class).toTemplate();
+            final String append = UriBuilder.fromMethod(UserDetail.class, "notFound").toTemplate();
+            final URI uri = UriBuilder.fromUri(base + append).build(paramUserId);
 
             assertThat(actualResponse.getStatusInfo(), is(Response.Status.SEE_OTHER));
-            assertThat(actualResponse.getLocation(), is(UriBuilder.fromMethod(UserDetail.class, "notFound").build()));
+            assertThat(actualResponse.getLocation(), is(UriBuilder.fromUri(uri).build()));
         }
     }
 

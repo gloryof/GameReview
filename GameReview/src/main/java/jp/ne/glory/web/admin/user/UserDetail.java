@@ -34,11 +34,6 @@ public class UserDetail {
     private final UserSearch userSearch;
 
     /**
-     * ユーザ登録.
-     */
-    private final UserRegister userRegister;
-
-    /**
      * コンストラクタ.<br>
      * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
      */
@@ -46,7 +41,6 @@ public class UserDetail {
     UserDetail() {
 
         userSearch = null;
-        userRegister = null;
     }
 
     /**
@@ -59,7 +53,6 @@ public class UserDetail {
     public UserDetail(final UserSearch userSearch, final UserRegister userRegister) {
 
         this.userSearch = userSearch;
-        this.userRegister = userRegister;
     }
 
     /**
@@ -75,7 +68,7 @@ public class UserDetail {
 
         if (!result.isPresent()) {
 
-            return redirectNotFound();
+            return redirectNotFound(userId);
         }
 
         return buildOkToDetail(result.get());
@@ -86,7 +79,7 @@ public class UserDetail {
      *
      * @return エラー画面
      */
-    @Path("/error/notFound")
+    @Path("notFound")
     @GET
     public Viewable notFound() {
 
@@ -96,11 +89,19 @@ public class UserDetail {
     /**
      * ユーザが見つからない画面にリダイレクトする.
      *
+     * @param userId ユーザID
      * @return リダイレクトレスポンス
      */
-    private Response redirectNotFound() {
+    private Response redirectNotFound(final long userId) {
 
-        final URI uri = UriBuilder.fromMethod(UserDetail.class, "notFound").build();
+        final String base = UriBuilder.fromResource(UserDetail.class).toTemplate();
+        final String append = UriBuilder.fromMethod(UserDetail.class, "notFound").toTemplate();
+
+        final UriBuilder builder = UriBuilder.fromUri(base + append);
+        builder.resolveTemplate("id", userId);
+
+        final URI uri = builder.build();
+
         return Response.seeOther(uri).build();
     }
     /**
