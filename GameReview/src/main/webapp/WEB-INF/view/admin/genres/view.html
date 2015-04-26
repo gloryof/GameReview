@@ -17,15 +17,14 @@
             </dl>
         </section>
         <section class="command">
-            <button class="cancel-button">キャンセル</button>
+            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/genre/{genreId}/edit(genreId=${it.genreId})}">キャンセル</button>
         </section>
         <script>
             $(document).ready(function(event){
                 $(".edit-butotn").on("click", function(event) {
 
                     var $self = $(this);
-                    var genreId = $self.data("genre-id");
-                    location.href = "/admin/genre/" + genreId + "/edit";
+                    location.href = $self.data("cancel-url");
                 });
             });
         </script>

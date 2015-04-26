@@ -8,7 +8,7 @@
     </head>
     <body>
         <section class="user-command">
-            <button class="edit-button" th:attr="data-user-id=${it.userId}">編集</button>
+            <button class="edit-button" th:attr="data-edit-url=@{/admin/user/{userId}/edit(userId=${it.userId})}">編集</button>
         </section>
         <section class="user-detail">
             <dl>
@@ -29,17 +29,17 @@
             </dl>
         </section>
         <section class="command">
-            <button class="cancel-button">キャンセル</button>
+            <button class="cancel-button" th:attr="data-back-url=@{/admin/users}">キャンセル</button>
         </section>
         <script>
             $(document).ready(function (event) {
                 $(".edit-button").on("click", function (event) {
                     var $self = $(this);
-                    var userId = $self.data("user-id");
-                    location.href = "/admin/user/" + userId + "/edit";
+                    location.href = $self.data("edit-url");
                 });
                 $(".cancel-button").on("click", function (event) {
-                    location.href = "/admin/users";
+                    var $self = $(this);
+                    location.href = $self.data("back-url");
                 });
             });
         </script>

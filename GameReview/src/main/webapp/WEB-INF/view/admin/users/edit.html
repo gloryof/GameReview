@@ -42,17 +42,16 @@
         </section>
         <section class="command">
             <button class="complete-button">編集完了</button>
-            <button class="cancel-button">キャンセル</button>
+            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/user/{userId}(userId=${it.userId})}">キャンセル</button>
         </section>
         <script>
             $(document).ready(function (event) {
-                var $userIdObj = $("#user-id");
-
                 $(".complete-button").on("click", function(event) {
                     $("#user-edit-form").submit();
                 });
                 $(".cancel-button").on("click", function (event) {
-                    location.href = "/admin/user/" + $userIdObj.val();
+                    var $self = $(this);
+                    location.href = $self.data("cancel-url");
                 });
             });
         </script>
