@@ -1,10 +1,12 @@
 package jp.ne.glory.application.genre;
 
 import java.util.List;
+import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.repository.GenreRepository;
+import jp.ne.glory.domain.genre.value.GenreId;
 
 /**
  * ジャンル検索に関する処理.
@@ -49,5 +51,16 @@ public class GenreSearch {
     public List<Genre> getAllGenres() {
 
         return repository.getAllGenreList();
+    }
+
+    /**
+     * ジャンルIDで検索する.
+     *
+     * @param genreId ジャンルID
+     * @return ジャンル
+     */
+    public Optional<Genre> searchBy(final GenreId genreId) {
+
+        return repository.findBy(genreId);
     }
 }

@@ -51,4 +51,15 @@ public final class PagePaths {
      * ジャンル一覧.
      */
     public static final String GENRE_LIST = "/admin/genres/list";
+
+    /**
+     * ジャンル詳細.
+     */
+    public static final String GENRE_DETAIL = "/admin/genres/view";
+
+    /**
+     * エラー画面（ジャンルが見つからない）.
+     */
+    public static final String GENRE_NOT_FOUND = "/admin/genres/notFound";
+
 }

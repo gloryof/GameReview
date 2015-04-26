@@ -33,14 +33,14 @@ public class GenreDetailTest {
 
         @Before
         public void setUp() {
-
+            stub = new GenreRepositoryStub();
             LongStream.rangeClosed(0, 10)
                     .mapToObj(v -> new Genre(new GenreId(v), new GenreName("ジャンル" + v)))
                     .forEach(stub::save);
 
-            final GenreSearch genreList = new GenreSearch(stub);
+            final GenreSearch genreSearch = new GenreSearch(stub);
 
-            sut = new GenreDetail(genreList);
+            sut = new GenreDetail(genreSearch);
         }
 
         @Test
@@ -70,8 +70,8 @@ public class GenreDetailTest {
             final long genreId = Long.MAX_VALUE;
             final Response actualResponse = sut.view(genreId);
 
-            final String base = UriBuilder.fromResource(GenreDetailView.class).toTemplate();
-            final String append = UriBuilder.fromMethod(GenreDetailView.class, "notFound").toTemplate();
+            final String base = UriBuilder.fromResource(GenreDetail.class).toTemplate();
+            final String append = UriBuilder.fromMethod(GenreDetail.class, "notFound").toTemplate();
             final URI uri = UriBuilder.fromUri(base + append).build(genreId);
 
             assertThat(actualResponse.getStatusInfo(), is(Response.Status.SEE_OTHER));
@@ -82,11 +82,18 @@ public class GenreDetailTest {
     public static class notFoundのテスト {
 
         private GenreDetail sut = null;
+        private GenreRepositoryStub stub = null;
 
         @Before
         public void setUp() {
+            stub = new GenreRepositoryStub();
+            LongStream.rangeClosed(0, 10)
+                    .mapToObj(v -> new Genre(new GenreId(v), new GenreName("ジャンル" + v)))
+                    .forEach(stub::save);
 
-            sut = new GenreDetail(new GenreSearch(null));
+            final GenreSearch genreSearch = new GenreSearch(stub);
+
+            sut = new GenreDetail(genreSearch);
         }
 
         @Test
@@ -94,7 +101,7 @@ public class GenreDetailTest {
 
             final Viewable viewable = sut.notFound();
 
-            assertThat(viewable.getTemplateName(), is(PagePaths.USER_NOT_FOUND));
+            assertThat(viewable.getTemplateName(), is(PagePaths.GENRE_NOT_FOUND));
             assertThat(viewable.getModel(), is(nullValue()));
         }
     }
