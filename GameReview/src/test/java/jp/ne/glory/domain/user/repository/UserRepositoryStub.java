@@ -30,7 +30,7 @@ public class UserRepositoryStub implements UserRepository {
     public UserId save(final User user) {
 
         final User saveUser;
-        if (user.getUserId() == null) {
+        if (!user.isRegistered()) {
 
             saveUser = new User(new UserId(sequence));
             sequence++;
@@ -89,6 +89,11 @@ public class UserRepositoryStub implements UserRepository {
     @Override
     public int getSearchCount(UserSearchCondition condition) {
         return searchAll(condition).size();
+    }
+
+    public long getCurrentSequence() {
+
+        return sequence;
     }
 
     private boolean isMatchCondition(final UserSearchCondition condition, final User user) {

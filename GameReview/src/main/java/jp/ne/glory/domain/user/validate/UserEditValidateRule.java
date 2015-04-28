@@ -5,6 +5,7 @@ import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.common.validate.ValidateRule;
 import jp.ne.glory.domain.user.entity.User;
+import jp.ne.glory.domain.user.repository.UserRepository;
 
 /**
  * ユーザ情報の変更に関する入力ルール.
@@ -23,12 +24,13 @@ public class UserEditValidateRule implements ValidateRule {
 
     /**
      * コンストラクタ.
-     * @param paramUser ユーザ. 
+     * @param user ユーザ
+     * @param repository リポジトリ
      */
-    public UserEditValidateRule(final User paramUser) {
+    public UserEditValidateRule(final User user, final UserRepository repository) {
 
-        user = paramUser;
-        commonRule = new UserModifyCommonValidateRule(paramUser);
+        this.user = user;
+        commonRule = new UserModifyCommonValidateRule(user, repository);
     }
 
     /**

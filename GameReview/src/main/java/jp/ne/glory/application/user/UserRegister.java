@@ -53,7 +53,7 @@ public class UserRegister {
 
         final Function<User, ValidateErrors> checkFunc = (v -> {
 
-            final UserModifyCommonValidateRule rule = new UserModifyCommonValidateRule(v);
+            final UserModifyCommonValidateRule rule = new UserModifyCommonValidateRule(v, repository);
             return rule.validate();
         });
 
@@ -70,7 +70,7 @@ public class UserRegister {
 
         final Function<User, ValidateErrors> checkFunc = (v -> {
 
-            final UserEditValidateRule rule = new UserEditValidateRule(v);
+            final UserEditValidateRule rule = new UserEditValidateRule(v, repository);
             return rule.validate();
         });
 

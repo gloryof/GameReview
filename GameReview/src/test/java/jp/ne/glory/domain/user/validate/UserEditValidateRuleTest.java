@@ -6,6 +6,7 @@ import jp.ne.glory.domain.common.error.ErrorInfo;
 import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.user.entity.User;
+import jp.ne.glory.domain.user.repository.UserRepositoryStub;
 import jp.ne.glory.domain.user.value.Authorities;
 import jp.ne.glory.domain.user.value.Authority;
 import jp.ne.glory.domain.user.value.LoginId;
@@ -38,7 +39,7 @@ public class UserEditValidateRuleTest {
             user.setUserName(new UserName("テストユーザ"));
             user.setPassword(new Password("19CB2A070DDBE8157E17C5DDA0EA38E8AA16FAE1725C1F7AC22747D870368579"));
 
-            sut = new UserEditValidateRule(user);
+            sut = new UserEditValidateRule(user, new UserRepositoryStub());
         }
 
         @Test
@@ -57,7 +58,7 @@ public class UserEditValidateRuleTest {
         @Before
         public void setUp() {
 
-            sut = new UserEditValidateRule(new User());
+            sut = new UserEditValidateRule(new User(), new UserRepositoryStub());
         }
 
         @Test

@@ -112,7 +112,13 @@ public class UserEditView {
      * コンストラクタ.
      */
     public UserEditView() {
-        super();
+
+        userId = null;
+        loginId = null;
+        userName = null;
+        configChangeable = false;
+        reviewPostenable = false;
+        authorityValues = null;
     }
 
     /**

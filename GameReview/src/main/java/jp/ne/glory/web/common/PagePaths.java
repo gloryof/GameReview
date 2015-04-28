@@ -33,6 +33,11 @@ public final class PagePaths {
     public static final String USER_LIST = "/admin/users/list";
 
     /**
+     * ユーザ作成.
+     */
+    public static final String USER_CREATE = "/admin/users/create";
+
+    /**
      * ユーザ詳細.
      */
     public static final String USER_DETAIL = "/admin/users/view";

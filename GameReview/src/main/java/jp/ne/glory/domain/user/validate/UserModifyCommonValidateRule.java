@@ -1,8 +1,14 @@
 package jp.ne.glory.domain.user.validate;
 
+import java.util.Optional;
+import jp.ne.glory.domain.common.error.ErrorInfo;
+import jp.ne.glory.domain.common.error.ValidateError;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.common.validate.ValidateRule;
 import jp.ne.glory.domain.user.entity.User;
+import jp.ne.glory.domain.user.repository.UserRepository;
+import jp.ne.glory.domain.user.value.LoginId;
+import jp.ne.glory.domain.user.value.UserId;
 
 /**
  * ユーザの編集に関する共通ルール.
@@ -15,12 +21,19 @@ public class UserModifyCommonValidateRule implements ValidateRule {
     private final User user;
 
     /**
-     * コンストラクタ.
-     * @param paramUser ユーザ. 
+     * ユーザリポジトリ.
      */
-    public UserModifyCommonValidateRule(final User paramUser) {
+    private final UserRepository repository;
 
-        user = paramUser;
+    /**
+     * コンストラクタ.
+     * @param user ユーザ
+     * @param repository リポジトリ
+     */
+    public UserModifyCommonValidateRule(final User user, final UserRepository repository) {
+
+        this.user = user;
+        this.repository = repository;
     }
 
     /**
@@ -37,6 +50,31 @@ public class UserModifyCommonValidateRule implements ValidateRule {
         errors.addAll(user.getAuthorities().validate());
         errors.addAll(user.getPassword().validate());
 
+        if (isDuplicated()) {
+
+            errors.add(new ValidateError(ErrorInfo.LoginIdDuplicated, LoginId.LABEL));
+        }
+
         return errors;
+    }
+
+    /**
+     * 重複しているかを判定する.
+     *
+     * @return 重複している場合：true、重複していない場合：false
+     */
+    private boolean isDuplicated() {
+
+        final Optional<User> optUser = repository.findBy(user.getLoginId());
+
+        if (!optUser.isPresent()) {
+
+            return false;
+        }
+
+        final User savedUser = optUser.get();
+        final UserId savedUserId = savedUser.getUserId();
+
+        return !(savedUserId.isSame(user.getUserId()));
     }
 }
