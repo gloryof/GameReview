@@ -267,7 +267,7 @@ public class UserEditTest {
             assertThat(actualView.getUserId(), is(expectedView.getUserId()));
             assertThat(actualView.getLoginId(), is(expectedView.getLoginId()));
             assertThat(actualView.getUserName(), is(expectedView.getUserName()));
-            assertThat(actualView.getPassword(), is(expectedView.getPassword()));
+            assertThat(actualView.getPassword(), is(nullValue()));
         }
 
         @Test

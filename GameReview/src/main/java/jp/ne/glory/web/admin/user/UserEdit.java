@@ -199,6 +199,7 @@ public class UserEdit {
     private Response buildOkToReviewEdit(final UserEditView paramUserEdit, final ValidateErrors errors) {
 
         paramUserEdit.getErrors().addAll(errors);
+        paramUserEdit.setPassword(null);
         final Viewable viewable = new Viewable(PagePaths.USER_EDIT, paramUserEdit);
 
         return Response.ok(viewable).build();
