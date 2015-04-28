@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='ユーザ編集')" >
-        <title>ユーザ編集</title>
+    <head th:include="/common/base/metaInfo :: commonHeader (title='ユーザ登録')" >
+        <title>ユーザ登録</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" th:href="@{/css/normalize.css}" />
         <link rel="stylesheet" th:href="@{/css/base.css}" />
@@ -9,15 +9,14 @@
     <body>
         <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
         <section class="user-edit">
-            <form th:action="@{/admin/user/{userId}/edit(userId=${it.userId})}" method="post" id="user-edit-form">
-                <input type="hidden" name="userId" th:value="${it.userId}" id="user-id" />
+            <form th:action="@{/admin/user/create}" method="post" id="user-create-form">
                 <dl>
                     <dt th:text="${it.loginIdLabel}">ログインID</dt>
                     <dd><input type="text" th:value="${it.loginId}" name="loginId" /></dd>
                     <dt th:text="${it.userNameLabel}">ユーザ名</dt>
                     <dd><input type="text" th:value="${it.userName}" name="userName" /></dd>
                     <dt th:text="${it.passwordLabel}">パスワード</dt>
-                    <dd><input type="password" name="password" placeholder="変更する場合はパスワードを入力してください" /></dd>
+                    <dd><input type="password" name="password" placeholder="" /></dd>
                     <dt>権限</dt>
                     <dd>
                         <ul>
@@ -41,13 +40,13 @@
             </form>
         </section>
         <section class="command">
-            <button class="complete-button">編集完了</button>
-            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/user/{userId}(userId=${it.userId})}">キャンセル</button>
+            <button class="complete-button">新規作成</button>
+            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/users}">キャンセル</button>
         </section>
         <script>
             $(document).ready(function (event) {
                 $(".complete-button").on("click", function(event) {
-                    $("#user-edit-form").submit();
+                    $("#user-create-form").submit();
                 });
                 $(".cancel-button").on("click", function (event) {
                     var $self = $(this);

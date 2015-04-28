@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import jp.ne.glory.domain.user.entity.User;
 import jp.ne.glory.domain.user.repository.UserRepository;
 import jp.ne.glory.domain.user.value.Authority;
@@ -16,7 +16,7 @@ import jp.ne.glory.domain.user.value.UserId;
 import jp.ne.glory.domain.user.value.UserName;
 import jp.ne.glory.domain.user.value.search.UserSearchCondition;
 
-@RequestScoped
+@ApplicationScoped
 public class UserRepositoryImpl implements UserRepository {
 
     private static final Map<Long, User> userMap = new HashMap<>();
@@ -46,7 +46,7 @@ public class UserRepositoryImpl implements UserRepository {
     public UserId save(final User user) {
 
         final User saveUser;
-        if (user.getUserId() == null) {
+        if (user.getUserId() == null || !user.isRegistered()) {
 
             saveUser = new User(new UserId(sequence));
             sequence++;

@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 import javax.inject.Inject;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -31,7 +32,7 @@ import org.glassfish.jersey.server.mvc.Viewable;
  * @author Admin
  */
 @CertifyTarget
-@Path("/amin/user/create")
+@Path("/admin/user/create")
 public class UserCreate {
 
     /**
@@ -84,6 +85,7 @@ public class UserCreate {
      * @param inputData 入力データ
      * @return 作成成功の場合：ユーザ詳細、失敗した場合：新規作成画面
      */
+    @POST
     public Response create(@BeanParam final UserEditView inputData) {
 
         final User user = convertToEntity(inputData);
