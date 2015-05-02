@@ -42,7 +42,7 @@ public class GenreRepositoryImpl implements GenreRepository {
     public GenreId save(Genre genre) {
 
         final Genre saveGenre;
-        if (genre.getId() == null) {
+        if (genre.getId() == null || !genre.isRegistered()) {
 
             saveGenre = new Genre(new GenreId(sequence), genre.getName());
             sequence++;

@@ -67,4 +67,9 @@ public final class PagePaths {
      */
     public static final String GENRE_NOT_FOUND = "/admin/genres/notFound";
 
+    /**
+     * ジャンル作成画面.
+     */
+    public static final String GENRE_CREATE = "/admin/genres/create";
+
 }
