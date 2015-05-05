@@ -19,6 +19,9 @@
                 <button>検索</button>
             </form>
         </section>
+        <section class="command">
+            <button class="create-button" th:attr="data-create-url=@{/admin/genre/create}">新規作成</button>
+        </section>
         <section>
             <table class="bs-list">
                 <thead>
@@ -37,5 +40,16 @@
                 </tbody>
             </table>
         </section>
+        <script>
+            $(document).ready(function(event) {
+                $(".create-button").on("click", function(event) {
+                    var $self = $(this);
+                    location.href = $self.data("create-url");
+                });
+                $(".clear-button").on("click", function(event) {
+                    $("#search-form").find("input").val("");
+                });
+            });
+        </script>
     </body>
 </html>

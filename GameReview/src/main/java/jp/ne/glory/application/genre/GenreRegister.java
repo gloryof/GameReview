@@ -1,6 +1,8 @@
 package jp.ne.glory.application.genre;
 
 import java.util.function.Function;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.repository.GenreRepository;
@@ -13,6 +15,7 @@ import jp.ne.glory.domain.genre.value.GenreId;
  *
  * @author Junki Yamada
  */
+@RequestScoped
 public class GenreRegister {
 
     /**
@@ -25,6 +28,7 @@ public class GenreRegister {
      * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
      *
      */
+    @Deprecated
     GenreRegister() {
         this.repository = null;
     }
@@ -34,6 +38,7 @@ public class GenreRegister {
      *
      * @param paramRepository リポジトリ
      */
+    @Inject
     public GenreRegister(final GenreRepository paramRepository) {
 
         repository = paramRepository;
