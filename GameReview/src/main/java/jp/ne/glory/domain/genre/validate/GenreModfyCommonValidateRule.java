@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ne.glory.domain.genre.validate;
 
 import jp.ne.glory.domain.common.error.ValidateErrors;
@@ -22,11 +17,11 @@ public class GenreModfyCommonValidateRule implements ValidateRule {
     /**
      * コンストラクタ.
      * 
-     * @param paramGenre ジャンル 
+     * @param genre ジャンル
      */
-    public GenreModfyCommonValidateRule(final Genre paramGenre) {
+    public GenreModfyCommonValidateRule(final Genre genre) {
 
-        genre = paramGenre;
+        this.genre = genre;
     }
 
     /**

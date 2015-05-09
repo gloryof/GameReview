@@ -26,12 +26,12 @@ public class GenreEditValidateRule implements ValidateRule {
     /**
      * コンストラクタ.
      * 
-     * @param paramGenre ジャンル 
+     * @param genre ジャンル
      */
-    public GenreEditValidateRule(final Genre paramGenre) {
+    public GenreEditValidateRule(final Genre genre) {
 
-        commonRule = new GenreModfyCommonValidateRule(paramGenre);
-        genre = paramGenre;
+        commonRule = new GenreModfyCommonValidateRule(genre);
+        this.genre = genre;
     }
 
 
