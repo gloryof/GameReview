@@ -1,6 +1,7 @@
 package jp.ne.glory.web.admin.user;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -9,6 +10,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import jp.ne.glory.application.user.UserSearch;
+import jp.ne.glory.domain.user.value.LoginId;
+import jp.ne.glory.domain.user.value.UserName;
+import jp.ne.glory.domain.user.value.search.UserSearchCondition;
 import jp.ne.glory.domain.user.value.search.UserSearchResults;
 import jp.ne.glory.infra.certify.CertifyTarget;
 import jp.ne.glory.ui.admin.user.UserBean;
@@ -81,12 +85,31 @@ public class Users {
 
         final UserListView userList = new UserListView();
 
-        final UserSearchResults results = userSearch.search(searchCondition.createEntity());
+        final UserSearchResults results = userSearch.search(createEntity(searchCondition));
         final List<UserBean> users = results.getResults().stream().map(UserBean::new).collect(Collectors.toList());
 
         userList.setUsers(users);
         userList.setCondition(searchCondition);
 
         return new Viewable(PagePaths.USER_LIST, userList);
+    }
+
+    /**
+     * ユーザ検索条件エンティティを作成する.
+     *
+     * @param searchCondition 検索条件Bean
+     * @return ユーザ検索条件エンティティ
+     */
+    public UserSearchCondition createEntity(final UserSearchConditionBean searchCondition) {
+
+        final UserSearchCondition entity = new UserSearchCondition();
+
+        final UserName name = new UserName(Optional.ofNullable(searchCondition.getUserName()).orElse(""));
+        final LoginId id = new LoginId(Optional.ofNullable(searchCondition.getLoginId()).orElse(""));
+
+        entity.setUserName(name);
+        entity.setLoginId(id);
+
+        return entity;
     }
 }
