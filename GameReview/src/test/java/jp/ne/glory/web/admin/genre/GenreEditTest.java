@@ -2,7 +2,6 @@
 package jp.ne.glory.web.admin.genre;
 
 import java.net.URI;
-import java.util.stream.LongStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import jp.ne.glory.application.genre.GenreRegister;
@@ -10,7 +9,7 @@ import jp.ne.glory.application.genre.GenreSearch;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.repository.GenreRepositoryStub;
 import jp.ne.glory.domain.genre.value.GenreId;
-import jp.ne.glory.domain.genre.value.GenreName;
+import jp.ne.glory.test.genre.list.GenreListDataGenerator;
 import jp.ne.glory.ui.admin.genre.GenreEditView;
 import jp.ne.glory.web.common.PagePaths;
 import org.glassfish.jersey.server.mvc.Viewable;
@@ -32,9 +31,7 @@ public class GenreEditTest {
         public void setUp() {
 
             stub = new GenreRepositoryStub();
-            LongStream.range(0, 10)
-                    .mapToObj(v -> new Genre(new GenreId(v), new GenreName("ジャンル" + v)))
-                    .forEach(stub::save);
+            GenreListDataGenerator.createGenreList(10).forEach(stub::save);
 
             sut = new GenreEdit(new GenreRegister(stub), new GenreSearch(stub));
         }
@@ -82,9 +79,7 @@ public class GenreEditTest {
         public void setUp() {
 
             stub = new GenreRepositoryStub();
-            LongStream.range(0, 10)
-                    .mapToObj(v -> new Genre(new GenreId(v), new GenreName("ジャンル" + v)))
-                    .forEach(stub::save);
+            GenreListDataGenerator.createGenreList(10).forEach(stub::save);
 
             sut = new GenreEdit(new GenreRegister(stub), new GenreSearch(stub));
         }
