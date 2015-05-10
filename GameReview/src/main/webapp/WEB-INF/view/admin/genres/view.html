@@ -8,7 +8,7 @@
     </head>
     <body>
         <section class="user-command">
-            <button class="edit-button" th:attr="data-genre-id=${it.genreId}">編集</button>
+            <button class="edit-button" th:attr="data-edit-url=@{/admin/genre/{genreId}/edit(genreId=${it.genreId})}">編集</button>
         </section>
         <section class="genre-detail">
             <dl>
@@ -17,11 +17,16 @@
             </dl>
         </section>
         <section class="command">
-            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/genre/{genreId}/edit(genreId=${it.genreId})}">キャンセル</button>
+            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/genres}">キャンセル</button>
         </section>
         <script>
             $(document).ready(function(event){
-                $(".edit-butotn").on("click", function(event) {
+                $(".edit-button").on("click", function(event) {
+
+                    var $self = $(this);
+                    location.href = $self.data("edit-url");
+                });
+                $(".cancel-button").on("click", function(event) {
 
                     var $self = $(this);
                     location.href = $self.data("cancel-url");

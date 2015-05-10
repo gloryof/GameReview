@@ -28,6 +28,7 @@
                     <tr>
                         <th>No.</th>
                         <th th:text="${it.nameLabel}">ジャンル名</th>
+                        <th>削除[未実装]</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,7 @@
                         <td>
                             <a th:href="@{/admin/genre/{genreId}(genreId=${genreInfo.id})}" th:text="${genreInfo.name}">ジャンル名</a>
                         </td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
