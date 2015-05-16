@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.repository.GenreRepository;
 import jp.ne.glory.domain.genre.value.GenreId;
+import jp.ne.glory.domain.genre.value.search.GenreSearchCondition;
+import jp.ne.glory.domain.genre.value.search.GenreSearchResults;
 
 /**
  * ジャンル検索に関する処理.
@@ -62,5 +64,19 @@ public class GenreSearch {
     public Optional<Genre> searchBy(final GenreId genreId) {
 
         return repository.findBy(genreId);
+    }
+
+    /**
+     * ジャンルの検索を行う.
+     *
+     * @param condition 検索条件
+     * @return 検索結果
+     */
+    public GenreSearchResults search(final GenreSearchCondition condition) {
+
+        final List<Genre> genreList = repository.search(condition);
+        final int resultCount = repository.getSearchCount(condition);
+
+        return new GenreSearchResults(condition, genreList, resultCount);
     }
 }
