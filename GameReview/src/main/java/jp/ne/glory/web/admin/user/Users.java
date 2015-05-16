@@ -1,7 +1,6 @@
 package jp.ne.glory.web.admin.user;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -104,8 +103,8 @@ public class Users {
 
         final UserSearchCondition entity = new UserSearchCondition();
 
-        final UserName name = new UserName(Optional.ofNullable(searchCondition.getUserName()).orElse(""));
-        final LoginId id = new LoginId(Optional.ofNullable(searchCondition.getLoginId()).orElse(""));
+        final UserName name = new UserName(searchCondition.getUserName());
+        final LoginId id = new LoginId(searchCondition.getLoginId());
 
         entity.setUserName(name);
         entity.setLoginId(id);
