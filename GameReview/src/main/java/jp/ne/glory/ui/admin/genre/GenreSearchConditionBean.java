@@ -1,5 +1,6 @@
 package jp.ne.glory.ui.admin.genre;
 
+import javax.ws.rs.FormParam;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +16,6 @@ public class GenreSearchConditionBean {
      */
     @Getter
     @Setter
+    @FormParam("genreName")
     private String genreName;
 }

@@ -8,7 +8,7 @@
     </head>
     <body>
         <section>
-            <form action="" method="post">
+            <form action="" method="post" th:action="@{/admin/genres/search}">
                 <button>クリア</button>
                 <dl>
                     <dt th:text="${it.nameLabel}">ジャンル名</dt>
