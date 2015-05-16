@@ -70,14 +70,68 @@ public class GenresTest {
 
     public static class searchのテスト {
 
+        private Genres sut = null;
+        private GenreRepositoryStub stub = null;
+        private List<Genre> genreList = null;
+
+        @Before
+        public void setUp() {
+
+            stub = new GenreRepositoryStub();
+            genreList = GenreListDataGenerator.createGenreList(10);
+            genreList.forEach(stub::save);
+
+            sut = new Genres(new GenreSearch(stub));
+        }
+
         @Test
         public void 検索条件が入力されていない場合は全件が取得される() {
 
+            final GenreSearchConditionBean condition = new GenreSearchConditionBean();
+            final Viewable viewable = sut.search(condition);
+
+            assertThat(viewable.getTemplateName(), is(PagePaths.GENRE_LIST));
+            assertThat(viewable.getModel(), is(instanceOf(GenreListView.class)));
+
+            final GenreListView actualView = (GenreListView) viewable.getModel();
+
+            final GenreSearchConditionBean actualCondition = actualView.getCondition();
+            assertThat(actualCondition.getGenreName(), is(nullValue()));
+
+            final List<GenreBean> actualGenres = actualView.getGenres();
+            assertThat(actualGenres.size(), is(genreList.size()));
+
+            IntStream.range(0, actualGenres.size()).forEach(i -> {
+                final GenreBean actualGenre = actualGenres.get(i);
+                final Genre expectedGenre = genreList.get(i);
+
+                assertThat(actualGenre.getId(), is(expectedGenre.getId().getValue()));
+                assertThat(actualGenre.getName(), is(expectedGenre.getName().getValue()));
+            });
         }
 
         @Test
         public void 検索条件が入力されている場合は検索条件にマッチした情報が検索される() {
 
+            final GenreSearchConditionBean expectedCondition = new GenreSearchConditionBean();
+            expectedCondition.setGenreName("ジャンル5");
+            final Viewable viewable = sut.search(expectedCondition);
+
+            assertThat(viewable.getTemplateName(), is(PagePaths.GENRE_LIST));
+            assertThat(viewable.getModel(), is(instanceOf(GenreListView.class)));
+
+            final GenreListView actualView = (GenreListView) viewable.getModel();
+
+            final GenreSearchConditionBean actualCondition = actualView.getCondition();
+            assertThat(actualCondition.getGenreName(), is(expectedCondition.getGenreName()));
+
+            final List<GenreBean> actualGenres = actualView.getGenres();
+            assertThat(actualGenres.size(), is(1));
+
+            final GenreBean actualGenre = actualGenres.get(0);
+
+            assertThat(actualGenre.getId(), is(5l));
+            assertThat(actualGenre.getName(), is(expectedCondition.getGenreName()));
         }
     }
 }
