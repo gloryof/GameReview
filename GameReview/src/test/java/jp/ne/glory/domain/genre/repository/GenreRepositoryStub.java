@@ -40,7 +40,7 @@ public class GenreRepositoryStub implements GenreRepository {
     }
 
     @Override
-    public List<Genre> getAllGenreList() {
+    public List<Genre> findAll() {
 
         return genreMap.entrySet()
                 .stream()

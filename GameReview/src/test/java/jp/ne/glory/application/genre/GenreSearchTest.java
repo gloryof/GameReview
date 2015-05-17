@@ -43,7 +43,7 @@ public class GenreSearchTest {
         @Test
         public void 全てのジャンルが取得される() {
 
-            final List<Genre> exepectedList = stub.getAllGenreList();
+            final List<Genre> exepectedList = stub.findAll();
             final List<Genre> actualList = sut.getAllGenres();
             final int actualSize = actualList.size();
 

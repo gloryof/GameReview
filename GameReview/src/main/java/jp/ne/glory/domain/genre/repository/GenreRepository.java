@@ -34,7 +34,7 @@ public interface GenreRepository {
      *
      * @return ジャンルリスト
      */
-    List<Genre> getAllGenreList();
+    List<Genre> findAll();
 
     /**
      * ジャンル検索.

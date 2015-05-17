@@ -52,7 +52,7 @@ public class GenreSearch {
      */
     public List<Genre> getAllGenres() {
 
-        return repository.getAllGenreList();
+        return repository.findAll();
     }
 
     /**
