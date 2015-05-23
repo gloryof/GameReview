@@ -206,7 +206,7 @@ public class GenreSearchTest {
         }
 
         @Test
-        public void ジャンル名を指定するとジャンル名に一致するユーザが取得できる() {
+        public void ジャンル名を指定するとジャンル名に一致するジャンルが取得できる() {
 
             final GenreSearchCondition condition = new GenreSearchCondition();
             final GenreName expectedGenreName = genreList.get(12).getName();
