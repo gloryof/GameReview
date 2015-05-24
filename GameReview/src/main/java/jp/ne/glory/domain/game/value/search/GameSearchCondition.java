@@ -34,4 +34,12 @@ public class GameSearchCondition extends SearchCondition {
     @Getter
     @Setter
     private GenreId genreId;
+
+    /**
+     * ゲームの並び順.<br>
+     * デフォルトは {@link GameSearchOrder#IdDesc}。
+     */
+    @Getter
+    @Setter
+    private GameSearchOrder order;
 }

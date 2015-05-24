@@ -59,6 +59,12 @@ public class GameRepositoryStub implements GameRepository {
 
         final List<Game> allList = searchAll(condition);
 
+        allList.sort((v1, v2) -> {
+
+            final long sortedValue = v2.getId().getValue() - v1.getId().getValue();
+            return (int) sortedValue;
+        });
+
         if (condition.getLotPerCount() < 1) {
 
             return allList;

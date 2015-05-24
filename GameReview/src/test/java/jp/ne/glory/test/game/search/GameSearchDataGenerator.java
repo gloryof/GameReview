@@ -12,7 +12,7 @@ import jp.ne.glory.domain.genre.value.GenreId;
 
 public class GameSearchDataGenerator {
 
-    public static List<Game> creaeteUsers(final int count) {
+    public static List<Game> creaeteGames(final int count) {
 
         return LongStream.rangeClosed(1, count)
                 .mapToObj(v -> createGame(v))

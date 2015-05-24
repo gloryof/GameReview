@@ -32,7 +32,7 @@ public class GameSearchTest {
         public void setUp() {
 
             stub = new GameRepositoryStub();
-            GameSearchDataGenerator.creaeteUsers(10).stream().forEach(stub::save);
+            GameSearchDataGenerator.creaeteGames(10).stream().forEach(stub::save);
 
             sut = new GameSearch(stub);
         }
@@ -69,7 +69,7 @@ public class GameSearchTest {
         public void setUp() {
 
             stub = new GameRepositoryStub();
-            GameSearchDataGenerator.creaeteUsers(10).stream().forEach(stub::save);
+            GameSearchDataGenerator.creaeteGames(10).stream().forEach(stub::save);
 
             sut = new GameSearch(stub);
         }
@@ -113,7 +113,7 @@ public class GameSearchTest {
         public void setUp() {
 
             stub = new GameRepositoryStub();
-            gameList = GameSearchDataGenerator.creaeteUsers(100);
+            gameList = GameSearchDataGenerator.creaeteGames(100);
             gameList.stream().forEach(stub::save);
 
             sut = new GameSearch(stub);
