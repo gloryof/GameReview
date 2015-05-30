@@ -46,7 +46,7 @@ public class GenresTest {
 
             final Viewable viewable = sut.view();
 
-            assertThat(viewable.getTemplateName(), is(PagePaths.GAME_LIST));
+            assertThat(viewable.getTemplateName(), is(PagePaths.GENRE_LIST));
             assertThat(viewable.getModel(), is(instanceOf(GenreListView.class)));
 
             final GenreListView actualView = (GenreListView) viewable.getModel();
@@ -90,7 +90,7 @@ public class GenresTest {
             final GenreSearchConditionBean condition = new GenreSearchConditionBean();
             final Viewable viewable = sut.search(condition);
 
-            assertThat(viewable.getTemplateName(), is(PagePaths.GAME_LIST));
+            assertThat(viewable.getTemplateName(), is(PagePaths.GENRE_LIST));
             assertThat(viewable.getModel(), is(instanceOf(GenreListView.class)));
 
             final GenreListView actualView = (GenreListView) viewable.getModel();
@@ -117,7 +117,7 @@ public class GenresTest {
             expectedCondition.setGenreName("ジャンル5");
             final Viewable viewable = sut.search(expectedCondition);
 
-            assertThat(viewable.getTemplateName(), is(PagePaths.GAME_LIST));
+            assertThat(viewable.getTemplateName(), is(PagePaths.GENRE_LIST));
             assertThat(viewable.getModel(), is(instanceOf(GenreListView.class)));
 
             final GenreListView actualView = (GenreListView) viewable.getModel();
