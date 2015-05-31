@@ -11,10 +11,14 @@
             <button class="clear-button">クリア</button>
             <form th:action="@{/admin/users/search}" method="post" id="search-form">
                 <dl>
-                    <dt>ログインID</dt>
-                    <dd><input type="text" name="loginId" th:value="${it.condition.loginId}" /></dd>
-                    <dt>ユーザ名</dt>
-                    <dd><input type="text" name="userName" th:value="${it.condition.userName}" /></dd>
+                    <dt>タイトル</dt>
+                    <dd><input type="text" name="loginId" th:value="${it.condition.title}" /></dd>
+                    <dt>ジャンル</dt>
+                    <dd>
+                        <select>
+                            <option value="">--</option>
+                        </select>
+                    </dd>
                 </dl>
                 <button>検索</button>
             </form>
@@ -26,29 +30,22 @@
             <table class="bs-list">
                 <thead>
                     <tr>
-                        <th rowspan="2">No.</th>
-                        <th rowspan="2">ログインID</th>
-                        <th rowspan="2">ユーザ名</th>
-                        <th colspan="2">権限</th>
-                        <th rowspan="2">削除[未実装]</th>
-                    </tr>
-                    <tr>
-                        <th th:text="${it.authorityConfigChangeLabel}">レビュー投稿</th>
-                        <th th:text="${it.authorityReviewPostLabel}">設定変更</th>
+                        <th>No.</th>
+                        <th>タイトル</th>
+                        <th>ジャンル</th>
+                        <th>CERO</th>
+                        <th>削除[未実装]</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="userInfo,stats : ${it.users}">
+                    <tr th:each="gameInfo,stats : ${it.games}">
                         <td th:text="${stats.count}"></td>
                         <td>
-                            <a th:href="@{/admin/user/{userId}(userId=${userInfo.userId})}" th:text="${userInfo.loginId}">ログインIDテスト</a>
+                            <a th:href="@{/admin/game/{gameId}(gameId=${gameInfo.gameId})}" th:text="${gameInfo.title}">ゲームタイトル</a>
                         </td>
-                        <td th:text="${userInfo.userName}">ユーザ名</td>
+                        <td th:text="${gameInfo.genreName}">ユーザ名</td>
                         <td>
-                            <span th:if="${userInfo.configChangeable}">○</span>
-                        </td>
-                        <td>
-                            <span th:if="${userInfo.reviewPostenable}">○</span>
+                            <span th:text="${gameInfo.ceroRating.label}">CC</span>
                         </td>
                         <td></td>
                     </tr>

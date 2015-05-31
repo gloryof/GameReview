@@ -1,15 +1,18 @@
 package jp.ne.glory.web.admin.game;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import jp.ne.glory.application.game.GameSearch;
+import jp.ne.glory.application.genre.GenreSearch;
 import jp.ne.glory.domain.game.value.search.GameSearchCondition;
 import jp.ne.glory.domain.game.value.search.GameSearchOrder;
 import jp.ne.glory.domain.game.value.search.GameSearchResults;
+import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.infra.certify.CertifyTarget;
 import jp.ne.glory.ui.admin.game.GameBean;
 import jp.ne.glory.ui.admin.game.GameListView;
@@ -30,7 +33,12 @@ public class Games {
     /**
      * ゲーム検索.
      */
-    private final GameSearch search;
+    private final GameSearch gameSearch;
+
+    /**
+     * ジャンル検索.
+     */
+    private final GenreSearch genreSearch;
 
     /**
      * コンストラクタ.<br>
@@ -39,18 +47,21 @@ public class Games {
     @Deprecated
     Games() {
 
-        this.search = null;
+        this.gameSearch = null;
+        this.genreSearch = null;
     }
 
     /**
      * コンストラクタ.
      *
-     * @param search ゲーム検索
+     * @param gameSearch ゲーム検索
+     * @param genreSearch ジャンル検索
      */
     @Inject
-    public Games(final GameSearch search) {
+    public Games(final GameSearch gameSearch, final GenreSearch genreSearch) {
 
-        this.search = search;
+        this.gameSearch = gameSearch;
+        this.genreSearch = genreSearch;
     }
 
     /**
@@ -65,13 +76,16 @@ public class Games {
         condition.setOrder(GameSearchOrder.IdDesc);
         condition.setLotPerCount(20);
 
-        final GameSearchResults results = search.search(condition);
+        final GameSearchResults results = gameSearch.search(condition);
 
         final GameListView listView = new GameListView();
         listView.setCondition(new GameSearchConditionBean());
 
+        final Map<Long, Genre> genreMap = genreSearch.getAllGenres().stream()
+                .collect(Collectors.toMap(e -> e.getId().getValue(), e -> e));
+
         final List<GameBean> games = results.getResults().stream()
-                .map(v -> new GameBean(v))
+                .map(v -> new GameBean(v, genreMap.get(v.getGenreId().getValue())))
                 .collect(Collectors.toList());
 
         listView.setGames(games);

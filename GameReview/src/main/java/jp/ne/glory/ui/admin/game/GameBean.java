@@ -2,6 +2,7 @@ package jp.ne.glory.ui.admin.game;
 
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.value.CeroRating;
+import jp.ne.glory.domain.genre.entity.Genre;
 import lombok.Getter;
 
 /**
@@ -42,16 +43,24 @@ public class GameBean {
     private final Long genreId;
 
     /**
+     * ジャンル名.
+     */
+    @Getter
+    private final String genreName;
+
+    /**
      * コンストラクタ.
      *
      * @param game ゲームエンティティ
+     * @param genre ジャンル
      */
-    public GameBean(final Game game) {
+    public GameBean(final Game game, final Genre genre) {
 
         gameId = game.getId().getValue();
         title = game.getTitle().getValue();
         siteUrl = game.getUrl().getValue();
         ceroRating = game.getCeroRating();
-        genreId = game.getGenreId().getValue();
+        genreId = genre.getId().getValue();
+        genreName = genre.getName().getValue();
     }
 }
