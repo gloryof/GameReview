@@ -17,6 +17,7 @@ import jp.ne.glory.ui.admin.game.GameBean;
 import jp.ne.glory.ui.admin.game.GameListView;
 import jp.ne.glory.ui.admin.game.GameSearchConditionBean;
 import jp.ne.glory.web.common.PagePaths;
+import jp.ne.glory.web.common.PagerInfo;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public class GamesTest {
         public void setUp() {
 
             stub = new GameRepositoryStub();
-            gameList = GameSearchDataGenerator.creaeteGames(100);
+            gameList = GameSearchDataGenerator.creaeteGames(200);
             gameList.forEach(stub::save);
 
             genreStub = new GenreRepositoryStub();
@@ -81,6 +82,21 @@ public class GamesTest {
                 assertThat(actualGame.getGenreId(), is(expectedGenre.getId().getValue()));
                 assertThat(actualGame.getGenreName(), is(expectedGenre.getName().getValue()));
             });
+
+            final PagerInfo actualPager = actualView.getPager();
+
+            assertThat(actualPager.getCurrentPage(), is(1));
+
+            final int[] actualPageNumbers = actualPager.getPages();
+            assertThat(actualPageNumbers.length, is(10));
+
+            for (int i = 0; i < 10; i++) {
+
+                assertThat(actualPageNumbers[i], is(i + 1));
+            }
+
+            assertThat(actualPager.isPrevActive(), is(false));
+            assertThat(actualPager.isNextActive(), is(true));
         }
     }
 

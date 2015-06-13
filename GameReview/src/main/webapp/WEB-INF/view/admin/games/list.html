@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" th:href="@{/css/normalize.css}" />
         <link rel="stylesheet" th:href="@{/css/base.css}" />
+        <link rel="stylesheet" th:href="@{/css/pager.css}" />
     </head>
     <body>
         <section class="search-condition">
@@ -27,6 +28,7 @@
             <button class="create-button" th:attr="data-create-url=@{/admin/user/create}">新規作成</button>
         </section>
         <section class="search-result">
+            <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager})"></div>
             <table class="bs-list">
                 <thead>
                     <tr>
@@ -51,6 +53,7 @@
                     </tr>
                 </tbody>
             </table>
+            <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager})"></div>
         </section>
         <script>
             $(document).ready(function(event) {

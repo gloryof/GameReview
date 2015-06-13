@@ -1,0 +1,22 @@
+ul.bs-pager {
+    text-align: center;
+}
+ul.bs-pager > li {
+    display: inline-block;
+}
+
+ul.bs-pager > li.pager-number {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+ul.bs-pager > li > button {
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+ul.bs-pager > li.st-not-view {
+    visibility: hidden;
+}

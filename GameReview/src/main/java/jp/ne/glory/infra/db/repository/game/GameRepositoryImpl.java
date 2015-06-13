@@ -30,7 +30,7 @@ public class GameRepositoryImpl implements GameRepository {
 
     static {
 
-        LongStream.rangeClosed(1, 50)
+        LongStream.rangeClosed(1, 250)
                 .mapToObj(GameRepositoryImpl::createGame)
                 .forEach(v -> gameMap.put(v.getId().getValue(), v));
         sequence = 50;

@@ -18,6 +18,7 @@ import jp.ne.glory.ui.admin.game.GameBean;
 import jp.ne.glory.ui.admin.game.GameListView;
 import jp.ne.glory.ui.admin.game.GameSearchConditionBean;
 import jp.ne.glory.web.common.PagePaths;
+import jp.ne.glory.web.common.PagerInfo;
 import org.glassfish.jersey.server.mvc.Viewable;
 
 /**
@@ -89,6 +90,7 @@ public class Games {
                 .collect(Collectors.toList());
 
         listView.setGames(games);
+        listView.setPager(new PagerInfo(results, 1));
 
         return new Viewable(PagePaths.GAME_LIST, listView);
     }
