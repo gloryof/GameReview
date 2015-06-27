@@ -9,16 +9,16 @@
         <link rel="stylesheet" href="../../../../css/pager.css" th:href="@{/css/pager.css}" />
     </head>
     <body>
-        <div class="bs-top-menu" th:fragment="pager(pagerInfo)">
-            <ul class="bs-pager">
+        <div class="bs-top-menu" th:fragment="pager(pagerInfo, appendClass)">
+            <ul class="bs-pager" th:classappend="${!#strings.isEmpty(appendClass)} ? ${appendClass}">
                 <li class="prev-page" th:classappend="${pagerInfo.prevActive}? '' : 'st-not-view'">
-                    <button>&lt;&lt;前へ</button>
+                    <button th:attr="data-pager-number=${pagerInfo.currentPage} - 1">&lt;&lt;前へ</button>
                 </li>
-                <li class="pager-number" th:each="pageNumber: ${pagerInfo.pages}">
+                <li class="pager-number" th:each="pageNumber: ${pagerInfo.pages}" th:classappend="${pagerInfo.currentPage == pageNumber? 'bs-current' : ''}">
                     <button th:attr="data-pager-number=${pageNumber}" th:text="${pageNumber}">1</button>
                 </li>
                 <li class="next-page"  th:classappend="${pagerInfo.nextActive}? '' : 'st-not-view'">
-                    <button>次へ&gt;&gt;</button>
+                    <button th:attr="data-pager-number=${pagerInfo.currentPage} + 1">次へ&gt;&gt;</button>
                 </li>
             </ul>
         </div>

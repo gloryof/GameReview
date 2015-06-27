@@ -20,3 +20,9 @@ ul.bs-pager > li > button {
 ul.bs-pager > li.st-not-view {
     visibility: hidden;
 }
+
+ul.bs-pager > li.bs-current > button {
+    background-color: orange;
+    color: white;
+    border-color: gold;
+}

@@ -41,76 +41,128 @@ public class PagerInfo {
     private final boolean nextActive;
 
     /**
+     * 1ページ内の件数.
+     */
+    private final int pagePerCount;
+
+    /**
+     * 全件数.
+     */
+    private final int allCount;
+
+    /**
+     * 最大ページ数.
+     */
+    private final int maxPageNumber;
+
+    /**
+     * 開始ページ番号.
+     */
+    private final int startPageNumber;
+
+    /**
      * コンストラクタ.
      *
      * @param results 検索結果
-     * @param startPage 開始ページ
      */
-    public PagerInfo(final SearchResults results, final int startPage) {
+    public PagerInfo(final SearchResults results) {
 
         final SearchCondition condition = results.getCondition();
-        final int pagePerCount = condition.getLotPerCount();
-        final int allCount = results.getAllCount();
+        pagePerCount = condition.getLotPerCount();
+        allCount = results.getAllCount();
 
-        final int restPageCount = calculateRestPageCount(pagePerCount, allCount, startPage);
-        currentPage = condition.getLotNumber();
+        currentPage = allCount > 0 ? condition.getLotNumber() : 0;
+        maxPageNumber = calculateMaxPage();
+        startPageNumber = calculateStartPage();
 
-        pages = createPageNumbers(restPageCount, startPage);
+        pages = createPageNumbers();
 
         prevActive = (1 < currentPage);
-
-        final int viewLastPage = pages[restPageCount - 1];
-        nextActive = (currentPage < viewLastPage);
-    }
-
-    /**
-     * 残りの表示ページ数を計算する.
-     *
-     * @param pagePerCount ページ内のデータ数
-     * @param allCount 全件数
-     * @param startPage 表示開始ページ数
-     * @return 表示ページ数
-     */
-    private int calculateRestPageCount(final int pagePerCount, final int allCount, final int startPage) {
-
-        final int prevPageLast = (startPage - 1) * pagePerCount;
-
-        final int restDataCount = allCount - prevPageLast;
-
-        int restPageCount = (restDataCount / pagePerCount);
-
-        if (restPageCount == 0) {
-
-            return 1;
-        }
-
-        if (MAX_VIEW_PAGES < restPageCount) {
-
-            return MAX_VIEW_PAGES;
-        }
-
-        if (restDataCount % pagePerCount < 1) {
-            return restPageCount;
-        }
-
-        return restPageCount + 1;
+        nextActive = hasNext();
     }
 
     /**
      * ページ数の配列を作成する.
      *
-     * @param restPageCount 残りページ数
-     * @param startPage 開始ページ数
      * @return ページ数配列
      */
-    private int[] createPageNumbers(final int restPageCount, final int startPage) {
+    private int[] createPageNumbers() {
+
+        final int restPageCount;
+        if (maxPageNumber < 1) {
+            restPageCount = 0;
+        } else if (maxPageNumber < (startPageNumber + MAX_VIEW_PAGES)) {
+
+            restPageCount = maxPageNumber - (startPageNumber - 1);
+        } else {
+
+            restPageCount = MAX_VIEW_PAGES;
+        }
 
         final int[] pages = new int[restPageCount];
         for (int i = 0; i < restPageCount; i++) {
 
-            pages[i] = startPage + i;
+            pages[i] = startPageNumber + i;
         }
 
         return pages;
+    }
+
+    /**
+     * 次ページが存在するかを判定する.
+     *
+     * @return 存在する場合：true、存在しない場合：false
+     */
+    private boolean hasNext() {
+
+        if (pages.length <= 1) {
+
+            return false;
+        }
+
+        final int viewLastPage = pages[pages.length - 1];
+
+        if (viewLastPage < maxPageNumber) {
+
+            return true;
+        }
+
+        return (currentPage < viewLastPage);
+    }
+
+    /**
+     * 最大ページ数を計算する.
+     *
+     * @return 最大ページ数.
+     */
+    private int calculateMaxPage() {
+
+        if (allCount == 0) {
+
+            return 0;
+        }
+
+        if (allCount <= pagePerCount) {
+
+            return 1;
+        }
+
+        final int appendPage = allCount % pagePerCount > 0 ? 1 : 0;
+        return (allCount / pagePerCount) + appendPage;
+    }
+
+    /**
+     * 開始ページ数を計算する.
+     *
+     * @return 開始ページ数
+     */
+    private int calculateStartPage() {
+
+        if (currentPage % MAX_VIEW_PAGES == 0) {
+
+            return currentPage - MAX_VIEW_PAGES + 1;
+        } 
+
+        return ((currentPage / MAX_VIEW_PAGES) * MAX_VIEW_PAGES) + 1;
     }
 }

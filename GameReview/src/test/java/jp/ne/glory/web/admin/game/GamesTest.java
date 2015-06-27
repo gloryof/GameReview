@@ -9,6 +9,7 @@ import jp.ne.glory.application.game.GameSearch;
 import jp.ne.glory.application.genre.GenreSearch;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.repository.GameRepositoryStub;
+import jp.ne.glory.domain.game.value.CeroRating;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.repository.GenreRepositoryStub;
 import jp.ne.glory.test.game.search.GameSearchDataGenerator;
@@ -67,6 +68,7 @@ public class GamesTest {
             assertThat(actualCondition.getTitle(), is(nullValue()));
             assertThat(actualCondition.getCeroRating(), is(nullValue()));
             assertThat(actualCondition.getGenreId(), is(nullValue()));
+            assertThat(actualCondition.getPageNumber(), is(nullValue()));
 
             final List<GameBean> actualGames = actualView.getGames();
             assertThat(actualGames.size(), is(20));
@@ -100,4 +102,117 @@ public class GamesTest {
         }
     }
 
+    public static class searchのテスト {
+
+        private Games sut = null;
+        private GameRepositoryStub stub = null;
+        private GenreRepositoryStub genreStub = null;
+        private List<Game> gameList = null;
+        private Map<Long, Genre> genreMap = null;
+
+        @Before
+        public void setUp() {
+
+            stub = new GameRepositoryStub();
+            gameList = GameSearchDataGenerator.creaeteGames(1000);
+            gameList.forEach(stub::save);
+
+            genreStub = new GenreRepositoryStub();
+            final List<Genre> genreList = GenreListDataGenerator.createGenreList(5);
+            genreMap = genreList.stream()
+                    .peek(genreStub::save)
+                    .collect(Collectors.toMap(e -> e.getId().getValue(), v -> v));
+
+            sut = new Games(new GameSearch(stub), new GenreSearch(genreStub));
+        }
+
+        @Test
+        public void 検索条件にマッチするデータが取得できる() {
+
+            final GameSearchConditionBean searchParam = new GameSearchConditionBean();
+            searchParam.setTitle("タイトル25");
+            searchParam.setCeroRating(CeroRating.A);
+            searchParam.setGenreId(2l);
+
+            final Viewable viewable = sut.search(searchParam);
+
+            assertThat(viewable.getTemplateName(), is(PagePaths.GAME_LIST));
+            assertThat(viewable.getModel(), is(instanceOf(GameListView.class)));
+
+            final GameListView actualView = (GameListView) viewable.getModel();
+
+            final GameSearchConditionBean actualCondition = actualView.getCondition();
+            assertThat(actualCondition.getTitle(), is(searchParam.getTitle()));
+            assertThat(actualCondition.getCeroRating(), is(searchParam.getCeroRating()));
+            assertThat(actualCondition.getGenreId(), is(searchParam.getGenreId()));
+            assertThat(actualCondition.getPageNumber(), is(nullValue()));
+
+            final List<GameBean> actualGames = actualView.getGames();
+            assertThat(actualGames.size(), is(1));
+
+            final GameBean actualGame = actualGames.get(0);
+            final Game expectedGame = gameList.get(24);
+            final Genre expectedGenre = genreMap.get(expectedGame.getGenreId().getValue());
+
+            assertThat(actualGame.getGameId(), is(expectedGame.getId().getValue()));
+            assertThat(actualGame.getTitle(), is(expectedGame.getTitle().getValue()));
+            assertThat(actualGame.getGenreId(), is(expectedGenre.getId().getValue()));
+            assertThat(actualGame.getGenreName(), is(expectedGenre.getName().getValue()));
+
+            final PagerInfo actualPager = actualView.getPager();
+
+            assertThat(actualPager.getCurrentPage(), is(1));
+
+            final int[] actualPageNumbers = actualPager.getPages();
+            assertThat(actualPageNumbers.length, is(1));
+
+            assertThat(actualPager.isPrevActive(), is(false));
+            assertThat(actualPager.isNextActive(), is(false));
+        }
+
+        @Test
+        public void 指定したページの情報が取得できる() {
+
+            final GameSearchConditionBean searchParam = new GameSearchConditionBean();
+            searchParam.setPageNumber(15);
+            final Viewable viewable = sut.search(searchParam);
+
+            assertThat(viewable.getTemplateName(), is(PagePaths.GAME_LIST));
+            assertThat(viewable.getModel(), is(instanceOf(GameListView.class)));
+
+            final GameListView actualView = (GameListView) viewable.getModel();
+
+            final GameSearchConditionBean actualCondition = actualView.getCondition();
+            assertThat(actualCondition.getTitle(), is(nullValue()));
+            assertThat(actualCondition.getCeroRating(), is(nullValue()));
+            assertThat(actualCondition.getGenreId(), is(nullValue()));
+            assertThat(actualCondition.getPageNumber(), is(15));
+
+            final List<GameBean> actualGames = actualView.getGames();
+            assertThat(actualGames.size(), is(20));
+
+            final int firstIndex = gameList.size() - (20 * (15 - 1));
+            IntStream.range(0, actualGames.size()).forEach(i -> {
+                final GameBean actualGame = actualGames.get(i);
+                final Game expectedGame = gameList.get(firstIndex - i);
+
+                assertThat(actualGame.getGameId(), is(expectedGame.getId().getValue()));
+            });
+
+            final PagerInfo actualPager = actualView.getPager();
+
+            assertThat(actualPager.getCurrentPage(), is(15));
+
+            final int[] actualPageNumbers = actualPager.getPages();
+            assertThat(actualPageNumbers.length, is(10));
+
+            for (int i = 0; i < 10; i++) {
+
+                assertThat(actualPageNumbers[i], is(i + 11));
+            }
+
+            assertThat(actualPager.isPrevActive(), is(true));
+            assertThat(actualPager.isNextActive(), is(true));
+        }
+    }
 }

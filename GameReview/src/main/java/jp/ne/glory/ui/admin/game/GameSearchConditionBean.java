@@ -1,5 +1,6 @@
 package jp.ne.glory.ui.admin.game;
 
+import javax.ws.rs.QueryParam;
 import jp.ne.glory.domain.game.value.CeroRating;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,4 +33,11 @@ public class GameSearchConditionBean {
     @Setter
     private Long genreId;
 
+    /**
+     * ページ番号.
+     */
+    @Getter
+    @Setter
+    @QueryParam("pageNumber")
+    private Integer pageNumber;
 }

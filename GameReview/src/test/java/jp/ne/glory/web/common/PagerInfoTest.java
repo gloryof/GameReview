@@ -23,20 +23,14 @@ public class PagerInfoTest {
         final int expectedStartPage = 1;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 0, 0);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(false));
         assertThat(actualPageInfo.isNextActive(), is(false));
-        assertThat(actualPageInfo.getCurrentPage(), is(1));
+        assertThat(actualPageInfo.getCurrentPage(), is(0));
 
         final int[] actualPages = actualPageInfo.getPages();
-        assertThat(actualPages.length, is(1));
-
-        for (int i = 0; i < actualPages.length; i++) {
-
-            final int expectedPageNumber = expectedStartPage + i;
-            assertThat(actualPages[0], is(expectedPageNumber));
-        }
+        assertThat(actualPages.length, is(0));
     }
 
     @Test
@@ -49,7 +43,7 @@ public class PagerInfoTest {
         final int expectedStartPage = 1;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 1, 1);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(false));
         assertThat(actualPageInfo.isNextActive(), is(false));
@@ -75,7 +69,7 @@ public class PagerInfoTest {
         final int expectedStartPage = 1;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 20);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(false));
         assertThat(actualPageInfo.isNextActive(), is(false));
@@ -101,7 +95,7 @@ public class PagerInfoTest {
         final int expectedStartPage = 1;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 21);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(false));
         assertThat(actualPageInfo.isNextActive(), is(true));
@@ -127,7 +121,7 @@ public class PagerInfoTest {
         final int expectedStartPage = 1;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 21);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(true));
         assertThat(actualPageInfo.isNextActive(), is(false));
@@ -153,7 +147,7 @@ public class PagerInfoTest {
         final int expectedStartPage = 1;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 200);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(false));
         assertThat(actualPageInfo.isNextActive(), is(true));
@@ -179,7 +173,7 @@ public class PagerInfoTest {
         final int expectedStartPage = 1;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 200);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(true));
         assertThat(actualPageInfo.isNextActive(), is(false));
@@ -205,7 +199,7 @@ public class PagerInfoTest {
         final int expectedStartPage = 11;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 220);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(true));
         assertThat(actualPageInfo.isNextActive(), is(false));
@@ -231,7 +225,7 @@ public class PagerInfoTest {
         final int expectedStartPage = 11;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 240);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(true));
         assertThat(actualPageInfo.isNextActive(), is(true));
@@ -257,7 +251,7 @@ public class PagerInfoTest {
         final int expectedStartPage = 11;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 240);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(true));
         assertThat(actualPageInfo.isNextActive(), is(false));
@@ -283,7 +277,7 @@ public class PagerInfoTest {
         final int expectedStartPage = 11;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 400);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(true));
         assertThat(actualPageInfo.isNextActive(), is(true));
@@ -309,11 +303,63 @@ public class PagerInfoTest {
         final int expectedStartPage = 11;
 
         final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 400);
-        final PagerInfo actualPageInfo = new PagerInfo(mock, expectedStartPage);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
 
         assertThat(actualPageInfo.isPrevActive(), is(true));
         assertThat(actualPageInfo.isNextActive(), is(false));
         assertThat(actualPageInfo.getCurrentPage(), is(20));
+
+        final int[] actualPages = actualPageInfo.getPages();
+        assertThat(actualPages.length, is(10));
+
+        for (int i = 0; i < actualPages.length; i++) {
+
+            final int expectedPageNumber = expectedStartPage + i;
+            assertThat(actualPages[i], is(expectedPageNumber));
+        }
+    }
+
+    @Test
+    public void 検索結果が20ページ_表示ページが15ページ目の場合() {
+
+        final SearchConditionMock condition = new SearchConditionMock();
+        condition.setLotNumber(15);
+        condition.setLotPerCount(20);
+
+        final int expectedStartPage = 11;
+
+        final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 400);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
+
+        assertThat(actualPageInfo.isPrevActive(), is(true));
+        assertThat(actualPageInfo.isNextActive(), is(true));
+        assertThat(actualPageInfo.getCurrentPage(), is(15));
+
+        final int[] actualPages = actualPageInfo.getPages();
+        assertThat(actualPages.length, is(10));
+
+        for (int i = 0; i < actualPages.length; i++) {
+
+            final int expectedPageNumber = expectedStartPage + i;
+            assertThat(actualPages[i], is(expectedPageNumber));
+        }
+    }
+
+    @Test
+    public void 検索結果が20ページ_表示ページが10ページ目の場合() {
+
+        final SearchConditionMock condition = new SearchConditionMock();
+        condition.setLotNumber(10);
+        condition.setLotPerCount(20);
+
+        final int expectedStartPage = 1;
+
+        final SearchResultsMock mock = SearchResultsMock.createResult(condition, 20, 400);
+        final PagerInfo actualPageInfo = new PagerInfo(mock);
+
+        assertThat(actualPageInfo.isPrevActive(), is(true));
+        assertThat(actualPageInfo.isNextActive(), is(true));
+        assertThat(actualPageInfo.getCurrentPage(), is(10));
 
         final int[] actualPages = actualPageInfo.getPages();
         assertThat(actualPages.length, is(10));

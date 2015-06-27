@@ -75,7 +75,7 @@ public class GameRepositoryStub implements GameRepository {
         final int startIndex = tempStartIndex < 1 ? 0 : tempStartIndex - 1;
         final int tempEndIndex = startIndex + condition.getLotPerCount();
 
-        final int listLastIndex = allList.size() - 1;
+        final int listLastIndex = allList.size();
         final int endIndex = listLastIndex < tempEndIndex ? listLastIndex : tempEndIndex;
 
         return allList.subList(startIndex, endIndex);

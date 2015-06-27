@@ -10,13 +10,14 @@
     <body>
         <section class="search-condition">
             <button class="clear-button">クリア</button>
-            <form th:action="@{/admin/users/search}" method="post" id="search-form">
+            <form th:action="@{/admin/games/search}" method="get" id="search-form">
+                <input type="hidden" name="pageNumber" class="page-number" />
                 <dl>
                     <dt>タイトル</dt>
-                    <dd><input type="text" name="loginId" th:value="${it.condition.title}" /></dd>
+                    <dd><input type="text" name="title" th:value="${it.condition.title}" /></dd>
                     <dt>ジャンル</dt>
                     <dd>
-                        <select>
+                        <select name="genre">
                             <option value="">--</option>
                         </select>
                     </dd>
@@ -28,7 +29,7 @@
             <button class="create-button" th:attr="data-create-url=@{/admin/user/create}">新規作成</button>
         </section>
         <section class="search-result">
-            <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager})"></div>
+            <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=game-list-pager)"></div>
             <table class="bs-list">
                 <thead>
                     <tr>
@@ -53,17 +54,25 @@
                     </tr>
                 </tbody>
             </table>
-            <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager})"></div>
+            <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=game-list-pager)"></div>
         </section>
         <script>
             $(document).ready(function(event) {
+                var $searchForm = $("form#search-form");
                 $(".create-button").on("click", function(event) {
                     var $self = $(this);
                     location.href = $self.data("create-url");
                 });
                 $(".clear-button").on("click", function(event) {
                     $("#search-form").find("input").val("");
-                })
+                });
+
+                $(".game-list-pager").on("click", "button", function(event) {
+                    var $this = $(this);
+                    $searchForm.find(".page-number").val($this.data("pager-number"));
+
+                    $searchForm.submit();
+                });
             });
         </script>
     </body>
