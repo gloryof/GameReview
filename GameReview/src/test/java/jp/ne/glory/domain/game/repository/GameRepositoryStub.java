@@ -22,7 +22,7 @@ public class GameRepositoryStub implements GameRepository {
     public GameId save(final Game game) {
 
         final Game saveGame;
-        if (game.getId() == null) {
+        if (game.getId() == null || !game.isRegistered()) {
 
             saveGame = new Game(new GameId(sequence), game.getTitle());
             saveGame.setCeroRating(game.getCeroRating());
@@ -53,6 +53,12 @@ public class GameRepositoryStub implements GameRepository {
                 .sorted((b, n) -> b.getId().getValue().compareTo(n.getId().getValue()))
                 .collect(Collectors.toList());
     }
+
+    public long getCurrentSequence() {
+
+        return sequence;
+    }
+
 
     @Override
     public List<Game> search(final GameSearchCondition condition) {

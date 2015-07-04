@@ -78,8 +78,12 @@ public final class PagePaths {
     public static final String GENRE_NOT_FOUND = "/admin/genres/notFound";
 
     /**
-     * ジャンル一覧.
+     * ゲーム一覧.
      */
     public static final String GAME_LIST = "/admin/games/list";
 
+    /**
+     * ゲーム登録.
+     */
+    public static final String GAME_CREATE = "/admin/games/create";
 }

@@ -40,7 +40,7 @@ public class GameRepositoryImpl implements GameRepository {
     public GameId save(final Game game) {
 
         final Game saveGame;
-        if (game.getId() == null) {
+        if (game.getId() == null || !game.isRegistered()) {
 
             saveGame = new Game(new GameId(sequence), game.getTitle());
             saveGame.setCeroRating(game.getCeroRating());

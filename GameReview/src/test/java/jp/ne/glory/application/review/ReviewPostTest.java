@@ -208,6 +208,7 @@ public class ReviewPostTest {
 
             final Review review = TestTool.createBaseReview();
             final Game game = TestTool.createBaseGame();
+            final Long currentGameId = gameRepStub.getCurrentSequence();
 
             final ReviewPostResult actualResult = sut.postWithGame(review, game);
             final ValidateErrors actualErrors = actualResult.getErrors();
@@ -218,7 +219,7 @@ public class ReviewPostTest {
 
             final Review postedReview = postedReviewOption.get();
 
-            final Optional<Game> savedGameOption = gameRepStub.findBy(postedReview.getGameId());
+            final Optional<Game> savedGameOption = gameRepStub.findBy(new GameId(currentGameId));
             assertThat(savedGameOption.isPresent(), is(true));
         }
 

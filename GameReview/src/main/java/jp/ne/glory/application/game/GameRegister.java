@@ -1,6 +1,8 @@
 package jp.ne.glory.application.game;
 
 import java.util.function.Function;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.repository.GameRepository;
@@ -13,6 +15,7 @@ import jp.ne.glory.domain.game.value.GameId;
  *
  * @author Junki Yamada
  */
+@RequestScoped
 public class GameRegister {
 
     /**
@@ -34,6 +37,7 @@ public class GameRegister {
      *
      * @param paramRepository リポジトリ
      */
+    @Inject
     public GameRegister(final GameRepository paramRepository) {
 
         repository = paramRepository;

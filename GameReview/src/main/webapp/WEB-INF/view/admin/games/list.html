@@ -26,7 +26,7 @@
             </form>
         </section>
         <section class="command">
-            <button class="create-button" th:attr="data-create-url=@{/admin/user/create}">新規作成</button>
+            <button class="create-button" th:attr="data-create-url=@{/admin/game/create}">新規作成</button>
         </section>
         <section class="search-result">
             <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=game-list-pager)"></div>
