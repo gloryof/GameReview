@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head th:include="/common/base/metaInfo :: commonHeader (title='ゲーム詳細')" >
+        <title>ゲーム詳細</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
+        <link rel="stylesheet" th:href="@{/css/base.css}" />
+    </head>
+    <body>
+        <section class="user-command">
+            <button class="edit-button" th:attr="data-edit-url=@{/admin/game/{gameId}/edit(gameId=${it.gameId})}">編集</button>
+        </section>
+        <section class="genre-detail">
+            <dl>
+                <dt th:text="${it.tileLabel}">タイトル</dt>
+                <dd th:text="${it.title}">テスト</dd>
+                <dt th:text="${it.urlLabel}">URL</dt>
+                <dd th:text="${it.url}">テスト</dd>
+                <dt th:text="${it.ceroLabel}">CEROレーティング</dt>
+                <dd th:text="${it.ceroRating.label}">テスト</dd>
+                <dt th:text="${it.genreLabel}">ジャンル</dt>
+                <dd th:text="${it.genreName}">テスト</dd>
+            </dl>
+        </section>
+        <section class="command">
+            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/games}">キャンセル</button>
+        </section>
+        <script>
+            $(document).ready(function(event){
+                $(".edit-button").on("click", function(event) {
+
+                    var $self = $(this);
+                    location.href = $self.data("edit-url");
+                });
+                $(".cancel-button").on("click", function(event) {
+
+                    var $self = $(this);
+                    location.href = $self.data("cancel-url");
+                });
+            });
+        </script>
+    </body>
+</html>

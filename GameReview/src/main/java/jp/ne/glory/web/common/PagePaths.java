@@ -86,4 +86,14 @@ public final class PagePaths {
      * ゲーム登録.
      */
     public static final String GAME_CREATE = "/admin/games/create";
+
+    /**
+     * ゲーム詳細.
+     */
+    public static final String GAME_DETAIL = "/admin/games/view";
+
+    /**
+     * エラー画面（ゲームが見つからない）.
+     */
+    public static final String GAME_NOT_FOUND = "/admin/games/notFound";
 }
