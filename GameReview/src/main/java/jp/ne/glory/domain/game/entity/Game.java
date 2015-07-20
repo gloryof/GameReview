@@ -26,7 +26,8 @@ public class Game {
 
     /** タイトル. */
     @Getter
-    private final Title title;
+    @Setter
+    private Title title;
 
     /** 公式サイトのURL. */
     @Getter
@@ -48,12 +49,11 @@ public class Game {
      * ゲームIDとタイトルを設定する。
      * 
      * @param paramId ゲームID
-     * @param paramTitle タイトル
      */
-    public Game(final GameId paramId, final Title paramTitle) {
+    public Game(final GameId paramId) {
 
         id = Optional.ofNullable(paramId).orElse(GameId.notNumberingValue());
-        title = Optional.ofNullable(paramTitle).orElse(Title.empty());
+        title = Title.empty();
         url = SiteUrl.empty();
         ceroRating = CeroRating.Empty;
         genreId = GenreId.notNumberingValue();

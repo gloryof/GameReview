@@ -41,7 +41,8 @@ public class ReviewRepositoryImpl implements ReviewRepository {
             final Review review = new Review(reviewId);
             review.setPostTime(new PostDateTime(new DateTimeValue(LocalDateTime.now())));
 
-            final Game game = new Game(gameId, new Title("テスト" + v));
+            final Game game = new Game(gameId);
+            game.setTitle(new Title("テスト" + v));
             final long genreId = (v % 3) + 1;
             final Genre genre = new Genre(new GenreId(genreId), new GenreName("テストジャンル"));
 

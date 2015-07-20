@@ -35,7 +35,8 @@ public class GameRegisterTest {
         @Test
         public void 正常な値が入力されていれば保存される() {
 
-            final Game game = new Game(GameId.notNumberingValue(), new Title("タイトル"));
+            final Game game = new Game(GameId.notNumberingValue());
+            game.setTitle(new Title("タイトル"));
             game.setUrl(new SiteUrl("http://test.co.jp/index"));
             game.setGenreId(new GenreId(10L));
             game.setCeroRating(CeroRating.A);
@@ -53,7 +54,8 @@ public class GameRegisterTest {
         @Test
         public void 入力に不正がある場合エラーになる() {
 
-            final Game game = new Game(GameId.notNumberingValue(), Title.empty());
+            final Game game = new Game(GameId.notNumberingValue());
+            game.setTitle(Title.empty());
 
             final GameRegisterResult result = sut.register(game);
 
@@ -77,7 +79,8 @@ public class GameRegisterTest {
         @Test
         public void 正常な値が入力されていれば保存される() {
 
-            final Game game = new Game(new GameId(100L), new Title("タイトル"));
+            final Game game = new Game(new GameId(100L));
+            game.setTitle(new Title("タイトル"));
             game.setUrl(new SiteUrl("http://test.co.jp/index"));
             game.setGenreId(new GenreId(10L));
             game.setCeroRating(CeroRating.A);
@@ -95,7 +98,8 @@ public class GameRegisterTest {
         @Test
         public void 入力に不正がある場合エラーになる() {
 
-            final Game game = new Game(GameId.notNumberingValue(), Title.empty());
+            final Game game = new Game(GameId.notNumberingValue());
+            game.setTitle(Title.empty());
 
             final GameRegisterResult result = sut.finishEdit(game);
 
@@ -106,7 +110,8 @@ public class GameRegisterTest {
         @Test
         public void IDが設定されていない場合エラーになる() {
 
-            final Game game = new Game(GameId.notNumberingValue(), Title.empty());
+            final Game game = new Game(GameId.notNumberingValue());
+            game.setTitle(Title.empty());
             game.setUrl(new SiteUrl("http://test.co.jp/index"));
             game.setGenreId(new GenreId(10L));
             game.setCeroRating(CeroRating.A);

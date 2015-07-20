@@ -1,7 +1,6 @@
 package jp.ne.glory.web.admin.game;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
@@ -17,7 +16,6 @@ import jp.ne.glory.application.game.GameRegisterResult;
 import jp.ne.glory.application.genre.GenreSearch;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.game.entity.Game;
-import jp.ne.glory.domain.game.value.CeroRating;
 import jp.ne.glory.domain.game.value.GameId;
 import jp.ne.glory.domain.game.value.SiteUrl;
 import jp.ne.glory.domain.game.value.Title;
@@ -81,7 +79,6 @@ public class GameCreate {
     public Viewable view() {
 
         final GameEditView viewData = new GameEditView();
-        viewData.setRatings(createRatings());
         viewData.setGenres(createGenres());
 
         return new Viewable(PagePaths.GAME_CREATE, viewData);
@@ -120,13 +117,13 @@ public class GameCreate {
     private Response buildOkToCreateView(final GameEditView inputData, final ValidateErrors errors) {
 
         inputData.getErrors().addAll(errors);
-        inputData.setRatings(createRatings());
         inputData.setGenres(createGenres());
 
         final Viewable viewable = new Viewable(PagePaths.GAME_CREATE, inputData);
 
         return Response.ok(viewable).build();
     }
+
     /**
      * ゲームエンティティに変換する.
      *
@@ -136,9 +133,9 @@ public class GameCreate {
     private Game convertToEntity(final GameEditView inputData) {
 
         final GameId notNumbered = GameId.notNumberingValue();
-        final Title title = new Title(inputData.getTitle());
 
-        final Game game = new Game(notNumbered, title);
+        final Game game = new Game(notNumbered);
+        game.setTitle(new Title(inputData.getTitle()));
         game.setCeroRating(inputData.getCeroRating());
         game.setGenreId(new GenreId(inputData.getGenreId()));
         game.setUrl(new SiteUrl(inputData.getUrl()));
@@ -158,18 +155,6 @@ public class GameCreate {
         final URI uri = UriBuilder.fromUri(urlTemplte).resolveTemplate("gameId", paramGameId).build();
 
         return Response.seeOther(uri).build();
-    }
-
-    /**
-     * CEROレーティングのリストを作成する.
-     *
-     * @return CEROレーティングリスト.
-     */
-    private List<CeroRating> createRatings() {
-
-        return Arrays.stream(CeroRating.values())
-                .filter(v -> v.getId() != null)
-                .collect(Collectors.toList());
     }
 
     /**

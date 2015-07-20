@@ -22,12 +22,12 @@ public class GameTest {
         private Game sut = null;
 
         private static final GameId INIT_GAME_ID = new GameId(12L);
-        private static final Title INIT_TITLE = new Title("テストタイトル");
 
         @Before
         public void setUp() {
 
-            sut = new Game(INIT_GAME_ID, INIT_TITLE);
+            sut = new Game(INIT_GAME_ID);
+            sut.setTitle(new Title("テストタイトル"));
             sut.setUrl(new SiteUrl("http://test.co.jp/index"));
             sut.setGenreId(new GenreId(10L));
             sut.setCeroRating(CeroRating.A);
@@ -37,7 +37,6 @@ public class GameTest {
         public void コンストラクタで設定した値がプロパティに設定されている() {
 
             assertThat(sut.getId().isSame(INIT_GAME_ID), is(true));
-            assertThat(sut.getTitle().getValue(), is(INIT_TITLE.getValue()));
         }
 
         @Test
@@ -52,19 +51,18 @@ public class GameTest {
         private Game sut = null;
 
         private static final GameId INIT_GAME_ID = GameId.notNumberingValue();
-        private static final Title INIT_TITLE =  Title.empty();
 
         @Before
         public void setUp() {
 
-            sut = new Game(INIT_GAME_ID, INIT_TITLE);
+            sut = new Game(INIT_GAME_ID);
         }
 
         @Test
         public void 全てに初期値が設定されている() {
 
             assertThat(sut.getId().isSame(INIT_GAME_ID), is(true));
-            assertThat(sut.getTitle().getValue(), is(INIT_TITLE.getValue()));
+            assertThat(sut.getTitle().getValue(), is(Title.empty().getValue()));
             assertThat(sut.getUrl().getValue(), is(SiteUrl.empty().getValue()));
             assertThat(sut.getCeroRating(), is(CeroRating.Empty));
             assertThat(sut.getGenreId().isSame(GenreId.notNumberingValue()), is(true));

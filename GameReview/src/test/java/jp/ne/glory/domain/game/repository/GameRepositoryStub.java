@@ -24,7 +24,8 @@ public class GameRepositoryStub implements GameRepository {
         final Game saveGame;
         if (game.getId() == null || !game.isRegistered()) {
 
-            saveGame = new Game(new GameId(sequence), game.getTitle());
+            saveGame = new Game(new GameId(sequence));
+            saveGame.setTitle(game.getTitle());
             saveGame.setCeroRating(game.getCeroRating());
             saveGame.setGenreId(game.getGenreId());
             saveGame.setUrl(game.getUrl());

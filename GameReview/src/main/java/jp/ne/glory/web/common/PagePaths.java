@@ -88,6 +88,11 @@ public final class PagePaths {
     public static final String GAME_CREATE = "/admin/games/create";
 
     /**
+     * ゲーム編集.
+     */
+    public static final String GAME_EDIT = "/admin/games/edit";
+
+    /**
      * ゲーム詳細.
      */
     public static final String GAME_DETAIL = "/admin/games/view";

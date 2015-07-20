@@ -42,7 +42,8 @@ public class ReviewRepositoryStub implements ReviewRepository {
             saveReview = review;
         }
 
-        final Game stubGame = new Game(GameId.notNumberingValue(), new Title("テスト"));
+        final Game stubGame = new Game(GameId.notNumberingValue());
+        stubGame.setTitle(new Title("テスト"));
         final Genre stubGenre = new Genre(new GenreId(2l), new GenreName("テストジャンル"));
         final ReviewSearchResult result = new ReviewSearchResult(saveReview, stubGame, stubGenre);
         reviewMap.put(saveReview.getId().getValue(), result);

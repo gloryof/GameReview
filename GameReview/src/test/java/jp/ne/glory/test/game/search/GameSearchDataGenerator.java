@@ -24,7 +24,8 @@ public class GameSearchDataGenerator {
         final GameId gameId = new GameId(paramGameId);
         final Title title = new Title("タイトル" + paramGameId);
 
-        final Game game = new Game(gameId, title);
+        final Game game = new Game(gameId);
+        game.setTitle(title);
 
         game.setUrl(new SiteUrl("http://localhost:8080/test/" + paramGameId));
 

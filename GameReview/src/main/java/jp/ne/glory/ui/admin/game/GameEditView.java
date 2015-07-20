@@ -1,8 +1,11 @@
 package jp.ne.glory.ui.admin.game;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.ws.rs.FormParam;
 import jp.ne.glory.domain.common.error.ValidateErrors;
+import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.value.CeroRating;
 import jp.ne.glory.domain.game.value.SiteUrl;
 import jp.ne.glory.domain.game.value.Title;
@@ -52,8 +55,7 @@ public class GameEditView {
      * CEROレーティングリスト.
      */
     @Getter
-    @Setter
-    private List<CeroRating> ratings;
+    private final List<CeroRating> ratings;
 
     /**
      * ジャンルリスト.
@@ -102,4 +104,28 @@ public class GameEditView {
     @FormParam("genreId")
     private Long genreId;
 
+    /**
+     * コンストラクタ.
+     */
+    public GameEditView() {
+
+        ratings = Arrays.stream(CeroRating.values())
+                .filter(v -> v.getId() != null)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * コンストラクタ.
+     *
+     * @param game ゲーム
+     */
+    public GameEditView(final Game game) {
+
+        this();
+        gameId = game.getId().getValue();
+        title = game.getTitle().getValue();
+        url = game.getUrl().getValue();
+        ceroRating = game.getCeroRating();
+        genreId = game.getGenreId().getValue();
+    }
 }

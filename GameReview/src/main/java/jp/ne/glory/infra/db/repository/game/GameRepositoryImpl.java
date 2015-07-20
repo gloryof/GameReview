@@ -42,7 +42,8 @@ public class GameRepositoryImpl implements GameRepository {
         final Game saveGame;
         if (game.getId() == null || !game.isRegistered()) {
 
-            saveGame = new Game(new GameId(sequence), game.getTitle());
+            saveGame = new Game(new GameId(sequence));
+            saveGame.setTitle(game.getTitle());
             saveGame.setCeroRating(game.getCeroRating());
             saveGame.setGenreId(game.getGenreId());
             saveGame.setUrl(game.getUrl());
@@ -149,9 +150,11 @@ public class GameRepositoryImpl implements GameRepository {
     private static Game createGame(final long paramGameId) {
 
         final GameId gameId = new GameId(paramGameId);
-        final Title title = new Title("タイトル" + paramGameId);
 
-        final Game game = new Game(gameId, title);
+        final Game game = new Game(gameId);
+
+        final Title title = new Title("タイトル" + paramGameId);
+        game.setTitle(title);
 
         game.setUrl(new SiteUrl("http://localhost:8080/test/" + paramGameId));
 

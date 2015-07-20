@@ -32,7 +32,8 @@ public class GameModifyCommonValidateRuleTest {
             final GameId gameId = new GameId(12L);
             final Title title = new Title("テストタイトル");
 
-            final Game game = new Game(gameId, title);
+            final Game game = new Game(gameId);
+            game.setTitle(title);
             game.setUrl(new SiteUrl("http://test.co.jp/index"));
             game.setGenreId(new GenreId(10L));
             game.setCeroRating(CeroRating.A);
@@ -57,9 +58,8 @@ public class GameModifyCommonValidateRuleTest {
         public void setUp() {
 
             final GameId gameId = GameId.notNumberingValue();
-            final Title title = Title.empty();
 
-            final Game game = new Game(gameId, title);
+            final Game game = new Game(gameId);
 
             sut = new GameModifyCommonValidateRule(game);
         }

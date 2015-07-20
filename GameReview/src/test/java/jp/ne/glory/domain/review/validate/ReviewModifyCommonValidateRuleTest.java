@@ -65,7 +65,8 @@ public class ReviewModifyCommonValidateRuleTest {
         @Before
         public void setUp() {
 
-            final Game game = new Game(new GameId(100L), new Title("タイトル"));
+            final Game game = new Game(new GameId(100L));
+            game.setTitle(new Title("タイトル"));
             final Review review = createBaseReveiw(123L, game.getId().getValue());
 
             game.setGenreId(new GenreId(200L));
@@ -120,7 +121,8 @@ public class ReviewModifyCommonValidateRuleTest {
         @Before
         public void setUp() {
 
-            final Game game = new Game(new GameId(100L), new Title("タイトル"));
+            final Game game = new Game(new GameId(100L));
+            game.setTitle(new Title("タイトル"));
             final Review review = createBaseReveiw(123L, (game.getId().getValue() + 1));
 
             game.setGenreId(new GenreId(200L));
@@ -154,7 +156,8 @@ public class ReviewModifyCommonValidateRuleTest {
         @Before
         public void setUp() {
 
-            final Game game = new Game(new GameId(100L), new Title("タイトル"));
+            final Game game = new Game(new GameId(100L));
+            game.setTitle(new Title("タイトル"));
             final Review review = createBaseReveiw(123L);
 
             game.setGenreId(new GenreId(200L));
@@ -189,7 +192,7 @@ public class ReviewModifyCommonValidateRuleTest {
         public void setUp() {
 
             final Review review = new Review(ReviewId.notNumberingValue());
-            final Game game = new Game(GameId.notNumberingValue(), Title.empty());
+            final Game game = new Game(GameId.notNumberingValue());
 
             sut = new ReviewModifyCommonValidateRule(review, game);
         }

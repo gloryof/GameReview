@@ -56,7 +56,10 @@ public class ReviewSearchDataGenerator {
         final GameId gameId = new GameId(number);
         final Title title = new Title("ゲーム" + number);
 
-        return new Game(gameId, title);
+        final Game game = new Game(gameId);
+        game.setTitle(title);
+
+        return game;
     }
 
     private static Review createTestReview(final long number) {

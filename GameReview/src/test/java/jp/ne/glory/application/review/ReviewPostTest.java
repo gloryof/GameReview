@@ -45,7 +45,8 @@ public class ReviewPostTest {
 
         private static Game copy(final Game game) {
 
-            final Game copiedGame = new Game(game.getId(), game.getTitle());
+            final Game copiedGame = new Game(game.getId());
+            copiedGame.setTitle(game.getTitle());
 
             copiedGame.setCeroRating(game.getCeroRating());
             copiedGame.setGenreId(game.getGenreId());
@@ -98,7 +99,8 @@ public class ReviewPostTest {
 
         private static Game createBaseGame(final GameId gameId) {
 
-            final Game game = new Game(gameId, new Title("タイトル"));
+            final Game game = new Game(gameId);
+            game.setTitle(new Title("タイトル"));
 
             game.setCeroRating(CeroRating.A);
             game.setGenreId(new GenreId(12L));
@@ -108,12 +110,12 @@ public class ReviewPostTest {
 
         private static Game createInvalidGame() {
 
-            return new Game(GameId.notNumberingValue(), Title.empty());
+            return new Game(GameId.notNumberingValue());
         }
 
         private static Game createInvalidGame(final GameId gameId) {
 
-            return new Game(gameId, Title.empty());
+            return new Game(gameId);
         }
     }
 
