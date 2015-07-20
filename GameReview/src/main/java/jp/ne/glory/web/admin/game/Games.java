@@ -78,7 +78,7 @@ public class Games {
 
         final GameSearchCondition condition = createSearchCondition();
         final GameSearchResults results = gameSearch.search(condition);
-        final GameListView listView = createView(results, new GameSearchConditionBean());
+        final GameListView listView = createView(results, new GameSearchConditionBean(genreSearch.getAllGenres()));
 
         return new Viewable(PagePaths.GAME_LIST, listView);
     }
@@ -93,6 +93,7 @@ public class Games {
     @Path("search")
     public Viewable search(@BeanParam final GameSearchConditionBean conditionParam) {
 
+        conditionParam.setGenres(genreSearch.getAllGenres());
         final GameSearchCondition condition = createSearchCondition(conditionParam);
         final GameSearchResults results = gameSearch.search(condition);
         final GameListView listView = createView(results, conditionParam);

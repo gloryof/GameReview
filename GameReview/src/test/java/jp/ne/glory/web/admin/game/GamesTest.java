@@ -17,6 +17,7 @@ import jp.ne.glory.test.genre.list.GenreListDataGenerator;
 import jp.ne.glory.ui.admin.game.GameBean;
 import jp.ne.glory.ui.admin.game.GameListView;
 import jp.ne.glory.ui.admin.game.GameSearchConditionBean;
+import jp.ne.glory.ui.genre.GenreBean;
 import jp.ne.glory.web.common.PagePaths;
 import jp.ne.glory.web.common.PagerInfo;
 import org.glassfish.jersey.server.mvc.Viewable;
@@ -30,12 +31,43 @@ import static org.junit.Assert.assertThat;
 
 public class GamesTest {
 
+    private static class TestTool {
+
+        public static void assertRatings(final List<CeroRating> actualCeroRatings) {
+
+            final CeroRating[] expcetedRatings = CeroRating.values();
+            final int exptectedLength = expcetedRatings.length - 1;
+
+            assertThat(actualCeroRatings.size(), is(exptectedLength));
+            for (int i = 0; i < exptectedLength; i++) {
+
+                final CeroRating expectedRating = expcetedRatings[i];
+                final CeroRating actualRating = actualCeroRatings.get(i);
+
+                assertThat(actualRating, is(expectedRating));
+            }
+        }
+
+        public static void assertGenres(final List<GenreBean> actualGenres, final List<Genre> expectedGenres) {
+
+            assertThat(actualGenres.size(), is(expectedGenres.size()));
+            IntStream.range(0, actualGenres.size()).forEach(i -> {
+                final GenreBean actualGenre = actualGenres.get(i);
+                final Genre expectedGenre = expectedGenres.get(i);
+
+                assertThat(actualGenre.getId(), is(expectedGenre.getId().getValue()));
+                assertThat(actualGenre.getName(), is(expectedGenre.getName().getValue()));
+            });
+        }
+    }
+
     public static class viewのテスト {
 
         private Games sut = null;
         private GameRepositoryStub stub = null;
         private GenreRepositoryStub genreStub = null;
         private List<Game> gameList = null;
+        private List<Genre> genreList = null;
         private Map<Long, Genre> genreMap = null;
 
         @Before
@@ -46,7 +78,7 @@ public class GamesTest {
             gameList.forEach(stub::save);
 
             genreStub = new GenreRepositoryStub();
-            final List<Genre> genreList = GenreListDataGenerator.createGenreList(5);
+            genreList = GenreListDataGenerator.createGenreList(5);
             genreMap = genreList.stream()
                     .peek(genreStub::save)
                     .collect(Collectors.toMap(e -> e.getId().getValue(), v -> v));
@@ -69,6 +101,8 @@ public class GamesTest {
             assertThat(actualCondition.getCeroRating(), is(nullValue()));
             assertThat(actualCondition.getGenreId(), is(nullValue()));
             assertThat(actualCondition.getPageNumber(), is(nullValue()));
+            TestTool.assertRatings(actualCondition.getRatings());
+            TestTool.assertGenres(actualCondition.getGenres(), genreList);
 
             final List<GameBean> actualGames = actualView.getGames();
             assertThat(actualGames.size(), is(20));
@@ -108,6 +142,7 @@ public class GamesTest {
         private GameRepositoryStub stub = null;
         private GenreRepositoryStub genreStub = null;
         private List<Game> gameList = null;
+        private List<Genre> genreList = null;
         private Map<Long, Genre> genreMap = null;
 
         @Before
@@ -118,7 +153,7 @@ public class GamesTest {
             gameList.forEach(stub::save);
 
             genreStub = new GenreRepositoryStub();
-            final List<Genre> genreList = GenreListDataGenerator.createGenreList(5);
+            genreList = GenreListDataGenerator.createGenreList(5);
             genreMap = genreList.stream()
                     .peek(genreStub::save)
                     .collect(Collectors.toMap(e -> e.getId().getValue(), v -> v));
@@ -146,6 +181,8 @@ public class GamesTest {
             assertThat(actualCondition.getCeroRating(), is(searchParam.getCeroRating()));
             assertThat(actualCondition.getGenreId(), is(searchParam.getGenreId()));
             assertThat(actualCondition.getPageNumber(), is(nullValue()));
+            TestTool.assertRatings(actualCondition.getRatings());
+            TestTool.assertGenres(actualCondition.getGenres(), genreList);
 
             final List<GameBean> actualGames = actualView.getGames();
             assertThat(actualGames.size(), is(1));
@@ -187,6 +224,8 @@ public class GamesTest {
             assertThat(actualCondition.getCeroRating(), is(nullValue()));
             assertThat(actualCondition.getGenreId(), is(nullValue()));
             assertThat(actualCondition.getPageNumber(), is(15));
+            TestTool.assertRatings(actualCondition.getRatings());
+            TestTool.assertGenres(actualCondition.getGenres(), genreList);
 
             final List<GameBean> actualGames = actualView.getGames();
             assertThat(actualGames.size(), is(20));
