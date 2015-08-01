@@ -1,9 +1,11 @@
 package jp.ne.glory.infra.db.repository.review;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import javax.enterprise.context.RequestScoped;
@@ -29,101 +31,188 @@ import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
 @RequestScoped
 public class ReviewRepositoryImpl implements ReviewRepository {
 
-    private static final List<ReviewSearchResult> stubResults = new ArrayList<>();
+    private static final Map<Long, ReviewSearchResult> reviewMap = new HashMap<>();
+
+    private static long sequence = 1;
 
     static {
 
-        LongStream.rangeClosed(1, 10).forEach(v -> {
-
-            final ReviewId reviewId = new ReviewId(100 + v);
-            final GameId gameId = new GameId(200 + v);
-
-            final Review review = new Review(reviewId);
-            review.setPostTime(new PostDateTime(new DateTimeValue(LocalDateTime.now())));
-
-            final Game game = new Game(gameId);
-            game.setTitle(new Title("テスト" + v));
-            final long genreId = (v % 3) + 1;
-            final Genre genre = new Genre(new GenreId(genreId), new GenreName("テストジャンル"));
-
-            stubResults.add(new ReviewSearchResult(review, game, genre));
-        });
+        final List<Genre> genreList = createBaseGenreList();
+        LongStream.rangeClosed(1, 400)
+                .mapToObj(i -> createSearchResult(i, genreList))
+                .forEach(v -> {
+                    reviewMap.put(v.getReview().getId().getValue(), v);
+                });
     }
 
     @Override
-    public ReviewId save(Review review) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ReviewId save(final Review review) {
+
+        final Review saveReview;
+        if (review.getId() == null) {
+
+            saveReview = new Review(new ReviewId(sequence));
+            saveReview.setBadPoint(review.getBadPoint());
+            saveReview.setComment(review.getComment());
+            saveReview.setGoodPoint(review.getGoodPoint());
+            saveReview.setScore(review.getScore());
+
+            sequence++;
+        } else {
+
+            saveReview = review;
+        }
+
+        final Game stubGame = new Game(GameId.notNumberingValue());
+        stubGame.setTitle(new Title("テスト"));
+        final Genre stubGenre = new Genre(new GenreId(2l), new GenreName("テストジャンル"));
+        final ReviewSearchResult result = new ReviewSearchResult(saveReview, stubGame, stubGenre);
+        reviewMap.put(saveReview.getId().getValue(), result);
+
+        return saveReview.getId();
+    }
+
+    public ReviewId save(final Review review, final Game game, final Genre genre) {
+
+        final ReviewSearchResult result = new ReviewSearchResult(review, game, genre);
+        reviewMap.put(review.getId().getValue(), result);
+
+        return review.getId();
+    }
+
+    public void addResult(final ReviewSearchResult result) {
+
+        reviewMap.put(result.getReview().getId().getValue(), result);
     }
 
     @Override
     public Optional<Review> findBy(ReviewId reviewId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        final ReviewSearchResult result = reviewMap.get(reviewId.getValue());
+
+        if (result == null) {
+
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(result.getReview());
     }
 
     @Override
     public List<ReviewSearchResult> search(ReviewSearchCondition condition) {
 
-        return searchStub(condition);
+        List<ReviewSearchResult> resultList = getSearchResult(condition, true);
+
+        resultList.sort((x, y) -> {
+            LocalDateTime xPostTime = x.getReview().getPostTime().getValue().getValue();
+            LocalDateTime yPostTime = y.getReview().getPostTime().getValue().getValue();
+
+            return xPostTime.compareTo(yPostTime);
+        });
+
+        if (0 < condition.getTargetCount()) {
+
+            resultList = resultList.subList(0, condition.getTargetCount());
+        }
+
+        final int first = (condition.getLotNumber() - 1) * condition.getLotPerCount();
+        final int last = condition.getLotNumber() * condition.getLotPerCount();
+
+        return resultList.subList(first, last);
     }
 
     @Override
-    public int getSearchCount(ReviewSearchCondition condition) {
-        return searchStub(condition).size();
+    public int getSearchCount(final ReviewSearchCondition condition) {
+        return getSearchResult(condition, false).size();
     }
 
-    private List<ReviewSearchResult> searchStub(final ReviewSearchCondition condition) {
+    private List<ReviewSearchResult> getSearchResult(final ReviewSearchCondition condition, final boolean limitedCount) {
 
-        List<ReviewSearchResult> returnList = stubResults
-                .stream()
-                .filter(v -> isMatch(condition, v))
+        long maxCount = Long.MAX_VALUE;
+        if (limitedCount && 0 < condition.getTargetCount()) {
+
+            maxCount = condition.getTargetCount();
+        }
+
+        final List<ReviewSearchResult> resultList = reviewMap.entrySet().stream()
+                .filter(entry -> isMatchSearchCondition(entry.getValue(), condition))
+                .limit(maxCount)
+                .map(v -> v.getValue())
                 .collect(Collectors.toList());
 
-        if (returnList.size() < condition.getTargetCount()) {
-
-            return returnList;
-        }
-
-        if (1 < condition.getTargetCount()) {
-
-            returnList = returnList.subList(0, condition.getTargetCount());
-        }
-
-        return returnList;
+        return resultList;
     }
 
-    private boolean isMatch(final ReviewSearchCondition condition, final ReviewSearchResult result) {
-
-        if (!isMatchReviewIdStub(condition, result)) {
-
-            return false;
-        }
-
-        return (!isMatchGenreIdStub(condition, result));
-    }
-
-    private boolean isMatchReviewIdStub(final ReviewSearchCondition condition, final ReviewSearchResult result) {
+    private boolean isMatchSearchCondition(final ReviewSearchResult result, final ReviewSearchCondition condition) {
 
         final List<ReviewId> reviewIds = condition.getReviewIds();
-        if (reviewIds.isEmpty()) {
+        final List<GenreId> genreIds = condition.getGenreIds();
 
-            return true;
+        if (!reviewIds.isEmpty()) {
+
+            final Set<Long> idSet = reviewIds
+                    .stream()
+                    .map(v -> v.getValue())
+                    .collect(Collectors.toSet());
+
+            if (!idSet.contains(result.getReview().getId().getValue())) {
+
+                return false;
+            }
         }
 
-        final Optional<ReviewId> option = reviewIds.stream().filter(v -> v.isSame(result.getReview().getId())).findAny();
+        if (!genreIds.isEmpty()) {
 
-        return option.isPresent();
+            final Set<Long> idSet = genreIds
+                    .stream()
+                    .map(v -> v.getValue())
+                    .collect(Collectors.toSet());
+
+            if (!idSet.contains(result.getGenre().getId().getValue())) {
+
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    private boolean isMatchGenreIdStub(final ReviewSearchCondition condition, final ReviewSearchResult result) {
+    private static List<Genre> createBaseGenreList() {
 
-        final List<GenreId> genreIds = condition.getGenreIds();
-        if (genreIds.isEmpty()) {
+        return LongStream
+                .rangeClosed(1, 3)
+                .mapToObj(i -> new Genre(new GenreId(i), new GenreName("ジャンル" + i)))
+                .collect(Collectors.toList());
+    }
 
-            return true;
-        }
+    private static ReviewSearchResult createSearchResult(final long number, final List<Genre> genreList) {
 
-        final Optional<GenreId> option = genreIds.stream().filter(v -> v.isSame(result.getGenre().getId())).findAny();
+        final Game game = createTestGame(number);
+        final Review review = createTestReview(number);
 
-        return option.isPresent();
+        final int genreIndex = (int) (number % genreList.size());
+        final Genre genre = genreList.get(genreIndex);
+
+        return new ReviewSearchResult(review, game, genre);
+    }
+
+    private static Game createTestGame(final long number) {
+
+        final GameId gameId = new GameId(number);
+        final Title title = new Title("ゲーム" + number);
+
+        final Game game = new Game(gameId);
+        game.setTitle(title);
+
+        return game;
+    }
+
+    private static Review createTestReview(final long number) {
+
+        final Review review = new Review(new ReviewId(number));
+
+        review.setPostTime(new PostDateTime(new DateTimeValue(LocalDateTime.now())));
+
+        return review;
     }
 }

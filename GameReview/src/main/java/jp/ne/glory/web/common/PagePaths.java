@@ -101,4 +101,10 @@ public final class PagePaths {
      * エラー画面（ゲームが見つからない）.
      */
     public static final String GAME_NOT_FOUND = "/admin/games/notFound";
+
+    /**
+     * レビュー一覧（管理画面）.
+     */
+    public static final String REVIEW_LIST = "/admin/reviews/list";
+
 }

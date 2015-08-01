@@ -25,7 +25,7 @@ public class ReviewRepositoryStub implements ReviewRepository {
     private long sequence = 1;
 
     @Override
-    public ReviewId save(Review review) {
+    public ReviewId save(final Review review) {
 
         final Review saveReview;
         if (review.getId() == null) {
@@ -49,6 +49,14 @@ public class ReviewRepositoryStub implements ReviewRepository {
         reviewMap.put(saveReview.getId().getValue(), result);
 
         return saveReview.getId();
+    }
+
+    public ReviewId save(final Review review, final Game game, final Genre genre) {
+
+        final ReviewSearchResult result = new ReviewSearchResult(review, game, genre);
+        reviewMap.put(review.getId().getValue(), result);
+
+        return review.getId();
     }
 
     public void addResult(final ReviewSearchResult result) {
