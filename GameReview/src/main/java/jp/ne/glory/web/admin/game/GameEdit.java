@@ -210,12 +210,13 @@ public class GameEdit {
      */
     private GameRegisterResult finishEdit(final Game game, final GameEditView inputData) {
 
-        game.setTitle(new Title(inputData.getTitle()));
-        game.setCeroRating(inputData.getCeroRating());
-        game.setGenreId(new GenreId(inputData.getGenreId()));
-        game.setUrl(new SiteUrl(inputData.getUrl()));
+        final Game updatedGame = new Game(game.getId());
+        updatedGame.setTitle(new Title(inputData.getTitle()));
+        updatedGame.setCeroRating(inputData.getCeroRating());
+        updatedGame.setGenreId(new GenreId(inputData.getGenreId()));
+        updatedGame.setUrl(new SiteUrl(inputData.getUrl()));
 
-        return register.finishEdit(game);
+        return register.finishEdit(updatedGame);
     }
 
 }
