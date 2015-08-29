@@ -131,29 +131,12 @@ public class ReviewSearchTest {
         }
 
         @Test
-        public void 指定したジャンルIDのレビュー情報が取得できる() {
-
-            final int expectedAllCount = 1;
-            final int expectedPagePerCount = 1;
-            final int expectedLotNumber = 1;
+        public void 指定したレビューIDのレビュー情報が取得できる() {
 
             final ReviewId expectedReviewId = new ReviewId(1l);
-            final ReviewSearchResults actualResult = sut.searchByReviewId(expectedReviewId);
+            final ReviewSearchResult actualResult = sut.searchByReviewId(expectedReviewId).get();
 
-            final ReviewSearchCondition actualCondition = actualResult.getCondition();
-            final List<ReviewSearchResult> actualList = actualResult.getResults();
-
-            assertThat(actualCondition, is(not(nullValue())));
-            assertThat(actualCondition.getTargetCount(), is(0));
-            assertThat(actualCondition.getLotPerCount(), is(expectedPagePerCount));
-            assertThat(actualCondition.getLotNumber(), is(expectedLotNumber));
-            assertThat(actualCondition.getOrderType(), is(ReviewSearchOrderType.PostTimeDesc));
-
-            assertThat(actualList.size(), is(expectedPagePerCount));
-
-            assertThat(actualResult.getAllCount(), is(expectedAllCount));
-            assertThat(actualResult.hasNextLot(), is(false));
-            assertThat(actualResult.hasPrevLot(), is(false));
+            assertThat(expectedReviewId.getValue(), is(actualResult.getReview().getId().getValue()));
         }
     }
 }

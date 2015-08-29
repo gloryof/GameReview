@@ -4,6 +4,7 @@ import jp.ne.glory.domain.game.value.GameId;
 import jp.ne.glory.domain.review.value.BadPoint;
 import jp.ne.glory.domain.review.value.Comment;
 import jp.ne.glory.domain.review.value.GoodPoint;
+import jp.ne.glory.domain.review.value.LastUpdateDateTime;
 import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.Score;
@@ -58,6 +59,13 @@ public class Review {
     @Getter
     @Setter
     private PostDateTime postTime = PostDateTime.empty();
+
+    /**
+     * 採取更新日時.
+     */
+    @Getter
+    @Setter
+    private LastUpdateDateTime lastUpdate = LastUpdateDateTime.empty();
 
     /**
      * コンストラクタ.

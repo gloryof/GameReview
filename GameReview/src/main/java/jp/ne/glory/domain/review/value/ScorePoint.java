@@ -1,7 +1,9 @@
 package jp.ne.glory.domain.review.value;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * スコア点数
@@ -60,5 +62,42 @@ public enum ScorePoint {
                 Arrays.stream(ScorePoint.values()).filter(value -> value.typeId == id).findFirst();
 
         return result.orElse(NotInput);
+    }
+
+    /**
+     * 選択可能なスコアの配列を返却する.
+     *
+     * @return スコア配列
+     */
+    public static List<ScorePoint> getSelectableScores() {
+
+        return Arrays.stream(ScorePoint.values())
+                .filter(v -> !v.equals(ScorePoint.NotInput))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 文字列からスコア点数に変換する.
+     *
+     * @param value 値
+     * @return スコア点数
+     */
+    public static ScorePoint fromString(final String value) {
+
+        if (value == null || value.isEmpty()) {
+
+            return ScorePoint.NotInput;
+        }
+
+        final Integer id = Integer.valueOf(value);
+        for (final ScorePoint score : ScorePoint.values()) {
+
+            if (id.equals(score.typeId)) {
+
+                return score;
+            }
+        }
+
+        return ScorePoint.NotInput;
     }
 }

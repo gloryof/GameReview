@@ -7,19 +7,27 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import javax.enterprise.context.RequestScoped;
 import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.game.entity.Game;
+import jp.ne.glory.domain.game.value.CeroRating;
 import jp.ne.glory.domain.game.value.GameId;
+import jp.ne.glory.domain.game.value.SiteUrl;
 import jp.ne.glory.domain.game.value.Title;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.genre.value.GenreName;
 import jp.ne.glory.domain.review.entity.Review;
 import jp.ne.glory.domain.review.repository.ReviewRepository;
+import jp.ne.glory.domain.review.value.BadPoint;
+import jp.ne.glory.domain.review.value.Comment;
+import jp.ne.glory.domain.review.value.GoodPoint;
 import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.ReviewId;
+import jp.ne.glory.domain.review.value.Score;
+import jp.ne.glory.domain.review.value.ScorePoint;
 import jp.ne.glory.domain.review.value.search.ReviewSearchCondition;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
 
@@ -118,6 +126,11 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         final int first = (condition.getLotNumber() - 1) * condition.getLotPerCount();
         final int last = condition.getLotNumber() * condition.getLotPerCount();
 
+        if (resultList.isEmpty()) {
+
+            return resultList;
+        }
+
         return resultList.subList(first, last);
     }
 
@@ -189,6 +202,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
         final Game game = createTestGame(number);
         final Review review = createTestReview(number);
+        review.setGameId(game.getId());
 
         final int genreIndex = (int) (number % genreList.size());
         final Genre genre = genreList.get(genreIndex);
@@ -202,7 +216,10 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         final Title title = new Title("ゲーム" + number);
 
         final Game game = new Game(gameId);
+        final int ceroId = (int) number % 6;
         game.setTitle(title);
+        game.setCeroRating(CeroRating.fromString(String.valueOf(ceroId)));
+        game.setUrl(new SiteUrl("http//test.co.jp/" + number));
 
         return game;
     }
@@ -212,6 +229,29 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         final Review review = new Review(new ReviewId(number));
 
         review.setPostTime(new PostDateTime(new DateTimeValue(LocalDateTime.now())));
+
+        final StringBuilder goodPointValue = new StringBuilder();
+        final StringBuilder badPointValue = new StringBuilder();
+        final StringBuilder commentValue = new StringBuilder();
+
+        final String lineSeparator = System.getProperty("line.separator");
+        IntStream.rangeClosed(1, 10).forEach(v -> {
+            goodPointValue.append("ああああああああああああああああああああああああああああああああああああ").append(lineSeparator);
+            badPointValue.append("いいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい").append(lineSeparator);;
+            commentValue.append("うううううううううううううううううううううううううううううううううううう").append(lineSeparator);;
+        });
+
+        review.setGoodPoint(new GoodPoint(goodPointValue.toString()));
+        review.setBadPoint(new BadPoint(badPointValue.toString()));
+        review.setComment(new Comment(commentValue.toString()));
+
+        final Score score = new Score();
+        score.setAddiction(ScorePoint.Point1);
+        score.setLoadTime(ScorePoint.Point2);
+        score.setMusic(ScorePoint.Point3);
+        score.setOperability(ScorePoint.Point4);
+        score.setStory(ScorePoint.Point5);
+        review.setScore(score);
 
         return review;
     }

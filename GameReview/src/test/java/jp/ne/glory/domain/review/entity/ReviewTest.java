@@ -6,6 +6,7 @@ import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.review.value.BadPoint;
 import jp.ne.glory.domain.review.value.Comment;
 import jp.ne.glory.domain.review.value.GoodPoint;
+import jp.ne.glory.domain.review.value.LastUpdateDateTime;
 import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.Score;
@@ -44,6 +45,7 @@ public class ReviewTest {
             sut.getScore().setMusic(ScorePoint.Point2);
             sut.getScore().setLoadTime(ScorePoint.Point1);
             sut.setPostTime(new PostDateTime(new DateTimeValue(LocalDateTime.now())));
+            sut.setLastUpdate(new LastUpdateDateTime(new DateTimeValue(LocalDateTime.now())));
         }
 
         @Test

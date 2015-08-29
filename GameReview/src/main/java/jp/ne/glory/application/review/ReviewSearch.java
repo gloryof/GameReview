@@ -1,6 +1,7 @@
 package jp.ne.glory.application.review;
 
 import java.util.List;
+import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import jp.ne.glory.domain.genre.value.GenreId;
@@ -101,17 +102,20 @@ public class ReviewSearch {
      * @param reviewId レビューId
      * @return レビュー検索結果
      */
-    public ReviewSearchResults searchByReviewId(final ReviewId reviewId) {
+    public Optional<ReviewSearchResult> searchByReviewId(final ReviewId reviewId) {
 
         final ReviewSearchCondition condition = new ReviewSearchCondition();
+        condition.getReviewIds().add(reviewId);
         condition.setLotNumber(1);
         condition.setLotPerCount(1);
-        condition.getReviewIds().add(reviewId);
-        condition.setOrderType(ReviewSearchOrderType.PostTimeDesc);
 
         final List<ReviewSearchResult> resultList = repository.search(condition);
-        final int resultCount = resultList.size();
 
-        return new ReviewSearchResults(condition, resultList, resultCount);
+        if (resultList.isEmpty()) {
+
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(resultList.get(0));
     }
 }

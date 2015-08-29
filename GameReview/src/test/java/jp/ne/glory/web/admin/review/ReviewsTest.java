@@ -7,6 +7,7 @@ import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.game.repository.GameRepositoryStub;
 import jp.ne.glory.domain.game.value.CeroRating;
 import jp.ne.glory.domain.review.repository.ReviewRepositoryStub;
+import jp.ne.glory.domain.review.value.Score;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
 import jp.ne.glory.test.review.search.ReviewSearchDataGenerator;
 import jp.ne.glory.ui.admin.game.GameSearchConditionBean;
@@ -14,6 +15,7 @@ import jp.ne.glory.ui.admin.review.DateRange;
 import jp.ne.glory.ui.admin.review.ReviewBean;
 import jp.ne.glory.ui.admin.review.ReviewListView;
 import jp.ne.glory.ui.admin.review.ReviewSearchConditionBean;
+import jp.ne.glory.ui.admin.review.ScoreBean;
 import jp.ne.glory.web.common.PagePaths;
 import jp.ne.glory.web.common.PagerInfo;
 import org.glassfish.jersey.server.mvc.Viewable;
@@ -107,13 +109,16 @@ public class ReviewsTest {
                 assertThat(actualReview.getGoodPoint(), is(expectedReview.getReview().getGoodPoint().getValue()));
                 assertThat(actualReview.getBadPoint(), is(expectedReview.getReview().getBadPoint().getValue()));
                 assertThat(actualReview.getComment(), is(expectedReview.getReview().getComment().getValue()));
-                assertThat(actualReview.getAddiction(), is(expectedReview.getReview().getScore().getAddiction()));
-                assertThat(actualReview.getLoadTime(), is(expectedReview.getReview().getScore().getLoadTime()));
-                assertThat(actualReview.getMusic(), is(expectedReview.getReview().getScore().getMusic()));
-                assertThat(actualReview.getOperability(), is(expectedReview.getReview().getScore().getOperability()));
-                assertThat(actualReview.getStory(), is(expectedReview.getReview().getScore().getStory()));
 
-                final DateTimeValue actualPostDatetime = actualReview.getPostDatetime();
+                final Score expectedScore = expectedReview.getReview().getScore();
+                final ScoreBean actuScore = actualReview.getScore();
+                assertThat(actuScore.getAddiction(), is(expectedScore.getAddiction()));
+                assertThat(actuScore.getLoadTime(), is(expectedScore.getLoadTime()));
+                assertThat(actuScore.getMusic(), is(expectedScore.getMusic()));
+                assertThat(actuScore.getOperability(), is(expectedScore.getOperability()));
+                assertThat(actuScore.getStory(), is(expectedScore.getStory()));
+
+                final DateTimeValue actualPostDatetime = actualReview.getPostDateTime();
                 final DateTimeValue expcetedPostDatetime = expectedReview.getReview().getPostTime().getValue();
 
                 assertThat(actualPostDatetime.getValue(), is(expcetedPostDatetime.getValue()));

@@ -1,6 +1,7 @@
 package jp.ne.glory.application.review;
 
 import java.util.List;
+import java.util.Optional;
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.review.repository.ReviewRepositoryStub;
 import jp.ne.glory.domain.review.value.ReviewId;
@@ -44,7 +45,7 @@ public class ReviewSearchStub extends ReviewSearch {
     }
 
     @Override
-    public ReviewSearchResults searchByReviewId(final ReviewId reviewId) {
+    public Optional<ReviewSearchResult> searchByReviewId(final ReviewId reviewId) {
 
         final ReviewSearchCondition condition = new ReviewSearchCondition();
         condition.setLotNumber(1);
@@ -52,7 +53,15 @@ public class ReviewSearchStub extends ReviewSearch {
         condition.getReviewIds().add(reviewId);
         condition.setOrderType(ReviewSearchOrderType.PostTimeDesc);
 
-        return search(condition);
+        final ReviewSearchResults results = search(condition);
+        final List<ReviewSearchResult > resultList = results.getResults();
+
+        if (resultList.isEmpty()) {
+
+            return Optional.empty();
+        }
+
+        return Optional.of(resultList.get(0));
     }
 
     private ReviewSearchResults search(final ReviewSearchCondition condition) {

@@ -1,6 +1,9 @@
 package jp.ne.glory.application.review;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
+import jp.ne.glory.application.datetime.DateTimeCalculatorStub;
+import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.repository.GameRepositoryStub;
@@ -14,6 +17,8 @@ import jp.ne.glory.domain.review.repository.ReviewRepositoryStub;
 import jp.ne.glory.domain.review.value.BadPoint;
 import jp.ne.glory.domain.review.value.Comment;
 import jp.ne.glory.domain.review.value.GoodPoint;
+import jp.ne.glory.domain.review.value.LastUpdateDateTime;
+import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.ScorePoint;
 import org.junit.Before;
@@ -39,6 +44,8 @@ public class ReviewPostTest {
             copiedReview.getScore().setMusic(review.getScore().getMusic());
             copiedReview.getScore().setOperability(review.getScore().getOperability());
             copiedReview.getScore().setStory(review.getScore().getStory());
+            copiedReview.setLastUpdate(review.getLastUpdate());
+            copiedReview.setPostTime(review.getPostTime());
 
             return copiedReview;
         }
@@ -67,12 +74,14 @@ public class ReviewPostTest {
 
         private static Review createBaseReview(final ReviewId reviewId, final GameId gameId) {
 
-            final Review review = new Review(new ReviewId(12L));
+            final Review review = new Review(reviewId);
 
             review.setBadPoint(new BadPoint("悪い点テスト"));
             review.setComment(new Comment("コメントテスト"));
             review.setGoodPoint(new GoodPoint("良い点テスト"));
             review.getScore().setAddiction(ScorePoint.Point5);
+            review.setLastUpdate(new LastUpdateDateTime(new DateTimeValue(LocalDateTime.now())));
+            review.setPostTime(new PostDateTime(new DateTimeValue(LocalDateTime.now())));
             review.setGameId(gameId);
 
             return review;
@@ -124,6 +133,7 @@ public class ReviewPostTest {
         private ReviewPost sut = null;
         private ReviewRepositoryStub reviewRepStub = null;
         private GameRepositoryStub gameRepStub = null;
+        private DateTimeCalculatorStub calculatorStub = null;
         private Game game = null;
 
         @Before
@@ -131,7 +141,9 @@ public class ReviewPostTest {
 
             reviewRepStub = new ReviewRepositoryStub();
             gameRepStub = new GameRepositoryStub();
-            sut = new ReviewPost(reviewRepStub, gameRepStub);
+            calculatorStub = new DateTimeCalculatorStub();
+
+            sut = new ReviewPost(reviewRepStub, gameRepStub, calculatorStub);
 
             game = TestTool.createBaseGame(new GameId(100L));
             gameRepStub.save(game);
@@ -148,6 +160,12 @@ public class ReviewPostTest {
 
             final Optional<Review> postedReview = reviewRepStub.findBy(actualResult.getPostedReviewId());
             assertThat(postedReview.isPresent(), is(true));
+
+            final Review actualReview = postedReview.get();
+            final LocalDateTime currentTime = calculatorStub.getCurrentDateTime().getValue();
+
+            assertThat(actualReview.getLastUpdate().getValue().getValue(), is(currentTime));
+            assertThat(actualReview.getPostTime().getValue().getValue(), is(currentTime));
         }
 
         @Test
@@ -196,13 +214,15 @@ public class ReviewPostTest {
         private ReviewPost sut = null;
         private ReviewRepositoryStub reviewRepStub = null;
         private GameRepositoryStub gameRepStub = null;
+        private DateTimeCalculatorStub calculatorStub = null;
 
         @Before
         public void setUp() {
 
             reviewRepStub = new ReviewRepositoryStub();
             gameRepStub = new GameRepositoryStub();
-            sut = new ReviewPost(reviewRepStub, gameRepStub);
+            calculatorStub = new DateTimeCalculatorStub();
+            sut = new ReviewPost(reviewRepStub, gameRepStub, calculatorStub);
         }
 
         @Test
@@ -220,6 +240,11 @@ public class ReviewPostTest {
             assertThat(postedReviewOption.isPresent(), is(true));
 
             final Review postedReview = postedReviewOption.get();
+
+            final LocalDateTime currentTime = calculatorStub.getCurrentDateTime().getValue();
+
+            assertThat(postedReview.getLastUpdate().getValue().getValue(), is(currentTime));
+            assertThat(postedReview.getPostTime().getValue().getValue(), is(currentTime));
 
             final Optional<Game> savedGameOption = gameRepStub.findBy(new GameId(currentGameId));
             assertThat(savedGameOption.isPresent(), is(true));
@@ -272,6 +297,7 @@ public class ReviewPostTest {
         private ReviewPost sut = null;
         private ReviewRepositoryStub reviewRepStub = null;
         private GameRepositoryStub gameRepStub = null;
+        private DateTimeCalculatorStub calculatorStub = null;
         private ReviewId reviewId = null;
 
         @Before
@@ -279,7 +305,8 @@ public class ReviewPostTest {
 
             reviewRepStub = new ReviewRepositoryStub();
             gameRepStub = new GameRepositoryStub();
-            sut = new ReviewPost(reviewRepStub, gameRepStub);
+            calculatorStub = new DateTimeCalculatorStub();
+            sut = new ReviewPost(reviewRepStub, gameRepStub, calculatorStub);
 
             final Game game = TestTool.createBaseGame(new GameId(100L));
             gameRepStub.save(game);
@@ -307,6 +334,10 @@ public class ReviewPostTest {
             final Review repostedReview = repostedReviewOption.get();
             assertThat(reviewId.isSame(repostedReview.getId()), is(true));
             assertThat(repostedReview.getComment().getValue(), is(editedComment.getValue()));
+
+            final LocalDateTime currentTime = calculatorStub.getCurrentDateTime().getValue();
+            assertThat(repostedReview.getLastUpdate().getValue().getValue(), is(currentTime));
+            assertThat(repostedReview.getPostTime().getValue().getValue(), is(review.getPostTime().getValue().getValue()));
         }
 
         @Test
@@ -349,6 +380,7 @@ public class ReviewPostTest {
         private ReviewPost sut = null;
         private ReviewRepositoryStub reviewRepStub = null;
         private GameRepositoryStub gameRepStub = null;
+        private DateTimeCalculatorStub calculatorStub = null;
         private ReviewId reviewId = null;
         private GameId gameId = null;
 
@@ -357,7 +389,8 @@ public class ReviewPostTest {
 
             reviewRepStub = new ReviewRepositoryStub();
             gameRepStub = new GameRepositoryStub();
-            sut = new ReviewPost(reviewRepStub, gameRepStub);
+            calculatorStub = new DateTimeCalculatorStub();
+            sut = new ReviewPost(reviewRepStub, gameRepStub, calculatorStub);
 
             gameId = new GameId(100L);
             final Game game = TestTool.createBaseGame(gameId);
@@ -396,6 +429,10 @@ public class ReviewPostTest {
 
             final Game savedGame = savedGameOption.get();
             assertThat(savedGame.getUrl().getValue(), is(changedUrl.getValue()));
+
+            final LocalDateTime currentTime = calculatorStub.getCurrentDateTime().getValue();
+            assertThat(postedReview.getLastUpdate().getValue().getValue(), is(currentTime));
+            assertThat(postedReview.getPostTime().getValue().getValue(), is(review.getPostTime().getValue().getValue()));
         }
 
         @Test

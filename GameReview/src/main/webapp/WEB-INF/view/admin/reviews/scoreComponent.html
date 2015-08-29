@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>スコアコンポーネント</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <div class="score-component" th:fragment="scoreComponent(score, name)">
+            <table>
+                <thead>
+                    <tr>
+                        <th>熱中度</th>
+                        <th>ストーリー</th>
+                        <th>操作性</th>
+                        <th>ロード時間</th>
+                        <th>音楽</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <select th:name="${name} + '.addiction'">
+                                <option
+                                    th:each="selectable : ${score.selectableScorePoints}"
+                                    th:selected="${selectable == score.addiction}"
+                                    th:value="${selectable.typeId}"
+                                    th:label="${selectable.label}">点数</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select th:name="${name} + '.story'">
+                                <option
+                                    th:each="selectable : ${score.selectableScorePoints}"
+                                    th:selected="${selectable == score.story}"
+                                    th:value="${selectable.typeId}"
+                                    th:label="${selectable.label}">点数</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select th:name="${name} + '.operability'">
+                                <option
+                                    th:each="selectable : ${score.selectableScorePoints}"
+                                    th:selected="${selectable == score.operability}"
+                                    th:value="${selectable.typeId}"
+                                    th:label="${selectable.label}">点数</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select th:name="${name} + '.loadTime'">
+                                <option
+                                    th:each="selectable : ${score.selectableScorePoints}"
+                                    th:selected="${selectable == score.loadTime}"
+                                    th:value="${selectable.typeId}"
+                                    th:label="${selectable.label}">点数</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select th:name="${name} + '.music'">
+                                <option
+                                    th:each="selectable : ${score.selectableScorePoints}"
+                                    th:selected="${selectable == score.music}"
+                                    th:value="${selectable.typeId}"
+                                    th:label="${selectable.label}">点数</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

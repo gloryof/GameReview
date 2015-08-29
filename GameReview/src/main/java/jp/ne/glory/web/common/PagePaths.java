@@ -107,4 +107,14 @@ public final class PagePaths {
      */
     public static final String REVIEW_LIST = "/admin/reviews/list";
 
+    /**
+     * レビュー編集.
+     */
+    public static final String REVIEW_EDIT = "/admin/reviews/edit";
+
+    /**
+     * エラー画面（ゲームが見つからない）.
+     */
+    public static final String REVIEW_NOT_FOUND = "/admin/reviews/notFound";
+
 }

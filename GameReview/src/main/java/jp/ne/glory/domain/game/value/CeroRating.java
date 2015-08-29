@@ -59,7 +59,7 @@ public enum CeroRating {
 
         for (CeroRating rating : CeroRating.values()) {
 
-            if (rating.id.equals(id)) {
+            if (id.equals(rating.id)) {
 
                 return rating;
             }

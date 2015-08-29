@@ -1,9 +1,9 @@
 package jp.ne.glory.ui.admin.review;
 
+import javax.ws.rs.BeanParam;
+import javax.ws.rs.FormParam;
 import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.review.entity.Review;
-import jp.ne.glory.domain.review.value.Score;
-import jp.ne.glory.domain.review.value.ScorePoint;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
 import jp.ne.glory.ui.admin.game.GameBean;
 import lombok.Getter;
@@ -21,13 +21,15 @@ public class ReviewBean {
      */
     @Getter
     @Setter
-    private long reviewId;
+    @FormParam("reviewId")
+    private Long reviewId;
 
     /**
      * 良い点.
      */
     @Getter
     @Setter
+    @FormParam("goodPoint")
     private String goodPoint;
 
     /**
@@ -35,6 +37,7 @@ public class ReviewBean {
      */
     @Getter
     @Setter
+    @FormParam("badPoint")
     private String badPoint;
 
     /**
@@ -42,49 +45,30 @@ public class ReviewBean {
      */
     @Getter
     @Setter
+    @FormParam("comment")
     private String comment;
 
     /**
-     * 熱中度.
+     * スコア.
      */
     @Getter
     @Setter
-    private ScorePoint addiction = ScorePoint.NotInput;
-
-    /**
-     * ストーリー.
-     */
-    @Getter
-    @Setter
-    private ScorePoint story = ScorePoint.NotInput;
-
-    /**
-     * 操作性.
-     */
-    @Getter
-    @Setter
-    private ScorePoint operability = ScorePoint.NotInput;
-
-    /**
-     * ロード時間.
-     */
-    @Getter
-    @Setter
-    private ScorePoint loadTime = ScorePoint.NotInput;
-
-    /**
-     * 音楽
-     */
-    @Getter
-    @Setter
-    private ScorePoint music = ScorePoint.NotInput;
+    @BeanParam
+    private ScoreBean score;
 
     /**
      * 投稿時刻.
      */
     @Getter
     @Setter
-    private DateTimeValue postDatetime;
+    private DateTimeValue postDateTime;
+
+    /**
+     * 最終更新日時.s
+     */
+    @Getter
+    @Setter
+    private DateTimeValue lastUpdateDateTime;
 
     /**
      * ゲーム情報.
@@ -109,20 +93,14 @@ public class ReviewBean {
     public ReviewBean(final ReviewSearchResult result) {
 
         final Review review = result.getReview();
-        final Score score = review.getScore();
 
         reviewId = review.getId().getValue();
         goodPoint = review.getGoodPoint().getValue();
         badPoint = review.getBadPoint().getValue();
         comment = review.getComment().getValue();
-
-        addiction = score.getAddiction();
-        story = score.getStory();
-        operability = score.getOperability();
-        loadTime = score.getLoadTime();
-        music = score.getMusic();
-
-        postDatetime = review.getPostTime().getValue();
+        score = new ScoreBean(review.getScore());
+        postDateTime = review.getPostTime().getValue();
+        lastUpdateDateTime = review.getLastUpdate().getValue();
 
         this.game = new GameBean(result.getGame(), result.getGenre());
     }

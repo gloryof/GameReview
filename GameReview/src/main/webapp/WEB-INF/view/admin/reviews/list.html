@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='ゲーム一覧')" >
-        <title>ゲーム一覧</title>
+    <head th:include="/common/base/metaInfo :: commonHeader (title='レビュー一覧')" >
+        <title>レビュー一覧</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" th:href="@{/css/normalize.css}" />
         <link rel="stylesheet" th:href="@{/css/base.css}" />
@@ -43,13 +43,13 @@
                 <tbody>
                     <tr th:each="reviewInfo,stats : ${it.reviews}">
                         <td th:text="${stats.count}"></td>
-                        <td th:text="${reviewInfo.postDatetime.value}">2015/01/01 01:01</td>
+                        <td th:text="${reviewInfo.postDateTime.value}">2015/01/01 01:01</td>
                         <td>
                             <a th:href="@{/admin/review/{reviewId}(reviewId=${reviewInfo.reviewId})}" th:text="${reviewInfo.game.title}">ゲームタイトル</a>
                         </td>
                         <td th:text="${reviewInfo.game.genreName}">ユーザ名</td>
                         <td>
-                            <span th:text="${reviewInfo.game.ceroRating.label}">CC</span>
+                            <span th:text="${reviewInfo.game.ceroRating != null}? ${reviewInfo.game.ceroRating.label} : ''">CC</span>
                         </td>
                         <td></td>
                     </tr>

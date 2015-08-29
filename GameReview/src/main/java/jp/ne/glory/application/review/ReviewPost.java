@@ -3,6 +3,9 @@ package jp.ne.glory.application.review;
 import java.util.Optional;
 import java.util.function.Supplier;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import jp.ne.glory.application.datetime.DateTimeCalculator;
+import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.common.error.ValidateErrors;
 import jp.ne.glory.domain.common.validate.ValidateRule;
 import jp.ne.glory.domain.game.entity.Game;
@@ -13,6 +16,8 @@ import jp.ne.glory.domain.review.entity.Review;
 import jp.ne.glory.domain.review.repository.ReviewRepository;
 import jp.ne.glory.domain.review.validate.ReviewEditValidateRule;
 import jp.ne.glory.domain.review.validate.ReviewModifyCommonValidateRule;
+import jp.ne.glory.domain.review.value.LastUpdateDateTime;
+import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.ReviewId;
 
 /**
@@ -34,6 +39,11 @@ public class ReviewPost {
     private final GameRepository gameRepository;
 
     /**
+     * 日付計算.
+     */
+    private final DateTimeCalculator calculator;
+
+    /**
      * コンストラクタ.<br>
      * CDIの仕様（？）でRequestScopeの場合用意する必要があったため作成。<br>
      *
@@ -42,6 +52,7 @@ public class ReviewPost {
     ReviewPost() {
         this.reviewRepository = null;
         this.gameRepository = null;
+        this.calculator = null;
     }
 
     /**
@@ -49,11 +60,14 @@ public class ReviewPost {
      *
      * @param paramReviewRep レビューリポジトリ
      * @param paramGameRep ゲームリポジトリ
+     * @param paramCalculator 日付計算
      */
-    public ReviewPost(final ReviewRepository paramReviewRep, final GameRepository paramGameRep) {
+    @Inject
+    public ReviewPost(final ReviewRepository paramReviewRep, final GameRepository paramGameRep, final DateTimeCalculator paramCalculator) {
 
         reviewRepository = paramReviewRep;
         gameRepository = paramGameRep;
+        calculator = paramCalculator;
     }
 
     /**
@@ -153,12 +167,12 @@ public class ReviewPost {
      */
     private ValidateRule crateReviewRule(final Review review, final Optional<Game> game) {
 
-        if (game.isPresent()) {
+        if (review.isRegistered()) {
 
-            return new ReviewEditValidateRule(review, game.get());
+            return new ReviewEditValidateRule(review, game.orElse(null));
         }
 
-        return new ReviewModifyCommonValidateRule(review, null);
+        return new ReviewModifyCommonValidateRule(review, game.orElse(null));
     }
 
     /**
@@ -177,7 +191,7 @@ public class ReviewPost {
             return new ReviewPostResult(errors, ReviewId.notNumberingValue());
         }
 
-        final ReviewId reviewId = reviewRepository.save(review);
+        final ReviewId reviewId = reviewRepository.save(createPostingReview(review));
         return new ReviewPostResult(errors, reviewId);
     }
 
@@ -201,7 +215,32 @@ public class ReviewPost {
 
         gameRepository.save(game);
 
-        final ReviewId reviewId = reviewRepository.save(review);
+        final ReviewId reviewId = reviewRepository.save(createPostingReview(review));
         return new ReviewPostResult(errors, reviewId);
+    }
+
+    /**
+     * 入力したレビューから更新用のレビューを作成する.
+     *
+     * @param inputReview 入力したレビュー
+     * @return 投稿用のレビュー
+     */
+    private Review createPostingReview(final Review inputReview) {
+
+        final Review postinReview = reviewRepository.findBy(inputReview.getId()).orElse(new Review(inputReview.getId()));
+        postinReview.setScore(inputReview.getScore());
+        postinReview.setGoodPoint(inputReview.getGoodPoint());
+        postinReview.setBadPoint(inputReview.getBadPoint());
+        postinReview.setComment(inputReview.getComment());
+
+        final DateTimeValue currenteDateTime = calculator.getCurrentDateTime();
+        postinReview.setLastUpdate(new LastUpdateDateTime(currenteDateTime));
+
+        if (!inputReview.isRegistered()) {
+
+            postinReview.setPostTime(new PostDateTime(currenteDateTime));
+        }
+
+        return postinReview;
     }
 }

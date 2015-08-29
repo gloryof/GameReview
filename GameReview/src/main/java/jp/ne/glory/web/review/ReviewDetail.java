@@ -69,7 +69,7 @@ public class ReviewDetail {
     public Viewable view(@PathParam("id") final long paramReviewId) {
 
         final ReviewId reviewId = new ReviewId(paramReviewId);
-        final ReviewView reviewView = new ReviewView(search.searchByReviewId(reviewId));
+        final ReviewView reviewView = new ReviewView(search.searchByReviewId(reviewId).get());
         final GenreSearchView genreSearchView = new GenreSearchView(genreSearch.getAllGenres());
         final TopView topView = new TopView(genreSearchView, reviewView);
 
