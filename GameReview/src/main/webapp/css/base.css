@@ -68,3 +68,9 @@ ul.bs-error-message > li {
 ul.bs-error-message > li:last-child {
     margin-bottom: 0px;
 }
+
+textarea.bs-review-text {
+    width: 800px;
+    height: 400px;
+    overflow: scroll;
+}

@@ -117,4 +117,8 @@ public final class PagePaths {
      */
     public static final String REVIEW_NOT_FOUND = "/admin/reviews/notFound";
 
+    /**
+     * レビュー詳細.
+     */
+    public static final String REVIEW_DETAIL = "/admin/reviews/view";
 }

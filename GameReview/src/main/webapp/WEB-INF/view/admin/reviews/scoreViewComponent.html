@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>スコアコンポーネント</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <div class="score-component" th:fragment="scoreComponent(score, name)">
+            <table>
+                <thead>
+                    <tr>
+                        <th>熱中度</th>
+                        <th>ストーリー</th>
+                        <th>操作性</th>
+                        <th>ロード時間</th>
+                        <th>音楽</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${score.addiction.label}">点数</td>
+                        <td th:text="${score.story.label}">点数</td>
+                        <td th:text="${score.operability.label}">点数</td>
+                        <td th:text="${score.loadTime.label}">点数</td>
+                        <td th:text="${score.music.label}">点数</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
