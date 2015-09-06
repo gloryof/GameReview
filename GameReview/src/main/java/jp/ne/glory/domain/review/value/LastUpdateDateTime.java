@@ -10,6 +10,11 @@ import jp.ne.glory.common.type.DateTimeValue;
 public class LastUpdateDateTime {
 
     /**
+     * ラベル.
+     */
+    public static final String LABEL = "最終更新日時";
+
+    /**
      * 日時情報.
      */
     private final DateTimeValue value;

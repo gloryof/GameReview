@@ -11,6 +11,11 @@ import jp.ne.glory.common.type.DateTimeValue;
 public class PostDateTime {
 
     /**
+     * ラベル.
+     */
+    public static final String LABEL = "レビュー投稿日時";
+
+    /**
      * 日時情報.
      */
     private final DateTimeValue value;

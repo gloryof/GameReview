@@ -8,6 +8,8 @@ import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.review.value.BadPoint;
 import jp.ne.glory.domain.review.value.Comment;
 import jp.ne.glory.domain.review.value.GoodPoint;
+import jp.ne.glory.domain.review.value.LastUpdateDateTime;
+import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.Score;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
 import lombok.Getter;
@@ -66,6 +68,18 @@ public class ReviewDetailView {
      */
     @Getter
     private final String scoreLabel = Score.LABEL;
+
+    /**
+     * ラベル：レビュー投稿日時.
+     */
+    @Getter
+    private final String postDateTimeLabel = PostDateTime.LABEL;
+
+    /**
+     * ラベル：最終更新日時.
+     */
+    @Getter
+    private final String lastUpdateDateTimeLabel = LastUpdateDateTime.LABEL;
 
     /**
      * レビュー.

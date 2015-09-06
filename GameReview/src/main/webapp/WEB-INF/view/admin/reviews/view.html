@@ -17,7 +17,9 @@
                     <dt th:text="${it.tileLabel}">タイトル</dt>
                     <dd th:text="*{title}">テストタイトル</dd>
                     <dt th:text="${it.urlLabel}">URL</dt>
-                    <dd th:text="*{siteUrl}">http://test.co.jp</dd>
+                    <dd>
+                        <a th:text="*{siteUrl}" th:href="*{siteUrl}">http://test.co.jp</a>
+                    </dd>
                     <dt th:text="${it.ceroLabel}">CERO レーティング</dt>
                     <dd th:text="*{ceroRating != null} ? *{ceroRating.label} : ''">A</dd>
                     <dt th:text="${it.genreLabel}">ジャンル</dt>
@@ -26,18 +28,18 @@
             </div>
             <div class="review-info">
                 <dl>
+                    <dt th:text="${it.postDateTimeLabel}">レビュー投稿日時</dt>
+                    <dd th:text="*{postDateTime.format()}"></dd>
+                    <dt th:text="${it.lastUpdateDateTimeLabel}">最終更新日時</dt>
+                    <dd th:text="*{lastUpdateDateTime.format()}"></dd>
                     <dt th:text="${it.scoreLabel}">スコア</dt>
                     <dd>
                         <div th:replace="/admin/reviews/scoreViewComponent :: scoreComponent(*{score}, 'score')"></div>
                     </dd>
-                </dl>
-                <dl>
                     <dt th:text="${it.goodPointLabel}">良い点</dt>
                     <dd>
                         <textarea class="bs-review-text" th:text="*{goodPoint}" readonly="true">良い点テスト</textarea>
                     </dd>
-                </dl>
-                <dl>
                     <dt th:text="${it.badPointLabel}">悪い点</dt>
                     <dd>
                         <textarea class="bs-review-text" th:text="*{badPoint}" readonly="true">悪い点テスト</textarea>
