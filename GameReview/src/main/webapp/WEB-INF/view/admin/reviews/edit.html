@@ -33,15 +33,15 @@
                     </dl>
                     <dl>
                         <dt th:text="${it.goodPointLabel}">良い点</dt>
-                        <dd><textarea name="goodPoint" th:text="*{#strings.excapeXml(goodPoint)}" cols="30" rows="10"></textarea></dd>
+                        <dd><textarea class="bs-review-text" name="goodPoint" th:text="*{goodPoint}" cols="30" rows="10"></textarea></dd>
                     </dl>
                     <dl>
                         <dt th:text="${it.badPointLabel}">悪い点</dt>
-                        <dd><textarea name="badPoint" th:text="*{#strings.excapeXml(badPoint)}" cols="30" rows="10"></textarea></dd>
+                        <dd><textarea class="bs-review-text" name="badPoint" th:text="*{badPoint}" cols="30" rows="10"></textarea></dd>
                     </dl>
                     <dl>
                         <dt th:text="${it.commentLabel}">コメント</dt>
-                        <dd><textarea name="comment" th:text="*{#strings.excapeXml(comment)}" cols="30" rows="10"></textarea></dd>
+                        <dd><textarea class="bs-review-text" name="comment" th:text="*{comment}" cols="30" rows="10"></textarea></dd>
                     </dl>
                 </div>
             </form>
