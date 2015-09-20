@@ -8,6 +8,15 @@
         <link rel="stylesheet" th:href="@{/css/pager.css}" />
     </head>
     <body  th:object="${it.review}">
+        <section class="bread-crumbs">
+            <nav class="bs-bread-crumbs">
+                <ol>
+                    <li><a th:href="@{/admin}">管理画面</a></li>
+                    <li><a th:href="@{/admin/reviews}">レビュー一覧</a></li>
+                    <li>新規作成</li>
+                </ol>
+            </nav>
+        </section>
         <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
         <section class="review-create">
             <form th:action="@{/admin/review/post/{gameId}(gameId=*{gameId})}" method="post" id="game-create-form">

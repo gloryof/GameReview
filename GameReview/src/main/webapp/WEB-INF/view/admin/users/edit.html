@@ -7,6 +7,16 @@
         <link rel="stylesheet" th:href="@{/css/base.css}" />
     </head>
     <body>
+        <section class="bread-crumbs">
+            <nav class="bs-bread-crumbs">
+                <ol>
+                    <li><a th:href="@{/admin}">管理画面</a></li>
+                    <li><a th:href="@{/admin/users}">ユーザ一覧</a></li>
+                    <li><a th:href="@{/admin/user/{userId}(userId=${it.userId})}" th:text="${it.userName}">ユーザ名</a></li>
+                    <li>編集</li>
+                </ol>
+            </nav>
+        </section>
         <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
         <section class="user-edit">
             <form th:action="@{/admin/user/{userId}/edit(userId=${it.userId})}" method="post" id="user-edit-form">

@@ -8,6 +8,15 @@
         <link rel="stylesheet" th:href="@{/css/pager.css}" />
     </head>
     <body  th:object="${it.review}">
+        <section class="bread-crumbs">
+            <nav class="bs-bread-crumbs">
+                <ol>
+                    <li><a th:href="@{/admin}">管理画面</a></li>
+                    <li><a th:href="@{/admin/reviews}">レビュー一覧</a></li>
+                    <li th:text="*{game.title}">レビュータイトル</li>
+                </ol>
+            </nav>
+        </section>
         <section class="user-command">
             <button class="edit-button" th:attr="data-edit-url=@{/admin/review/{reviewId}/edit(reviewId=*{reviewId})}">編集</button>
         </section>

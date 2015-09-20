@@ -7,6 +7,14 @@
         <link rel="stylesheet" th:href="@{/css/base.css}" />
     </head>
     <body>
+        <section class="bread-crumbs">
+            <nav class="bs-bread-crumbs">
+                <ol>
+                    <li><a th:href="@{/admin}">管理画面</a></li>
+                    <li>ジャンル一覧</li>
+                </ol>
+            </nav>
+        </section>
         <section>
             <form action="" method="post" th:action="@{/admin/genres/search}">
                 <button>クリア</button>

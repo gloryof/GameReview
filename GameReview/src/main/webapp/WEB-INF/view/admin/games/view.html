@@ -7,6 +7,15 @@
         <link rel="stylesheet" th:href="@{/css/base.css}" />
     </head>
     <body>
+        <section class="bread-crumbs">
+            <nav class="bs-bread-crumbs">
+                <ol>
+                    <li><a th:href="@{/admin}">管理画面</a></li>
+                    <li><a th:href="@{/admin/games}">ゲーム一覧</a></li>
+                    <li th:text="${it.title}">ゲームタイトル</li>
+                </ol>
+            </nav>
+        </section>
         <section class="user-command">
             <button class="edit-button" th:attr="data-edit-url=@{/admin/game/{gameId}/edit(gameId=${it.gameId})}">編集</button>
         </section>

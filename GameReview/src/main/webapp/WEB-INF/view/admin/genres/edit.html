@@ -7,6 +7,16 @@
         <link rel="stylesheet" th:href="@{/css/base.css}" />
     </head>
     <body>
+        <section class="bread-crumbs">
+            <nav class="bs-bread-crumbs">
+                <ol>
+                    <li><a th:href="@{/admin}">管理画面</a></li>
+                    <li><a th:href="@{/admin/genres}">ジャンル一覧</a></li>
+                    <li><a th:href="@{/admin/genre/{genreId}(genreId=${it.genreId})}" th:text="${it.name}">ジャンル名</a></li>
+                    <li>編集</li>
+                </ol>
+            </nav>
+        </section>
         <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
         <section class="genre-edit">
             <form th:action="@{/admin/genre/{genreId}/edit(genreId=${it.genreId})}" method="post" id="genre-edit-form">
