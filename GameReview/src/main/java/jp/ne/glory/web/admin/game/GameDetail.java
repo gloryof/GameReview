@@ -25,7 +25,7 @@ import org.glassfish.jersey.server.mvc.Viewable;
  * @author Junki Yamada.
  */
 @RequestScoped
-@Path("/admin/game/{gameId}")
+@Path("/admin/game/{gameId}/")
 @CertifyTarget
 public class GameDetail {
 

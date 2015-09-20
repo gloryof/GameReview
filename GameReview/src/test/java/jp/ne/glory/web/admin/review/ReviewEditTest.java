@@ -98,6 +98,7 @@ public class ReviewEditTest {
             final GameBean actualGame = actualReview.getGame();
             final Game expectedGame = result.getGame();
             final Genre expectedGenre = result.getGenre();
+            assertThat(actualReview.getGameId(), is(expectedGame.getId().getValue()));
             assertThat(actualGame.getGameId(), is(expectedGame.getId().getValue()));
             assertThat(actualGame.getTitle(), is(expectedGame.getTitle().getValue()));
             assertThat(actualGame.getSiteUrl(), is(expectedGame.getUrl().getValue()));
@@ -239,7 +240,6 @@ public class ReviewEditTest {
 
             final ReviewSearchResult searchResult
                     = reviewSearchStub.searchByReviewId(new ReviewId(paramReviewId)).get();
-            final Game expectedGame = searchResult.getGame();
 
             assertThat(actualReview.getReviewId(), is(postedReview.getReviewId()));
 
@@ -259,7 +259,17 @@ public class ReviewEditTest {
             assertThat(actualPostedDateTime, is(beforeData.getPostTime().getValue().getValue()));
 
             final LocalDateTime actualUpdateTime = actualReview.getLastUpdateDateTime().getValue();
+
+            final GameBean actualGame = actualReview.getGame();
+            final Game expectedGame = searchResult.getGame();
+            final Genre expectedGenre = searchResult.getGenre();
             assertThat(actualUpdateTime, is(beforeData.getLastUpdate().getValue().getValue()));
+            assertThat(actualReview.getGameId(), is(expectedGame.getId().getValue()));
+            assertThat(actualGame.getGameId(), is(expectedGame.getId().getValue()));
+            assertThat(actualGame.getTitle(), is(expectedGame.getTitle().getValue()));
+            assertThat(actualGame.getSiteUrl(), is(expectedGame.getUrl().getValue()));
+            assertThat(actualGame.getCeroRating(), is(expectedGame.getCeroRating()));
+            assertThat(actualGame.getGenreName(), is(expectedGenre.getName().getValue()));
         }
 
         @Test

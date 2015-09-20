@@ -108,6 +108,11 @@ public final class PagePaths {
     public static final String REVIEW_LIST = "/admin/reviews/list";
 
     /**
+     * レビュー作成.
+     */
+    public static final String REVIEW_CREATE = "/admin/reviews/create";
+
+    /**
      * レビュー編集.
      */
     public static final String REVIEW_EDIT = "/admin/reviews/edit";

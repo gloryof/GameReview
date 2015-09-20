@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head th:include="/common/base/metaInfo :: commonHeader (title='レビュー登録')" >
+        <title>レビュー編集</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
+        <link rel="stylesheet" th:href="@{/css/base.css}" />
+        <link rel="stylesheet" th:href="@{/css/pager.css}" />
+    </head>
+    <body  th:object="${it.review}">
+        <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
+        <section class="review-create">
+            <form th:action="@{/admin/review/post/{gameId}(gameId=*{gameId})}" method="post" id="game-create-form">
+                <input type="hidden" name="gameId" th:value="*{gameId}" />
+                <div class="game-info" th:object="*{game}">
+                    <dl>
+                        <dt th:text="${it.tileLabel}">タイトル</dt>
+                        <dd th:text="*{title}">テストタイトル</dd>
+                        <dt th:text="${it.urlLabel}">URL</dt>
+                        <dd th:text="*{siteUrl}">http://test.co.jp</dd>
+                        <dt th:text="${it.ceroLabel}">CERO レーティング</dt>
+                        <dd th:text="*{ceroRating != null} ? *{ceroRating.label} : ''">A</dd>
+                        <dt th:text="${it.genreLabel}">ジャンル</dt>
+                        <dd th:text="*{genreName}">アクション</dd>
+                    </dl>
+                </div>
+                <div class="review-info">
+                    <dl>
+                        <dt th:text="${it.scoreLabel}">スコア</dt>
+                        <dd>
+                            <div th:replace="/admin/reviews/scoreEditComponent :: scoreComponent(*{score}, 'score')"></div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt th:text="${it.goodPointLabel}">良い点</dt>
+                        <dd><textarea class="bs-review-text" name="goodPoint" th:text="*{goodPoint}" cols="30" rows="10"></textarea></dd>
+                    </dl>
+                    <dl>
+                        <dt th:text="${it.badPointLabel}">悪い点</dt>
+                        <dd><textarea class="bs-review-text" name="badPoint" th:text="*{badPoint}" cols="30" rows="10"></textarea></dd>
+                    </dl>
+                    <dl>
+                        <dt th:text="${it.commentLabel}">コメント</dt>
+                        <dd><textarea class="bs-review-text" name="comment" th:text="*{comment}" cols="30" rows="10"></textarea></dd>
+                    </dl>
+                </div>
+            </form>
+        </section>
+        <section class="command">
+            <button class="complete-button">投稿完了</button>
+            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/game/{gameId}(gameId=*{gameId})}">キャンセル</button>
+        </section>
+        <script>
+            $(document).ready(function (event) {
+                $(".complete-button").on("click", function(event) {
+                    $("#game-create-form").submit();
+                });
+                $(".cancel-button").on("click", function (event) {
+                    var $self = $(this);
+                    location.href = $self.data("cancel-url");
+                });
+            });
+        </script>
+    </body>
+</html>

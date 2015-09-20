@@ -153,6 +153,7 @@ public class ReviewPostTest {
         public void 正常に値が設定されていれば投稿される() {
 
             final Review review = TestTool.createBaseReview(game.getId());
+            final Long currentSequence = reviewRepStub.getCurrentSequence();
 
             final ReviewPostResult actualResult = sut.post(review);
             final ValidateErrors actualErrors = actualResult.getErrors();
@@ -164,6 +165,7 @@ public class ReviewPostTest {
             final Review actualReview = postedReview.get();
             final LocalDateTime currentTime = calculatorStub.getCurrentDateTime().getValue();
 
+            assertThat(actualReview.getId().getValue(), is(currentSequence));
             assertThat(actualReview.getLastUpdate().getValue().getValue(), is(currentTime));
             assertThat(actualReview.getPostTime().getValue().getValue(), is(currentTime));
         }

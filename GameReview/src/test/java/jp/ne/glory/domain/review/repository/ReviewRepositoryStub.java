@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.value.GameId;
 import jp.ne.glory.domain.game.value.Title;
@@ -15,8 +14,6 @@ import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.genre.value.GenreName;
 import jp.ne.glory.domain.review.entity.Review;
-import jp.ne.glory.domain.review.value.LastUpdateDateTime;
-import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.search.ReviewSearchCondition;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
@@ -41,15 +38,15 @@ public class ReviewRepositoryStub implements ReviewRepository {
     public ReviewId save(final Review review, final Game game, final Genre genre) {
 
         final Review saveReview;
-        if (review.getId() == null) {
+        if (review.getId() == null || !review.isRegistered()) {
 
             saveReview = new Review(new ReviewId(sequence));
             saveReview.setBadPoint(review.getBadPoint());
             saveReview.setComment(review.getComment());
             saveReview.setGoodPoint(review.getGoodPoint());
             saveReview.setScore(review.getScore());
-            saveReview.setPostTime(new PostDateTime(new DateTimeValue(LocalDateTime.now())));
-            saveReview.setLastUpdate(new LastUpdateDateTime(new DateTimeValue(LocalDateTime.now())));
+            saveReview.setPostTime(review.getPostTime());
+            saveReview.setLastUpdate(review.getLastUpdate());
 
             sequence++;
         } else {
@@ -112,6 +109,11 @@ public class ReviewRepositoryStub implements ReviewRepository {
     @Override
     public int getSearchCount(final ReviewSearchCondition condition) {
         return getSearchResult(condition, false).size();
+    }
+
+    public long getCurrentSequence() {
+
+        return sequence;
     }
 
     private List<ReviewSearchResult> getSearchResult(final ReviewSearchCondition condition, final boolean limitedCount) {

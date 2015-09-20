@@ -51,19 +51,22 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                 .forEach(v -> {
                     reviewMap.put(v.getReview().getId().getValue(), v);
                 });
+        sequence = genreList.size();
     }
 
     @Override
     public ReviewId save(final Review review) {
 
         final Review saveReview;
-        if (review.getId() == null) {
+        if (review.getId() == null || !review.isRegistered()) {
 
             saveReview = new Review(new ReviewId(sequence));
             saveReview.setBadPoint(review.getBadPoint());
             saveReview.setComment(review.getComment());
             saveReview.setGoodPoint(review.getGoodPoint());
             saveReview.setScore(review.getScore());
+            saveReview.setPostTime(review.getPostTime());
+            saveReview.setLastUpdate(review.getLastUpdate());
 
             sequence++;
         } else {

@@ -48,6 +48,11 @@ public class ReviewBean {
     @FormParam("comment")
     private String comment;
 
+    @Getter
+    @Setter
+    @FormParam("gameId")
+    private Long gameId;
+
     /**
      * スコア.
      */
@@ -55,7 +60,6 @@ public class ReviewBean {
     @Setter
     @BeanParam
     private ScoreBean score;
-
     /**
      * 投稿時刻.
      */
@@ -94,7 +98,11 @@ public class ReviewBean {
 
         final Review review = result.getReview();
 
-        reviewId = review.getId().getValue();
+        if (review.isRegistered()) {
+
+            reviewId = review.getId().getValue();
+        }
+
         goodPoint = review.getGoodPoint().getValue();
         badPoint = review.getBadPoint().getValue();
         comment = review.getComment().getValue();
@@ -102,6 +110,7 @@ public class ReviewBean {
         postDateTime = review.getPostTime().getValue();
         lastUpdateDateTime = review.getLastUpdate().getValue();
 
-        this.game = new GameBean(result.getGame(), result.getGenre());
+        game = new GameBean(result.getGame(), result.getGenre());
+        gameId = result.getGame().getId().getValue();
     }
 }
