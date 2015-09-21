@@ -1,9 +1,12 @@
 package jp.ne.glory.ui.review;
 
+import java.util.Arrays;
+import java.util.List;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.review.entity.Review;
 import jp.ne.glory.domain.review.value.Score;
+import jp.ne.glory.domain.review.value.ScorePoint;
 import lombok.Getter;
 
 /**
@@ -35,49 +38,49 @@ public class ReviewBean {
      * 熱中度
      */
     @Getter
-    private final String addictionScore;
+    private final ScorePoint addictionScore;
 
     /**
      * ストーリー.
      */
     @Getter
-    private final String storyScore;
+    private final ScorePoint storyScore;
 
     /**
      * 操作性.
      */
     @Getter
-    private final String operabilityScore;
+    private final ScorePoint operabilityScore;
 
     /**
      * ロード時間.
      */
     @Getter
-    private final String loadTimeScore;
+    private final ScorePoint loadTimeScore;
 
     /**
      * 音楽
      */
     @Getter
-    private final String musicScore;
+    private final ScorePoint musicScore;
 
     /**
      * 良い点.
      */
     @Getter
-    private final String goodPoint;
+    private final List<String> goodPoint;
 
     /**
      * 悪い点.
      */
     @Getter
-    private final String badPoint;
+    private final List<String> badPoint;
 
     /**
      * コメント.
      */
     @Getter
-    private final String comment;
+    private final List<String> comment;
 
     /**
      * コンストラクタ.
@@ -93,14 +96,15 @@ public class ReviewBean {
         genreName = genre.getName().getValue();
 
         final Score score = review.getScore();
-        addictionScore = score.getAddiction().label;
-        storyScore = score.getStory().label;
-        loadTimeScore = score.getLoadTime().label;
-        operabilityScore = score.getOperability().label;
-        musicScore = score.getMusic().label;
+        addictionScore = score.getAddiction();
+        storyScore = score.getStory();
+        loadTimeScore = score.getLoadTime();
+        operabilityScore = score.getOperability();
+        musicScore = score.getMusic();
 
-        goodPoint = review.getGoodPoint().getValue();
-        badPoint = review.getBadPoint().getValue();
-        comment = review.getComment().getValue();
+        final String line = System.getProperty("line.separator");
+        goodPoint = Arrays.asList(review.getGoodPoint().getValue().split(line));
+        badPoint = Arrays.asList(review.getBadPoint().getValue().split(line));
+        comment = Arrays.asList(review.getComment().getValue().split(line));
     }
 }

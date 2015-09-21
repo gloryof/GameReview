@@ -10,31 +10,33 @@
         <div class="fm-review" th:fragment="reviewArea (reviewView)">
             <ul th:each="review : ${reviewView.reviews}">
                 <li>
-                    <h2 th:text="${review.title}">テストタイトル</h2>
-                    <dl>
-                        <dt>熱中度</dt>
-                        <dd>5点</dd>
-                        <dt>ストーリー</dt>
-                        <dd>4点</dd>
-                        <dt>操作性</dt>
-                        <dd>3点</dd>
-                        <dt>ロード時間</dt>
-                        <dd>2点</dd>
-                        <dt>音楽</dt>
-                        <dd>1点</dd>
-                    </dl>
-                    <h3>良い点</h3>
-                    <p th:text="${review.goodPoint}">
-                        テストテストテスト。
-                    </p>
-                    <h3>悪い点</h3>
-                    <p th:text="${review.badPoint}">
-                        テストテストテスト。
-                    </p>
-                    <h3>コメント</h3>
-                    <p th:text="${review.comment}">
-                        テストテストテスト。
-                    </p>
+                    <article>
+                        <h2 th:text="${review.title}">テストタイトル</h2>
+                        <dl>
+                            <dt>熱中度</dt>
+                            <dd>5点</dd>
+                            <dt>ストーリー</dt>
+                            <dd>4点</dd>
+                            <dt>操作性</dt>
+                            <dd>3点</dd>
+                            <dt>ロード時間</dt>
+                            <dd>2点</dd>
+                            <dt>音楽</dt>
+                            <dd>1点</dd>
+                        </dl>
+                        <h3>良い点</h3>
+                        <p>
+                            <div th:each="goodPoint : ${review.goodPoint}" th:text="${goodPoint}">テスト</div>
+                        </p>
+                        <h3>悪い点</h3>
+                        <p>
+                            <div th:each="badPoint : ${review.badPoint}" th:text="${badPoint}">テスト</div>
+                        </p>
+                        <h3>コメント</h3>
+                        <p>
+                            <div th:each="comment : ${review.comment}" th:text="${comment}">テスト</div>
+                        </p>
+                    </article>
                 </li>
             </ul>
         </div>
