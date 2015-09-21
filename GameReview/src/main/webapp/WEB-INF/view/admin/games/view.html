@@ -18,6 +18,7 @@
         </section>
         <section class="user-command">
             <button class="edit-button" th:attr="data-edit-url=@{/admin/game/{gameId}/edit(gameId=${it.gameId})}">編集</button>
+            <button class="review-button" th:attr="data-review-url=@{/admin/review/post/{gameId}(gameId=${it.gameId})}">レビュー投稿</button>
         </section>
         <section class="genre-detail">
             <dl>
@@ -40,6 +41,11 @@
 
                     var $self = $(this);
                     location.href = $self.data("edit-url");
+                });
+                $(".review-button").on("click", function(event) {
+                    
+                    var $self = $(this);
+                    location.href = $self.data("review-url");
                 });
                 $(".cancel-button").on("click", function(event) {
 

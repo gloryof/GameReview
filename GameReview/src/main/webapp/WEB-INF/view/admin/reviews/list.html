@@ -33,7 +33,7 @@
             </form>
         </section>
         <section class="command">
-            <button class="create-button" th:attr="data-create-url=@{/admin/game/create}">新規作成</button>
+            <button class="search-button" th:attr="data-search-url=@{/admin/games}">ゲームを探す</button>
         </section>
         <section class="search-result">
             <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=review-list-pager)"></div>
@@ -68,9 +68,9 @@
         <script>
             $(document).ready(function(event) {
                 var $searchForm = $("form#search-form");
-                $(".create-button").on("click", function(event) {
+                $(".search-button").on("click", function(event) {
                     var $self = $(this);
-                    location.href = $self.data("create-url");
+                    location.href = $self.data("search-url");
                 });
                 $(".clear-button").on("click", function(event) {
                     $("#search-form").find("input").val("");
