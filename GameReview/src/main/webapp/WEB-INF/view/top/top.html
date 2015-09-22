@@ -14,12 +14,14 @@
         <div class="bs-content-area">
             <div th:replace="/common/component/topMenu :: topMenu">
             </div>
-            <div class="bs-left-menu">
-                <div th:replace="/genreSearch/genreSearch :: genreSearch">
+            <div class="bs-content">
+                <div class="bs-left-menu">
+                    <div th:replace="/genreSearch/genreSearch :: genreSearch">
+                    </div>
                 </div>
-            </div>
-            <div class="bs-main-contents">
-                <div th:replace="/review/review :: reviewArea(reviewView=${it.review})">
+                <div class="bs-main-contents">
+                    <div th:replace="/review/review :: reviewArea(reviewView=${it.review})">
+                    </div>
                 </div>
             </div>
         </div>

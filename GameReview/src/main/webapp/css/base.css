@@ -49,13 +49,15 @@ table.bs-list > tbody > tr > td {
 .bs-top-menu {
 }
 
+.bs-content {
+    display: flex;
+}
+
 .bs-left-menu {
-    float : left;
     width : 200px;
 }
 
 .bs-main-contents {
-    float : right;
     width : 800px;
 }
 
