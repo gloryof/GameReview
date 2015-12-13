@@ -127,7 +127,7 @@ public class UserRepositoryImpl implements UserRepository {
      * @return ユーザ
      */
     @Override
-    public Optional<User> findBy(LoginId loginId) {
+    public Optional<User> findBy(final LoginId loginId) {
 
         final Optional<UserAccount> optUserAccount = userAccountDao.selectByLoginId(loginId.getValue());
         if (!optUserAccount.isPresent()) {
@@ -155,7 +155,7 @@ public class UserRepositoryImpl implements UserRepository {
      * @return ユーザリスト
      */
     @Override
-    public List<User> search(UserSearchCondition condition) {
+    public List<User> search(final UserSearchCondition condition) {
 
         return userInfoDao.search(new UserSearchParam(condition)).stream()
                 .map(v -> convertToDomainEntity(v))
@@ -169,7 +169,7 @@ public class UserRepositoryImpl implements UserRepository {
      * @return 検索結果件数
      */
     @Override
-    public int getSearchCount(UserSearchCondition condition) {
+    public int getSearchCount(final UserSearchCondition condition) {
         return search(condition).size();
     }
 
