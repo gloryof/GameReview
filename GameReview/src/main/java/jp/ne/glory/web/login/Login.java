@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -94,6 +95,7 @@ public class Login {
      * @throws java.net.URISyntaxException URLの形式が間違っている場合。固定値のため本来起こらない。
      */
     @POST
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response login(@BeanParam final LoginView view) throws URISyntaxException {
 
         final ValidateErrors errors = validateLogin(view);

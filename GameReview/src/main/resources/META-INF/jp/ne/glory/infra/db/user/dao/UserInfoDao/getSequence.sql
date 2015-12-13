@@ -1,0 +1,1 @@
+SELECT nextval('seq_user_id');
