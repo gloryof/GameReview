@@ -20,7 +20,7 @@ public class UserAuthority {
     @Getter
     @Setter
     @Id
-    private Long userId;
+    private long userId;
 
     /**
      * 権限ID.

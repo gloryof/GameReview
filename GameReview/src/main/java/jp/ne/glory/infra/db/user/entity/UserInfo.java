@@ -20,7 +20,7 @@ public class UserInfo {
     @Getter
     @Setter
     @Id
-    private Long userId;
+    private long userId;
 
     /**
      * ユーザ名.

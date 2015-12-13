@@ -19,7 +19,7 @@ public class UserAccount {
     @Getter
     @Setter
     @Id
-    private Long userId;
+    private long userId;
 
     /**
      * ログインID.

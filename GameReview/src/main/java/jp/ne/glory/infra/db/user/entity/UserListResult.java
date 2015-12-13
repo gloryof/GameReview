@@ -18,7 +18,7 @@ public class UserListResult {
      */
     @Getter
     @Setter
-    private Long userId;
+    private long userId;
 
     /**
      * ユーザ名.
