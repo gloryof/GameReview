@@ -1,0 +1,8 @@
+$ createuser game-review -P
+$ createdb -E utf8 -O game-review game-review
+
+
+$ psql -d game-review -U game-review -f 01_create_user_tables.sql
+$ psql -d game-review -U game-review -f 02_create_genre_tables.sql
+$ psql -d game-review -U game-review -f 03_create_game_tables.sql
+$ psql -d game-review -U game-review -f 04_create_review_tables.sql
