@@ -1,4 +1,4 @@
-package jp.ne.glory.infra.db.repository.entity;
+package jp.ne.glory.infra.db.genre.entity;
 
 import jp.ne.glory.domain.genre.value.search.GenreSearchCondition;
 import lombok.Getter;

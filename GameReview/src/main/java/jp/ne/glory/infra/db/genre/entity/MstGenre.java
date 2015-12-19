@@ -1,4 +1,4 @@
-package jp.ne.glory.infra.db.repository.entity;
+package jp.ne.glory.infra.db.genre.entity;
 
 import java.time.LocalDateTime;
 import lombok.Getter;

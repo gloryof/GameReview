@@ -12,8 +12,8 @@ import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.genre.value.GenreName;
 import jp.ne.glory.domain.genre.value.search.GenreSearchCondition;
 import jp.ne.glory.infra.db.genre.dao.MstGenreDao;
-import jp.ne.glory.infra.db.repository.entity.GenreSearchParam;
-import jp.ne.glory.infra.db.repository.entity.MstGenre;
+import jp.ne.glory.infra.db.genre.entity.GenreSearchParam;
+import jp.ne.glory.infra.db.genre.entity.MstGenre;
 
 /**
  * ジャンルリポジトリ.
