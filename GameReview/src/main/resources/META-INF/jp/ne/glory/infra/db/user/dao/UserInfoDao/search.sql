@@ -44,4 +44,10 @@ WHERE
     /*%if condition.userName != null && condition.userName.isEmpty() != true */
         AND usr.user_name LIKE /* condition.userName + "%" */'シュンツ%'
     /*%end */
+ORDER BY
+    usr.user_id ASC
+/*%if condition.limit != null */
+    LIMIT /* condition.limit */10
+    OFFSET /* condition.offset */10
+/*%end */
 ;
