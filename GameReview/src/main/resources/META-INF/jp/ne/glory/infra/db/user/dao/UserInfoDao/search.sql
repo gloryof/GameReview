@@ -39,10 +39,10 @@ FROM
         auth_review_post.user_id = usr.user_id
 WHERE
     /*%if condition.loginId != null && condition.loginId.isEmpty() != true */
-        account.login_id LIKE /* condition.loginId + "%" */'test%'
+        account.login_id LIKE /* @prefix(condition.loginId) */'test%'
     /*%end */
     /*%if condition.userName != null && condition.userName.isEmpty() != true */
-        AND usr.user_name LIKE /* condition.userName + "%" */'シュンツ%'
+        AND usr.user_name LIKE /* @prefix(condition.userName) */'シュンツ%'
     /*%end */
 ORDER BY
     usr.user_id ASC
