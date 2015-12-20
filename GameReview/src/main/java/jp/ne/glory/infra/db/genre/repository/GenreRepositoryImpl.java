@@ -66,8 +66,7 @@ public class GenreRepositoryImpl implements GenreRepository {
     public Optional<Genre> findBy(GenreId genreId) {
 
         return dao.selectById(genreId.getValue())
-                .map(v -> Optional.of(this.convertToDomainEntity(v)))
-                .orElse(Optional.empty());
+                .map(this::convertToDomainEntity);
     }
 
     /**
