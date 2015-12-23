@@ -46,8 +46,8 @@ WHERE
     /*%end */
 ORDER BY
     usr.user_id ASC
-/*%if condition.limit != null */
-    LIMIT /* condition.limit */10
-    OFFSET /* condition.offset */10
+/*%if condition.limits.activeLimit == true */
+    LIMIT /* condition.limits.limit */10
+    OFFSET /* condition.limits.offset */10
 /*%end */
 ;
