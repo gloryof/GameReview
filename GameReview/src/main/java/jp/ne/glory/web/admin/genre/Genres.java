@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -60,6 +61,7 @@ public class Genres {
      * @return ジャンル一覧
      */
     @GET
+    @Transactional(Transactional.TxType.REQUIRED)
     public Viewable view() {
 
         final List<GenreBean> genres = genreSearch.getAllGenres().stream()
@@ -81,6 +83,7 @@ public class Genres {
      */
     @POST
     @Path("search")
+    @Transactional(Transactional.TxType.REQUIRED)
     public Viewable search(@BeanParam final GenreSearchConditionBean conditionBean) {
 
         final GenreSearchCondition condition = new GenreSearchCondition();

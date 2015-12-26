@@ -3,6 +3,7 @@ package jp.ne.glory.web.admin.review;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import jp.ne.glory.application.review.ReviewSearch;
@@ -55,6 +56,7 @@ public class Reviews {
      * @return レビュー一覧
      */
     @GET
+    @Transactional(Transactional.TxType.REQUIRED)
     public Viewable view() {
 
         final ReviewSearchResults result = search.searchNewReviews(20, 1);

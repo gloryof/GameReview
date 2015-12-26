@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -81,6 +82,7 @@ public class ReviewEdit {
      * @return レスポンス
      */
     @GET
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response view(@PathParam("reviewId") final long paramReviewId) {
 
         final Optional<ReviewSearchResult> results = search.searchByReviewId(new ReviewId(paramReviewId));
@@ -105,6 +107,7 @@ public class ReviewEdit {
      * @return レスポンス
      */
     @POST
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response completeEdit(@PathParam("reviewId") final long paramReviewId, @BeanParam final ReviewBean postedReview) {
 
         if (postedReview.getReviewId() == null || postedReview.getReviewId() != paramReviewId) {

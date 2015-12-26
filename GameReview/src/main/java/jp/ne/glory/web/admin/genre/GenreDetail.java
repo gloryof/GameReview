@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -60,6 +61,7 @@ public class GenreDetail {
      * @return 詳細画面
      */
     @GET
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response view(@PathParam("genreId") final long paramGenreId) {
 
         final Optional<Genre> genreOpt = genreSearch.searchBy(new GenreId(paramGenreId));

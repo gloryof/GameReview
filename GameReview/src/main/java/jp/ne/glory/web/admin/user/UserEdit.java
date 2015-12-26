@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -88,6 +89,7 @@ public class UserEdit {
      * @return レスポンス
      */
     @GET
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response view(@PathParam("id") final long userId) {
 
         final Optional<User> result = userSearch.searchBy(new UserId(userId));
@@ -108,6 +110,7 @@ public class UserEdit {
      * @return レスポンス
      */
     @POST
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response completeEdit(@PathParam("id") final long paramUserId, @BeanParam final UserEditView paramUserEdit) {
 
         final UserId userId = new UserId(paramUserEdit.getUserId());

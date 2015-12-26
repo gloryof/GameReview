@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -86,6 +87,7 @@ public class UserCreate {
      * @return 作成成功の場合：ユーザ詳細、失敗した場合：新規作成画面
      */
     @POST
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response create(@BeanParam final UserEditView inputData) {
 
         final User user = convertToEntity(inputData);

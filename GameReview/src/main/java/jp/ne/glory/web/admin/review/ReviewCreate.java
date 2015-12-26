@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -93,6 +94,7 @@ public class ReviewCreate {
      * @return 作成画面
      */
     @GET
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response view(@PathParam("gameId") final Long paramGameId) {
 
         final Optional<ReviewSearchResult> reviewOpt = createBaseReivew(paramGameId);
@@ -116,6 +118,7 @@ public class ReviewCreate {
      * @return 作成に成功した場合：詳細画面、入力チェックエラーの場合：レビュー投稿画面
      */
     @POST
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response create(@PathParam("gameId") final Long paramGameId, @BeanParam final ReviewBean postData) {
 
         if (!isGameIdMatched(paramGameId, postData)) {

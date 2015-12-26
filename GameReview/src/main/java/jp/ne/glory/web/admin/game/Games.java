@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -74,6 +75,7 @@ public class Games {
      * @return ゲーム一覧
      */
     @GET
+    @Transactional(Transactional.TxType.REQUIRED)
     public Viewable view() {
 
         final GameSearchCondition condition = createSearchCondition();
@@ -91,6 +93,7 @@ public class Games {
      */
     @GET
     @Path("search")
+    @Transactional(Transactional.TxType.REQUIRED)
     public Viewable search(@BeanParam final GameSearchConditionBean conditionParam) {
 
         conditionParam.setGenres(genreSearch.getAllGenres());

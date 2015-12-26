@@ -2,6 +2,7 @@ package jp.ne.glory.web.admin.genre;
 
 import java.net.URI;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -73,6 +74,7 @@ public class GenreCreate {
      * @return 作成に成功した場合：詳細画面、入力チェックエラーの場合：ジャンル作成画面
      */
     @POST
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response create(@BeanParam final GenreEditView inputData) {
 
         final Genre genre = convertToEntity(inputData);

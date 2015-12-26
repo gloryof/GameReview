@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -88,6 +89,7 @@ public class GameEdit {
      * @return レスポンス
      */
     @GET
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response view(@PathParam("gameId") final long paramGameId) {
 
         final Optional<Game> gameOpt = gameSearch.searchBy(new GameId(paramGameId));
@@ -113,6 +115,7 @@ public class GameEdit {
      * @return 登録に成功した場合：詳細画面、入力エラーの場合：編集画面
      */
     @POST
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response completeEdit(@PathParam("gameId") final long paramGameId, @BeanParam final GameEditView inputData) {
 
         if (inputData.getGameId() == null || inputData.getGameId() != paramGameId) {

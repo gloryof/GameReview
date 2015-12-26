@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -74,6 +75,7 @@ public class GenreEdit {
      * @return ジャンル編集画面
      */
     @GET
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response view(@PathParam("genreId") final long genreId) {
 
         final Optional<Genre> genreOpt = genreSearch.searchBy(new GenreId(genreId));
@@ -97,6 +99,7 @@ public class GenreEdit {
      * @return レスポンス
      */
     @POST
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response completeEdit(@PathParam("genreId") final long paramGenreId, @BeanParam final GenreEditView inputData) {
         if (inputData.getGenreId() == null || inputData.getGenreId() != paramGenreId) {
 

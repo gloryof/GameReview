@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -76,6 +77,7 @@ public class GameCreate {
      * @return 新規登録画面
      */
     @GET
+    @Transactional(Transactional.TxType.REQUIRED)
     public Viewable view() {
 
         final GameEditView viewData = new GameEditView();
@@ -91,6 +93,7 @@ public class GameCreate {
      * @return 作成に成功した場合：詳細画面、入力チェックエラーの場合：ゲーム作成画面
      */
     @POST
+    @Transactional(Transactional.TxType.REQUIRED)
     public Response create(@BeanParam final GameEditView inputData) {
 
         final Game game = convertToEntity(inputData);

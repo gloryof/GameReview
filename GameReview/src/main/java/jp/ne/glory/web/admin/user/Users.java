@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -61,6 +62,7 @@ public class Users {
      * @return　ユーザ一覧
      */
     @GET
+    @Transactional(Transactional.TxType.REQUIRED)
     public Viewable view() {
 
         final UserListView userList = new UserListView();
@@ -80,6 +82,7 @@ public class Users {
      */
     @POST
     @Path("search")
+    @Transactional(Transactional.TxType.REQUIRED)
     public Viewable search(@BeanParam final UserSearchConditionBean searchCondition) {
 
         final UserListView userList = new UserListView();
@@ -99,7 +102,7 @@ public class Users {
      * @param searchCondition 検索条件Bean
      * @return ユーザ検索条件エンティティ
      */
-    public UserSearchCondition createEntity(final UserSearchConditionBean searchCondition) {
+    private UserSearchCondition createEntity(final UserSearchConditionBean searchCondition) {
 
         final UserSearchCondition entity = new UserSearchCondition();
 
