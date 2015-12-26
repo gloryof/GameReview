@@ -1,8 +1,9 @@
-CREATE TABLE game (
+CREATE TABLE game_base_info (
     game_id bigint NOT NULL,
     title varchar(100) NOT NULL,
     genre_id bigint NOT NULL,
     cero_id bigint NOT NULL,
+    lock_update_timestamp timestamp with time zone NOT NULL,
     CONSTRAINT pk_game PRIMARY KEY(game_id)
 );
 

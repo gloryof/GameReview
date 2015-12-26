@@ -1,6 +1,7 @@
 package jp.ne.glory.infra.db.user.entity;
 
 import jp.ne.glory.domain.user.value.search.UserSearchCondition;
+import jp.ne.glory.infra.db.common.entity.RecordLimits;
 import lombok.Getter;
 
 /**
@@ -11,16 +12,10 @@ import lombok.Getter;
 public class UserSearchParam {
 
     /**
-     * LIMIT件数.
+     * レコード制限.
      */
     @Getter
-    private Integer limit = null;
-
-    /**
-     * OFFSET件数.
-     */
-    @Getter
-    private Integer offset = null;
+    private final RecordLimits limits;
 
     /**
      * ログインID.
@@ -41,15 +36,7 @@ public class UserSearchParam {
      */
     public UserSearchParam(final UserSearchCondition condition) {
 
-        if (0 < condition.getTargetCount()) {
-
-            this.limit = condition.getTargetCount();
-
-            final int lpc = condition.getLotPerCount();
-            final int ln = condition.getLotNumber();
-            this.offset = lpc * (ln - 1);
-        }
-
+        this.limits = new RecordLimits(condition);
         this.loginId = condition.getLoginId().getValue();
         this.userName = condition.getUserName().getValue();
     }

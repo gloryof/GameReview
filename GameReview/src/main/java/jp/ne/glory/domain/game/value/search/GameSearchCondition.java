@@ -37,7 +37,7 @@ public class GameSearchCondition extends SearchCondition {
 
     /**
      * ゲームの並び順.<br>
-     * デフォルトは {@link GameSearchOrder#IdDesc}。
+     * デフォルトは {@link GameSearchOrder#defalutValue}。
      */
     @Getter
     @Setter

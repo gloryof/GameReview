@@ -1,0 +1,1 @@
+SELECT nextval('seq_game_id')

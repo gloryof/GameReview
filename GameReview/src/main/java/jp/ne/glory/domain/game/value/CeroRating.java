@@ -55,16 +55,30 @@ public enum CeroRating {
             return null;
         }
 
-        final Long id = Long.valueOf(value);
+        return fromId(Long.valueOf(value));
+    }
+
+    /**
+     * IDからCeroRatingを取得する.
+     *
+     * @param id ID
+     * @return CeroRating
+     */
+    public static CeroRating fromId(final long id) {
 
         for (CeroRating rating : CeroRating.values()) {
 
-            if (id.equals(rating.id)) {
+            if (rating.equals(Empty)) {
+
+                continue;
+            }
+
+            if (id == rating.id) {
 
                 return rating;
             }
         }
 
-        return null;
+        return Empty;
     }
 }

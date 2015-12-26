@@ -10,5 +10,19 @@ public enum GameSearchOrder {
     /**
      * IDの降順.
      */
-    IdDesc;
+    IdDesc,
+    /**
+     * IDの昇順.
+     */
+    IdAsc;
+
+    /**
+     * 並び順のデフォルトを取得する.
+     *
+     * @return デフォルト値
+     */
+    public static GameSearchOrder defaultValue() {
+
+        return IdDesc;
+    }
 }
