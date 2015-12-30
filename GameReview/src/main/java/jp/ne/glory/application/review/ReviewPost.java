@@ -228,6 +228,7 @@ public class ReviewPost {
     private Review createPostingReview(final Review inputReview) {
 
         final Review postinReview = reviewRepository.findBy(inputReview.getId()).orElse(new Review(ReviewId.notNumberingValue()));
+        postinReview.setGameId(inputReview.getGameId());
         postinReview.setScore(inputReview.getScore());
         postinReview.setGoodPoint(inputReview.getGoodPoint());
         postinReview.setBadPoint(inputReview.getBadPoint());
