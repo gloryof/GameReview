@@ -68,9 +68,9 @@ public class PagerInfo {
     public PagerInfo(final SearchResults results) {
 
         final SearchCondition condition = results.getCondition();
-        pagePerCount = condition.getLotPerCount();
         allCount = results.getAllCount();
 
+        pagePerCount = condition.getLotPerCount() > 0 ? condition.getLotPerCount() : allCount;
         currentPage = allCount > 0 ? condition.getLotNumber() : 0;
         maxPageNumber = calculateMaxPage();
         startPageNumber = calculateStartPage();
