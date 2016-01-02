@@ -88,7 +88,7 @@ public class GameSearchConditionBean {
      *
      * @param paramGenres ジャンルリスト
      */
-    public void setGenres(final List<Genre> paramGenres) {
+    public final void setGenres(final List<Genre> paramGenres) {
 
         this.genres = paramGenres.stream()
                 .map(GenreBean::new)
