@@ -14,7 +14,7 @@ public class DateTimeValue {
     /**
      * デフォルトの日付形式.
      */
-    private static final String DEFAULT_FORMAT = "yyyy/MM/dd HH:mm:ss";
+    private static final String DEFAULT_FORMAT = "uuuu-MM-dd HH:mm:ss";
 
     /**
      * 値.

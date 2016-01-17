@@ -51,7 +51,7 @@
                 <tbody>
                     <tr th:each="reviewInfo,stats : ${it.reviews}">
                         <td th:text="${stats.count}"></td>
-                        <td th:text="${reviewInfo.postDateTime.value}">2015/01/01 01:01</td>
+                        <td th:text="${reviewInfo.postDateTime.format()}">2015/01/01 01:01</td>
                         <td>
                             <a th:href="@{/admin/review/{reviewId}(reviewId=${reviewInfo.reviewId})}" th:text="${reviewInfo.game.title}">ゲームタイトル</a>
                         </td>

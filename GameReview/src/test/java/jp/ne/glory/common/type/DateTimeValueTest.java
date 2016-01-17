@@ -45,7 +45,7 @@ public class DateTimeValueTest {
         @Test
         public void formatで日付形式で返却される() {
 
-            assertThat(sut.format(), is("2014/07/08 23:48:54"));
+            assertThat(sut.format(), is("2014-07-08 23:48:54"));
         }
     }
 
