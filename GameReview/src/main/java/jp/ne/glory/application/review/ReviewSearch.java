@@ -118,4 +118,18 @@ public class ReviewSearch {
 
         return Optional.ofNullable(resultList.get(0));
     }
+
+    /**
+     * レビューの検索を行う.
+     *
+     * @param condition 検索条件
+     * @return 検索結果
+     */
+    public ReviewSearchResults search(final ReviewSearchCondition condition) {
+
+        final List<ReviewSearchResult> resultList = repository.search(condition);
+        final int resultCount = repository.getSearchCount(condition);
+
+        return new ReviewSearchResults(condition, resultList, resultCount);
+    }
 }

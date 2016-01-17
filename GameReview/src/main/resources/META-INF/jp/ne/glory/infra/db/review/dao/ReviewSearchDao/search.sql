@@ -31,6 +31,12 @@ WHERE
     /*%if condition.reviewIds != null && condition.reviewIds.isEmpty() == false*/
         base.review_id IN /*condition.reviewIds*/(1,2,3)
     /*%end*/
+    /*%if condition.from != null */
+        AND base.post_time >= /*condition.from*/'2016/01/01 00:00:00'
+    /*%end*/
+    /*%if condition.to != null */
+        AND base.post_time < /*condition.to*/'2016/01/01 00:00:00'
+    /*%end*/
 ORDER BY
     base.review_id DESC
 /*%if condition.limits.activeLimit == true */

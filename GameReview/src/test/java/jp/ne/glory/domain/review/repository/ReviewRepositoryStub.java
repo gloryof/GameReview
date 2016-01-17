@@ -1,5 +1,6 @@
 package jp.ne.glory.domain.review.repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import jp.ne.glory.common.type.DateValue;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.game.value.GameId;
 import jp.ne.glory.domain.game.value.Title;
@@ -14,6 +16,7 @@ import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.genre.value.GenreId;
 import jp.ne.glory.domain.genre.value.GenreName;
 import jp.ne.glory.domain.review.entity.Review;
+import jp.ne.glory.domain.review.value.PostDateTime;
 import jp.ne.glory.domain.review.value.ReviewId;
 import jp.ne.glory.domain.review.value.search.ReviewSearchCondition;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
@@ -90,9 +93,9 @@ public class ReviewRepositoryStub implements ReviewRepository {
             return xPostTime.compareTo(yPostTime);
         });
 
-        if (0 < condition.getTargetCount()) {
+        if (condition.getLotPerCount() < 1) {
 
-            resultList = resultList.subList(0, condition.getTargetCount());
+            return resultList;
         }
 
         final int first = (condition.getLotNumber() - 1) * condition.getLotPerCount();
@@ -136,8 +139,6 @@ public class ReviewRepositoryStub implements ReviewRepository {
     private boolean isMatchSearchCondition(final ReviewSearchResult result, final ReviewSearchCondition condition) {
 
         final List<ReviewId> reviewIds = condition.getReviewIds();
-        final List<GenreId> genreIds = condition.getGenreIds();
-
         if (!reviewIds.isEmpty()) {
 
             final Set<Long> idSet = reviewIds
@@ -151,6 +152,7 @@ public class ReviewRepositoryStub implements ReviewRepository {
             }
         }
 
+        final List<GenreId> genreIds = condition.getGenreIds();
         if (!genreIds.isEmpty()) {
 
             final Set<Long> idSet = genreIds
@@ -159,6 +161,32 @@ public class ReviewRepositoryStub implements ReviewRepository {
                     .collect(Collectors.toSet());
 
             if (!idSet.contains(result.getGenre().getId().getValue())) {
+
+                return false;
+            }
+        }
+
+        final DateValue from = condition.getPostedFrom();
+        if (from != null) {
+
+            final PostDateTime postDatetime = result.getReview().getPostTime();
+            final LocalDateTime datetime = postDatetime.getValue().getValue();
+            final LocalDate date = datetime.toLocalDate();
+
+            if (!date.isEqual(from.getValue()) && !date.isAfter(from.getValue())) {
+
+                return false;
+            }
+        }
+
+        final DateValue to = condition.getPostedFrom();
+        if (to != null) {
+
+            final PostDateTime postDatetime = result.getReview().getPostTime();
+            final LocalDateTime datetime = postDatetime.getValue().getValue();
+            final LocalDate date = datetime.toLocalDate();
+
+            if (!date.isEqual(to.getValue()) && !date.isAfter(to.getValue())) {
 
                 return false;
             }

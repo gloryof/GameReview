@@ -1,6 +1,7 @@
 package jp.ne.glory.web;
 
 import javax.ws.rs.ApplicationPath;
+import jp.ne.glory.web.framework.converter.LocalDateConverterProvider;
 import jp.ne.glory.web.framework.filter.SessionSecurityFeature;
 import jp.ne.glory.web.framework.thymeleaf.ThymeleafViewProcessor;
 import org.glassfish.jersey.filter.LoggingFilter;
@@ -24,6 +25,7 @@ public class ApplicationSetting extends ResourceConfig {
         packages(this.getClass().getPackage().getName());
 
         register(ThymeleafViewProcessor.class);
+        register(LocalDateConverterProvider.class);
 
         register(MvcFeature.class);
         register(SessionSecurityFeature.class);

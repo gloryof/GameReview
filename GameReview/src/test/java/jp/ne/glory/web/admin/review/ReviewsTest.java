@@ -1,21 +1,24 @@
 package jp.ne.glory.web.admin.review;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.IntStream;
+import jp.ne.glory.application.genre.GenreSearchStub;
 import jp.ne.glory.application.review.ReviewSearch;
 import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.game.repository.GameRepositoryStub;
 import jp.ne.glory.domain.game.value.CeroRating;
+import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.review.repository.ReviewRepositoryStub;
 import jp.ne.glory.domain.review.value.Score;
 import jp.ne.glory.domain.review.value.search.ReviewSearchResult;
+import jp.ne.glory.test.genre.list.GenreListDataGenerator;
 import jp.ne.glory.test.review.search.ReviewSearchDataGenerator;
-import jp.ne.glory.ui.admin.game.GameSearchConditionBean;
-import jp.ne.glory.ui.admin.review.DateRange;
 import jp.ne.glory.ui.admin.review.ReviewBean;
 import jp.ne.glory.ui.admin.review.ReviewListView;
 import jp.ne.glory.ui.admin.review.ReviewSearchConditionBean;
 import jp.ne.glory.ui.admin.review.ScoreBean;
+import jp.ne.glory.ui.genre.GenreBean;
 import jp.ne.glory.web.common.PagePaths;
 import jp.ne.glory.web.common.PagerInfo;
 import org.glassfish.jersey.server.mvc.Viewable;
@@ -27,6 +30,7 @@ import org.junit.runner.RunWith;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Enclosed.class)
@@ -34,14 +38,35 @@ public class ReviewsTest {
 
     private static class TestTool {
 
-        private static void assertNotUsedCondition(final GameSearchConditionBean actualCondition) {
+        private static void assertViewable(final Viewable actual) {
 
-            assertThat(actualCondition.getCeroRating(), is(nullValue()));
-            assertThat(actualCondition.getGenreId(), is(nullValue()));
-            assertThat(actualCondition.getGenres(), is(nullValue()));
-            assertThat(actualCondition.getPageNumber(), is(nullValue()));
+            assertThat(actual.getTemplateName(), is(PagePaths.REVIEW_LIST));
+            assertThat(actual.getModel(), is(instanceOf(ReviewListView.class)));
+        }
 
-            final List<CeroRating> actualCeroRatings = actualCondition.getRatings();
+        private static void assertEmptyCondition(final ReviewSearchConditionBean actual) {
+
+            assertThat(actual.getTitle(), is(nullValue()));
+            assertThat(actual.getCeroRating(), is(nullValue()));
+            assertThat(actual.getGenreId(), is(nullValue()));
+            assertThat(actual.getFrom(), is(nullValue()));
+            assertThat(actual.getTo(), is(nullValue()));
+            assertThat(actual.getPageNumber(), is(nullValue()));
+        }
+
+        private static void assertCondition(final ReviewSearchConditionBean actual,
+                final ReviewSearchConditionBean expected) {
+
+            assertThat(actual.getTitle(), is(expected.getTitle()));
+            assertThat(actual.getCeroRating(), is(expected.getCeroRating()));
+            assertThat(actual.getGenreId(), is(expected.getGenreId()));
+            assertThat(actual.getFrom(), is(expected.getFrom()));
+            assertThat(actual.getTo(), is(expected.getTo()));
+            assertThat(actual.getPageNumber(), is(expected.getPageNumber()));
+        }
+
+        private static void assertRatigns(final List<CeroRating> actualCeroRatings) {
+
             final CeroRating[] expcetedRatings = CeroRating.values();
             final int exptectedLength = expcetedRatings.length - 1;
 
@@ -53,19 +78,74 @@ public class ReviewsTest {
 
                 assertThat(actualRating, is(expectedRating));
             }
+        }
+
+        private static void assertGenres(final List<GenreBean> actual, final List<Genre> expected) {
+
+            assertThat(actual.size(), is(expected.size()));
+
+            for (int i = 0; i < actual.size(); i++) {
+
+                final GenreBean actualGenre = actual.get(i);
+                final Genre expectedGenre = expected.get(i);
+
+                assertThat(actualGenre.getId(), is(expectedGenre.getId().getValue()));
+                assertThat(actualGenre.getName(), is(expectedGenre.getName().getValue()));
+            }
+        }
+
+        private static void assertReview(final ReviewBean actual, final ReviewSearchResult expected) {
+
+            assertThat(actual.getReviewId(), is(expected.getReview().getId().getValue()));
+            assertThat(actual.getGoodPoint(), is(expected.getReview().getGoodPoint().getValue()));
+            assertThat(actual.getBadPoint(), is(expected.getReview().getBadPoint().getValue()));
+            assertThat(actual.getComment(), is(expected.getReview().getComment().getValue()));
+
+            final Score expectedScore = expected.getReview().getScore();
+            final ScoreBean actuScore = actual.getScore();
+            assertThat(actuScore.getAddiction(), is(expectedScore.getAddiction()));
+            assertThat(actuScore.getLoadTime(), is(expectedScore.getLoadTime()));
+            assertThat(actuScore.getMusic(), is(expectedScore.getMusic()));
+            assertThat(actuScore.getOperability(), is(expectedScore.getOperability()));
+            assertThat(actuScore.getStory(), is(expectedScore.getStory()));
+
+            final DateTimeValue actualPostDatetime = actual.getPostDateTime();
+            final DateTimeValue expcetedPostDatetime = expected.getReview().getPostTime().getValue();
+
+            assertThat(actualPostDatetime.getValue(), is(expcetedPostDatetime.getValue()));
+            assertThat(actual.getGame().getTitle(), is(expected.getGame().getTitle().getValue()));
+        }
+
+        private static void assertPager(final ReviewListView actual, final int expectedCount) {
+
+            final PagerInfo actualPager = actual.getPager();
+            assertThat(actualPager.getCurrentPage(), is(1));
+
+            final int[] actualPageNumbers = actualPager.getPages();
+            assertThat(actualPageNumbers.length, is(expectedCount));
+
+            for (int i = 0; i < expectedCount; i++) {
+
+                assertThat(actualPageNumbers[i], is(i + 1));
+            }
 
         }
     }
 
     public static class viewのテスト {
 
-        private Reviews sut = null;
         private List<ReviewSearchResult> reviewList = null;
+        private List<Genre> expectedGenre = null;
+
+        private Viewable actualViewable = null;
+        private ReviewListView actualView = null;
+        private ReviewSearchConditionBean actualCondition = null;
 
         @Before
         public void setUp() {
 
-            reviewList = ReviewSearchDataGenerator.createBaseSearchResults(200);
+            expectedGenre = GenreListDataGenerator.createGenreList(5);
+            reviewList = ReviewSearchDataGenerator.createBaseSearchResults(200, expectedGenre);
 
             final ReviewRepositoryStub stub = new ReviewRepositoryStub();
             final GameRepositoryStub gameStub = new GameRepositoryStub();
@@ -75,28 +155,40 @@ public class ReviewsTest {
                 gameStub.save(v.getGame());
             });
 
-            sut = new Reviews(new ReviewSearch(stub));
+            final GenreSearchStub genreStub = new GenreSearchStub(expectedGenre);
+
+            final Reviews sut = new Reviews(new ReviewSearch(stub), genreStub);
+            actualViewable = sut.view();
+            actualView = (ReviewListView) actualViewable.getModel();
+            actualCondition = actualView.getCondition();
         }
 
         @Test
-        public void 検索条件は未入力_リストは全件表示される() {
+        public void Viewableには結果一覧の情報が設定される() {
 
-            final Viewable viewable = sut.view();
+            TestTool.assertViewable(actualViewable);
+        }
 
-            assertThat(viewable.getTemplateName(), is(PagePaths.REVIEW_LIST));
-            assertThat(viewable.getModel(), is(instanceOf(ReviewListView.class)));
+        @Test
+        public void 検索条件は空が設定される() {
 
-            final ReviewListView actualView = (ReviewListView) viewable.getModel();
+            TestTool.assertEmptyCondition(actualCondition);
+        }
 
-            final ReviewSearchConditionBean actualCondition = actualView.getCondition();
+        @Test
+        public void CEROレーティングのリストは全てのレーティングが設定される() {
 
-            final DateRange actualRange = actualCondition.getRange();
-            assertThat(actualRange.getFrom(), is(nullValue()));
-            assertThat(actualRange.getTo(), is(nullValue()));
+            TestTool.assertRatigns(actualCondition.getRatings());
+        }
 
-            final GameSearchConditionBean actualGameCondition = actualCondition.getGameCondition();
-            assertThat(actualGameCondition.getTitle(), is(nullValue()));
-            TestTool.assertNotUsedCondition(actualGameCondition);
+        @Test
+        public void ジャンルのリストは全てのジャンルが設定される() {
+
+            TestTool.assertGenres(actualCondition.getGenres(), expectedGenre);
+        }
+
+        @Test
+        public void リストは全件表示される() {
 
             final List<ReviewBean> actualReviews = actualView.getReviews();
             assertThat(actualReviews.size(), is(20));
@@ -105,35 +197,85 @@ public class ReviewsTest {
                 final ReviewBean actualReview = actualReviews.get(i);
                 final ReviewSearchResult expectedReview = reviewList.get(i);
 
-                assertThat(actualReview.getReviewId(), is(expectedReview.getReview().getId().getValue()));
-                assertThat(actualReview.getGoodPoint(), is(expectedReview.getReview().getGoodPoint().getValue()));
-                assertThat(actualReview.getBadPoint(), is(expectedReview.getReview().getBadPoint().getValue()));
-                assertThat(actualReview.getComment(), is(expectedReview.getReview().getComment().getValue()));
-
-                final Score expectedScore = expectedReview.getReview().getScore();
-                final ScoreBean actuScore = actualReview.getScore();
-                assertThat(actuScore.getAddiction(), is(expectedScore.getAddiction()));
-                assertThat(actuScore.getLoadTime(), is(expectedScore.getLoadTime()));
-                assertThat(actuScore.getMusic(), is(expectedScore.getMusic()));
-                assertThat(actuScore.getOperability(), is(expectedScore.getOperability()));
-                assertThat(actuScore.getStory(), is(expectedScore.getStory()));
-
-                final DateTimeValue actualPostDatetime = actualReview.getPostDateTime();
-                final DateTimeValue expcetedPostDatetime = expectedReview.getReview().getPostTime().getValue();
-
-                assertThat(actualPostDatetime.getValue(), is(expcetedPostDatetime.getValue()));
-                assertThat(actualReview.getGame().getTitle(), is(expectedReview.getGame().getTitle().getValue()));
+                TestTool.assertReview(actualReview, expectedReview);
             });
 
-            final PagerInfo actualPager = actualView.getPager();
-            assertThat(actualPager.getCurrentPage(), is(1));
+            TestTool.assertPager(actualView, 10);
+        }
+    }
 
-            final int[] actualPageNumbers = actualPager.getPages();
-            assertThat(actualPageNumbers.length, is(10));
+    @RunWith(Enclosed.class)
+    public static class searchのテスト {
 
-            for (int i = 0; i < 10; i++) {
+        public static class 検索条件を全て入力した場合 {
+            private List<ReviewSearchResult> reviewList = null;
+            private List<Genre> expectedGenre = null;
 
-                assertThat(actualPageNumbers[i], is(i + 1));
+            private Viewable actualViewable = null;
+            private ReviewListView actualView = null;
+            private ReviewSearchConditionBean expectedCondition = null;
+            private ReviewSearchConditionBean actualCondition = null;
+
+            @Before
+            public void setUp() {
+
+                expectedGenre = GenreListDataGenerator.createGenreList(5);
+                reviewList = ReviewSearchDataGenerator.createBaseSearchResults(200, expectedGenre);
+
+                final ReviewRepositoryStub stub = new ReviewRepositoryStub();
+                final GameRepositoryStub gameStub = new GameRepositoryStub();
+
+                reviewList.forEach(v -> {
+                    stub.save(v.getReview(), v.getGame(), v.getGenre());
+                    gameStub.save(v.getGame());
+                });
+
+                final GenreSearchStub genreStub = new GenreSearchStub(expectedGenre);
+                expectedCondition = new ReviewSearchConditionBean(expectedGenre);
+                expectedCondition.setCeroRating(CeroRating.A);
+                expectedCondition.setGenreId(2l);
+                expectedCondition.setPageNumber(3);
+                expectedCondition.setTitle("タイトル");
+
+                expectedCondition.setFrom(LocalDate.MIN);
+                expectedCondition.setTo(LocalDate.MAX);
+
+                final Reviews sut = new Reviews(new ReviewSearch(stub), genreStub);
+                actualViewable = sut.search(expectedCondition);
+                actualView = (ReviewListView) actualViewable.getModel();
+                actualCondition = actualView.getCondition();
+            }
+
+            @Test
+            public void Viewableには結果一覧の情報が設定される() {
+
+                TestTool.assertViewable(actualViewable);
+            }
+
+            @Test
+            public void 入力した検索条件がそのまま設定される() {
+
+                TestTool.assertCondition(actualCondition, expectedCondition);
+            }
+
+            @Test
+            public void CEROレーティングのリストは全てのレーティングが設定される() {
+
+                TestTool.assertRatigns(actualCondition.getRatings());
+            }
+
+            @Test
+            public void ジャンルのリストは全てのジャンルが設定される() {
+
+                TestTool.assertGenres(actualCondition.getGenres(), expectedGenre);
+            }
+
+            @Test
+            public void リストに検索結果が設定される() {
+
+                // 検索結果が正しい事については内部のクラスの範囲のためテストはしない
+                final List<ReviewBean> actualReviews = actualView.getReviews();
+                assertFalse(actualReviews.isEmpty());
             }
 
         }

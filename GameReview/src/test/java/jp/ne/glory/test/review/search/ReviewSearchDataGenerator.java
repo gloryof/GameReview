@@ -27,14 +27,26 @@ public class ReviewSearchDataGenerator {
 
     public static List<ReviewSearchResult> createBaseSearchResults(final int dataCount) {
 
-        return createBaseSearchResults(dataCount, createBaseGenreList());
+        return createBaseSearchResults(dataCount, LocalDateTime.now());
+    }
+
+    public static List<ReviewSearchResult> createBaseSearchResults(final int dataCount, final LocalDateTime postedBase) {
+
+        return createBaseSearchResults(dataCount, createBaseGenreList(), postedBase);
     }
 
     public static List<ReviewSearchResult> createBaseSearchResults(final int dataCount, final List<Genre> genreList) {
 
+        return createBaseSearchResults(dataCount, genreList, LocalDateTime.now());
+    }
+
+
+    public static List<ReviewSearchResult> createBaseSearchResults(final int dataCount, final List<Genre> genreList,
+            final LocalDateTime postedBase) {
+
         return LongStream
                 .rangeClosed(1, dataCount)
-                .mapToObj(i -> createSearchResult(i, genreList))
+                .mapToObj(i -> createSearchResult(i, genreList, postedBase.plusDays(i)))
                 .collect(Collectors.toList());
     }
 
@@ -47,10 +59,11 @@ public class ReviewSearchDataGenerator {
                 .collect(Collectors.toList());
     }
 
-    private static ReviewSearchResult createSearchResult(final long number, final List<Genre> genreList) {
+    private static ReviewSearchResult createSearchResult(final long number, final List<Genre> genreList,
+            final LocalDateTime postedDatetime) {
 
         final Game game = createTestGame(number);
-        final Review review = createTestReview(number);
+        final Review review = createTestReview(number, postedDatetime);
         review.setGameId(game.getId());
 
         final int genreIndex = (int) (number % genreList.size());
@@ -70,12 +83,12 @@ public class ReviewSearchDataGenerator {
         return game;
     }
 
-    private static Review createTestReview(final long number) {
+    private static Review createTestReview(final long number, final LocalDateTime postedDatetime) {
 
         final Review review = new Review(new ReviewId(number));
 
-        review.setPostTime(new PostDateTime(new DateTimeValue(LocalDateTime.now())));
-        review.setLastUpdate(new LastUpdateDateTime(new DateTimeValue(LocalDateTime.now())));
+        review.setPostTime(new PostDateTime(new DateTimeValue(postedDatetime)));
+        review.setLastUpdate(new LastUpdateDateTime(new DateTimeValue(postedDatetime)));
 
         final StringBuilder goodPointValue = new StringBuilder();
         final StringBuilder badPointValue = new StringBuilder();

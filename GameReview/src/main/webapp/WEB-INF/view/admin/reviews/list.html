@@ -19,21 +19,21 @@
         <section class="search-condition">
             <button class="clear-button">クリア</button>
             <form th:action="@{/admin/reviews/search}" method="get" id="search-form">
-                <input type="hidden" name="pageNumber" class="page-number" />
+                <input type="hidden" name="pageNumber" class="page-number" value="1"/>
                 <dl>
                     <dt>FROM</dt>
-                    <dd><input type="text" name="range.from" th:value="${it.condition.range.from}" /></dd>
+                    <dd><input type="text" class="from-date" name="from" th:value="${it.condition.from}" /></dd>
                     <dt>TO</dt>
-                    <dd><input type="text" name="range.to" th:value="${it.condition.range.to}" /></dd>
+                    <dd><input type="text" class="to-date" name="to" th:value="${it.condition.to}" /></dd>
                     <dt>タイトル</dt>
-                    <dd><input type="text" name="gameCondition.title" th:value="${it.condition.gameCondition.title}" /></dd>
+                    <dd><input type="text" name="title" th:value="${it.condition.title}" /></dd>
                     <dt>ジャンル</dt>
                 </dl>
-                <button>検索</button>
+                <button class="search-button">検索</button>
             </form>
         </section>
         <section class="command">
-            <button class="search-button" th:attr="data-search-url=@{/admin/games}">ゲームを探す</button>
+            <button class="game-search-button" th:attr="data-search-url=@{/admin/games}">ゲームを探す</button>
         </section>
         <section class="search-result">
             <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=review-list-pager)"></div>
@@ -68,7 +68,76 @@
         <script>
             $(document).ready(function(event) {
                 var $searchForm = $("form#search-form");
+
+                var isMatchPattern = function(inputValue) {
+
+                    if (inputValue === "") {
+
+                        return true;
+                    }
+
+                    if (inputValue.length === 8) {
+
+                        return /[0-9]{8}/.test(inputValue);
+                    }
+
+                    if (inputValue.length === 10) {
+
+                        var slashStyle = /[0-9]{4}\/[01]?[0-9]\/[0123]?[0-9]$/;
+                        var hyphenStyle = /[0-9]{4}-[01]?[0-9]-[0123]?[0-9]$/
+
+                        return slashStyle.test(inputValue) || hyphenStyle.test(inputValue);
+                    }
+
+                    return false;
+                }
+
+                var validateForm = function() {
+
+                    var fromDate = $searchForm.find(".from-date").val();
+                    var toDate = $searchForm.find(".to-date").val();
+                    var validateReulst = {
+                        hasError: false,
+                        messages: []
+                    };
+
+                    if (!isMatchPattern(fromDate)) {
+
+                        validateReulst.hasError = true;
+                        validateReulst.messages.push("FROMの入力形式に不備があります。");
+                    }
+
+                    if (!isMatchPattern(toDate)) {
+
+                        validateReulst.hasError = true;
+                        validateReulst.messages.push("TOの入力形式に不備があります。");
+                    }
+
+                    return validateReulst;
+                };
+
                 $(".search-button").on("click", function(event) {
+                   
+                    event.preventDefault();
+                    var result = validateForm();
+                    if (result.hasError) {
+
+                        var message = "入力内容に不備があります。";
+
+                        result.messages.forEach(function(item) {
+
+                            message += "\r" + item;
+                        });
+
+                        alert(message);
+                        return false;
+                    }
+ 
+                    $searchForm.submit();
+                    return true;
+                });
+
+                $(".game-search-button").on("click", function(event) {
                     var $self = $(this);
                     location.href = $self.data("search-url");
                 });

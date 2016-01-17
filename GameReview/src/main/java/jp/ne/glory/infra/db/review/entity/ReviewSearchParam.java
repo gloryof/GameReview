@@ -1,7 +1,10 @@
 package jp.ne.glory.infra.db.review.entity;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import jp.ne.glory.common.type.DateValue;
 import jp.ne.glory.domain.review.value.search.ReviewSearchCondition;
 import jp.ne.glory.infra.db.common.entity.RecordLimits;
 import lombok.Getter;
@@ -22,12 +25,24 @@ public class ReviewSearchParam {
     /**
      * レビューIDリスト.
      */
+    @Getter
     private final List<Long> reviewIds;
 
     /**
      * ジャンルIDリスト.
      */
+    @Getter
     private final List<Long> genreIds;
+
+    /**
+     * 検索日付From.
+     */
+    private LocalDateTime from = null;
+
+    /**
+     * 検索日付to.
+     */
+    private LocalDateTime to = null;
 
     /**
      * コンストラクタ.
@@ -45,5 +60,17 @@ public class ReviewSearchParam {
         this.genreIds = condition.getGenreIds().stream()
                 .map(v -> v.getValue())
                 .collect(Collectors.toList());
+
+        final DateValue fromDate = condition.getPostedFrom();
+        if (fromDate != null && fromDate.getValue() != null) {
+
+            this.from = fromDate.getValue().atTime(LocalTime.MIDNIGHT);
+        }
+
+        final DateValue toDate = condition.getPostedTo();
+        if (toDate != null && toDate.getValue() != null) {
+
+            this.to = toDate.getValue().plusDays(1).atTime(LocalTime.MIDNIGHT);
+        }
     }
 }

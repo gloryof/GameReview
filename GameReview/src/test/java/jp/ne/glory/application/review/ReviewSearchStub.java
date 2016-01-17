@@ -29,7 +29,7 @@ public class ReviewSearchStub extends ReviewSearch {
         condition.setLotPerCount(lotPerCount);
         condition.setOrderType(ReviewSearchOrderType.PostTimeDesc);
 
-        return search(condition);
+        return searchData(condition);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class ReviewSearchStub extends ReviewSearch {
         condition.getGenreIds().add(genreId);
         condition.setOrderType(ReviewSearchOrderType.PostTimeDesc);
 
-        return search(condition);
+        return searchData(condition);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ReviewSearchStub extends ReviewSearch {
         condition.getReviewIds().add(reviewId);
         condition.setOrderType(ReviewSearchOrderType.PostTimeDesc);
 
-        final ReviewSearchResults results = search(condition);
+        final ReviewSearchResults results = searchData(condition);
         final List<ReviewSearchResult > resultList = results.getResults();
 
         if (resultList.isEmpty()) {
@@ -64,7 +64,7 @@ public class ReviewSearchStub extends ReviewSearch {
         return Optional.of(resultList.get(0));
     }
 
-    private ReviewSearchResults search(final ReviewSearchCondition condition) {
+    private ReviewSearchResults searchData(final ReviewSearchCondition condition) {
 
         final List<ReviewSearchResult> searchResults = repository.search(condition);
         final int resultCount = repository.getSearchCount(condition);
