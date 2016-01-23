@@ -2,6 +2,7 @@ package jp.ne.glory.ui.review;
 
 import java.util.Arrays;
 import java.util.List;
+import jp.ne.glory.common.type.DateTimeValue;
 import jp.ne.glory.domain.game.entity.Game;
 import jp.ne.glory.domain.genre.entity.Genre;
 import jp.ne.glory.domain.review.entity.Review;
@@ -83,6 +84,18 @@ public class ReviewBean {
     private final List<String> comment;
 
     /**
+     * 投稿時刻.
+     */
+    @Getter
+    private final DateTimeValue postDateTime;
+
+    /**
+     * 最終更新日時.s
+     */
+    @Getter
+    private final DateTimeValue lastUpdateDateTime;
+
+    /**
      * コンストラクタ.
      *
      * @param review レビュー
@@ -106,5 +119,8 @@ public class ReviewBean {
         goodPoint = Arrays.asList(review.getGoodPoint().getValue().split(line));
         badPoint = Arrays.asList(review.getBadPoint().getValue().split(line));
         comment = Arrays.asList(review.getComment().getValue().split(line));
+
+        postDateTime = review.getPostTime().getValue();
+        lastUpdateDateTime = review.getLastUpdate().getValue();
     }
 }

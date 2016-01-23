@@ -12,17 +12,25 @@
                 <li>
                     <article>
                         <h2 th:text="${review.title}">テストタイトル</h2>
+                        <div>
+                            <span>投稿日時</span>
+                            <span th:text="${review.postDateTime.format()}">2016/01/01 12:30</span>
+                        </div>
+                        <div>
+                            <span>最終更新日時</span>
+                            <span th:text="${review.lastUpdateDateTime.format()}"></span>
+                        </div>
                         <dl>
                             <dt>熱中度</dt>
-                            <dd>5点</dd>
+                            <dd th:text="${review.addictionScore.label}">5点</dd>
                             <dt>ストーリー</dt>
-                            <dd>4点</dd>
+                            <dd th:text="${review.storyScore.label}">4点</dd>
                             <dt>操作性</dt>
-                            <dd>3点</dd>
+                            <dd th:text="${review.operabilityScore.label}">3点</dd>
                             <dt>ロード時間</dt>
-                            <dd>2点</dd>
+                            <dd th:text="${review.loadTimeScore.label}">2点</dd>
                             <dt>音楽</dt>
-                            <dd>1点</dd>
+                            <dd th:text="${review.musicScore.label}">1点</dd>
                         </dl>
                         <h3>良い点</h3>
                         <p>
