@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color : lightsteelblue;
+    background-color : #fdeba9;
     font-size : 16px;
 }
 
@@ -14,7 +14,7 @@ ul {
 
 table.bs-list {
     border-collapse: collapse;
-    background-color: #ffffff;
+    background-color: #fff;
     margin-top : 8px;
     margin-bottom : 8px;
     width: 100%;
@@ -22,7 +22,7 @@ table.bs-list {
 
 table.bs-list > thead > tr,
 table.bs-list > tbody > tr {
-    border : solid 1px #000000;
+    border : solid 1px #000;
 }
 
 table.bs-list > tbody > tr:nth-child(even) {
@@ -30,20 +30,21 @@ table.bs-list > tbody > tr:nth-child(even) {
 }
 
 table.bs-list > thead > tr > th {
-    border : solid 1px #000000;
+    border : solid 1px #000;
     background-color : #dcdcdc;
     padding : 4px;
 }
 
 table.bs-list > tbody > tr > td {
-    border : solid 1px #000000;
+    border : solid 1px #000;
     padding : 4px;
 }
 
 .bs-content-area {
-    width : 1000px;
+    background-color: #fff;
     margin : 0 auto;
     padding : 8px;
+    width : 1000px;
 }
 
 .bs-top-menu {
