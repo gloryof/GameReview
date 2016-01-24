@@ -9,18 +9,19 @@
     </head>
     <body>
         <div class="cp-genre-search" th:fragment="genreSearch">
-            <h1>ジャンル検索</h1>
-            <ul>
-                <li th:each="genre : ${it.genreSearch.genres}">
+            <link rel="stylesheet" href="../../../css/user/genre-search.css" th:href="@{/css/user/genre-search.css}" />
+            <dl>
+                <dt>ジャンル検索</dt>
+                <dd th:each="genre : ${it.genreSearch.genres}">
                     <a th:href="@{/genreSearch/id/{id}(id=${genre.id})}" th:text="${genre.name}">テスト</a>
-                </li>
-                <li th:remove="all">
+                </dd>
+                <dd th:remove="all">
                     <a href="#">アクション</a>
-                </li>
-                <li th:remove="all">
+                </dd>
+                <dd th:remove="all">
                     <a href="#">RPG</a>
-                </li>
-            </ul>
+                </dd>
+            </dl>
        </div>
     </body>
 </html>
