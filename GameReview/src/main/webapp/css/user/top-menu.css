@@ -1,31 +1,35 @@
 div.cp-top-menu {
-    overflow: hidden;
 }
 
-div.cp-top-menu > h1 {
+div.cp-top-menu > div.menus {
+    overflow: hidden;
     background-color: #b7ac83;
-    color: #fff;
-    float: left;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    line-height: 48px;
-    width: 60%;
 }
-div.cp-top-menu > ul.right-menu {
+
+div.cp-top-menu > div.menus > ul.right-menu {
     float: right;
+    padding-top: 8px;
+    padding-bottom: 8px;
     margin-top: 0px;
     margin-bottom: 0px;
-    line-height: 48px;
     width: 40%;
     text-align: right;
-}
 
-ul.right-menu {
     display: flex;
+}
+
+div.cp-top-menu > div.menus > ul.right-menu > li {
+    margin-left: 8px;
+}
+
+div.cp-top-menu > div.logo {
     background-color: #ffe7d2;
+    padding-top: 24px;
+    padding-bottom: 24px;
 }
 
 
-ul.right-menu > li {
-    margin-left: 8px;
+div.cp-top-menu > div.logo > h1 {
+    color: #333;
+    padding-left: 32px;
 }

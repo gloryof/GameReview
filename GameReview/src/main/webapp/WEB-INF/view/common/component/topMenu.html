@@ -10,15 +10,20 @@
     <body>
         <div class="cp-top-menu" th:fragment="topMenu">
             <link rel="stylesheet" href="../../../../css/user/top-menu.css" th:href="@{/css/user/top-menu.css}" />
-            <h1>
-                ゲームレビュー
-            </h1>
-            <ul class="right-menu">
-                <li><a href="" th:href="@{/top}" >TOP</a></li>
-                <li><a href="../../login/login.html" th:href="@{/login}" >ログイン</a></li>
-                <li><a href="">管理画面[未実装]</a></li>
-                <li><a href="">ログアウト[未実装]</a></li>
-            </ul>
+            <div class="menus">
+                <ul class="right-menu">
+                    <li><a href="" th:href="@{/top}" >TOP</a></li>
+                    <li><a href="../../login/login.html" th:href="@{/login}" >ログイン</a></li>
+                    <li><a href="">管理画面[未実装]</a></li>
+                    <li><a href="">ログアウト[未実装]</a></li>
+                </ul>
+            </div>
+            
+            <div class="logo">
+                <h1>
+                    ゲームレビュー
+                </h1>
+            </div>
         </div>
     </body>
 </html>

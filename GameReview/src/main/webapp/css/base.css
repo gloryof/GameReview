@@ -1,13 +1,13 @@
 /*
 配色メモ
-テーマカラー	#D8B96D
-全体の背景#FDEBA9
-メニュー	#B7A483
+テーマカラー	#d8b96d
+全体の背景 #fdeba9
+メニュー	#b7a483
 ロゴ	#555555
-本文見出し1	#E5BF63
-本文見出し2	#FEE58A
-サイドバー見出し#FFE7D2
-サイドバー背景	#FFF7F0
+本文見出し1	#e5bf63
+本文見出し2	#fee58a
+サイドバー見出し #ffe7d2
+サイドバー背景	#fff7f0
 */
 
 * {
@@ -62,7 +62,7 @@ table.bs-list > tbody > tr > td {
     display: flex;
 }
 
-.bs-left-menu {
+.bs-sub-menu {
     width : 200px;
 }
 

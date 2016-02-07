@@ -3,7 +3,7 @@ div.cp-genre-search {
 }
 
 div.cp-genre-search dl > dt {
-    background-color: #fff5d2;
+    background-color: #ffe7d2;
     font-size: 24px;
     margin-left: 0px;
     padding-top: 8px;
@@ -13,7 +13,7 @@ div.cp-genre-search dl > dt {
 }
 
 div.cp-genre-search dl > dd {
-    background-color: #fffcf0;
+    background-color: #fff7f0;
     margin-left: 0px;
     padding-top: 4px;
     padding-bottom: 4px;
