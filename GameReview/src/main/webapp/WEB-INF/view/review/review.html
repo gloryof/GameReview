@@ -8,42 +8,159 @@
     </head>
     <body>
         <div class="fm-review" th:fragment="reviewArea (reviewView)">
-            <ul th:each="review : ${reviewView.reviews}">
-                <li>
-                    <article>
+            <link rel="stylesheet" href="../../../css/user/review-detail.css" th:href="@{/css/user/review-detail.css}" />
+            <ul class="reviews">
+                <li th:each="review : ${reviewView.reviews}">
+                    <article class="review">
                         <h2 th:text="${review.title}">テストタイトル</h2>
-                        <div>
-                            <span>投稿日時</span>
-                            <span th:text="${review.postDateTime.format()}">2016/01/01 12:30</span>
-                        </div>
-                        <div>
-                            <span>最終更新日時</span>
-                            <span th:text="${review.lastUpdateDateTime.format()}"></span>
-                        </div>
-                        <dl>
-                            <dt>熱中度</dt>
-                            <dd th:text="${review.addictionScore.label}">5点</dd>
-                            <dt>ストーリー</dt>
-                            <dd th:text="${review.storyScore.label}">4点</dd>
-                            <dt>操作性</dt>
-                            <dd th:text="${review.operabilityScore.label}">3点</dd>
-                            <dt>ロード時間</dt>
-                            <dd th:text="${review.loadTimeScore.label}">2点</dd>
-                            <dt>音楽</dt>
-                            <dd th:text="${review.musicScore.label}">1点</dd>
-                        </dl>
-                        <h3>良い点</h3>
-                        <p>
-                            <div th:each="goodPoint : ${review.goodPoint}" th:text="${goodPoint}">テスト</div>
-                        </p>
-                        <h3>悪い点</h3>
-                        <p>
-                            <div th:each="badPoint : ${review.badPoint}" th:text="${badPoint}">テスト</div>
-                        </p>
-                        <h3>コメント</h3>
-                        <p>
-                            <div th:each="comment : ${review.comment}" th:text="${comment}">テスト</div>
-                        </p>
+                        <section>
+                            <dl class="update-datetime">
+                                <dt>投稿日時</dt>
+                                <dd th:text="${review.postDateTime.format()}">2016/01/01 12:30</dd>
+                                <dt>最終更新日時</dt>
+                                <dd th:text="${review.lastUpdateDateTime.format()}">2016/02/03 09:04</dd>
+                            </dl>
+                        </section>
+                        <section>
+                            <dl class="points">
+                                <dt>熱中度</dt>
+                                <dd th:text="${review.addictionScore.label}">5点</dd>
+                                <dt>ストーリー</dt>
+                                <dd th:text="${review.storyScore.label}">4点</dd>
+                                <dt>操作性</dt>
+                                <dd th:text="${review.operabilityScore.label}">3点</dd>
+                                <dt>ロード時間</dt>
+                                <dd th:text="${review.loadTimeScore.label}">2点</dd>
+                                <dt>音楽</dt>
+                                <dd th:text="${review.musicScore.label}">1点</dd>
+                            </dl>
+                        </section>
+                        <section>
+                            <h3>良い点</h3>
+                            <p>
+                                <div th:each="goodPoint : ${review.goodPoint}" th:text="${goodPoint}">テスト</div>
+                            </p>
+                        </section>
+                        <section>
+                            <h3>悪い点</h3>
+                            <p>
+                                <div th:each="badPoint : ${review.badPoint}" th:text="${badPoint}">テスト</div>
+                            </p>
+                        </section>
+                        <section>
+                            <h3>コメント</h3>
+                            <p>
+                                <div th:each="comment : ${review.comment}" th:text="${comment}">テスト</div>
+                            </p>
+                        </section>
+                    </article>
+                </li>
+                <li th:remove="all">
+                    <article class="review">
+                        <h2>テストタイトル</h2>
+                        <section>
+                            <dl class="update-datetime">
+                                <dt>投稿日時</dt>
+                                <dd>2016/01/01 12:30</dd>
+                                <dt>最終更新日時</dt>
+                                <dd>2016/01/02 09:24</dd>
+                            </dl>
+                        </section>
+                        <section>
+                            <dl class="points">
+                                <dt>熱中度</dt>
+                                <dd>5点</dd>
+                                <dt>ストーリー</dt>
+                                <dd>4点</dd>
+                                <dt>操作性</dt>
+                                <dd>3点</dd>
+                                <dt>ロード時間</dt>
+                                <dd>2点</dd>
+                                <dt>音楽</dt>
+                                <dd>1点</dd>
+                            </dl>
+                        </section>
+                        <section>
+                            <h3>良い点</h3>
+                            <p>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                            </p>
+                        </section>
+                        <section>
+                            <h3>悪い点</h3>
+                            <p>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                            </p>
+                        </section>
+                        <section>
+                            <h3>コメント</h3>
+                            <p>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                            </p>
+                        </section>
+                    </article>
+                </li>
+                <li th:remove="all">
+                    <article class="review">
+                        <h2>テストタイトル</h2>
+                        <section>
+                            <dl class="update-datetime">
+                                <dt>投稿日時</dt>
+                                <dd>2016/01/01 12:30</dd>
+                                <dt>最終更新日時</dt>
+                                <dd>2016/01/02 09:24</dd>
+                            </dl>
+                        </section>
+                        <section>
+                            <dl class="points">
+                                <dt>熱中度</dt>
+                                <dd>5点</dd>
+                                <dt>ストーリー</dt>
+                                <dd>4点</dd>
+                                <dt>操作性</dt>
+                                <dd>3点</dd>
+                                <dt>ロード時間</dt>
+                                <dd>2点</dd>
+                                <dt>音楽</dt>
+                                <dd>1点</dd>
+                            </dl>
+                        </section>
+                        <section>
+                            <h3>良い点</h3>
+                            <p>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                            </p>
+                        </section>
+                        <section>
+                            <h3>悪い点</h3>
+                            <p>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                            </p>
+                        </section>
+                        <section>
+                            <h3>コメント</h3>
+                            <p>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                                <div>テスト</div>
+                            </p>
+                        </section>
                     </article>
                 </li>
             </ul>
