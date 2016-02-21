@@ -3,7 +3,6 @@ div.cp-top-menu {
 
 div.cp-top-menu > div.menus {
     overflow: hidden;
-    background-color: #b7ac83;
 }
 
 div.cp-top-menu > div.menus > ul.right-menu {
@@ -23,13 +22,10 @@ div.cp-top-menu > div.menus > ul.right-menu > li {
 }
 
 div.cp-top-menu > div.logo {
-    background-color: #ffe7d2;
     padding-top: 24px;
     padding-bottom: 24px;
 }
 
-
 div.cp-top-menu > div.logo > h1 {
-    color: #333;
     padding-left: 32px;
 }

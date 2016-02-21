@@ -1,5 +1,4 @@
 div.fm-review {
-    background-color: #fff;
     padding: 8px;
 }
 
@@ -22,15 +21,18 @@ div.fm-review article.review p {
 }
 
 div.fm-review article.review h2 {
-    border-left: 8px #e5bf63 solid;
-    border-bottom: 1px #e5bf63 solid;
+    border-left-width: 8px;
+    border-left-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     margin-top: 8px;
     margin-bottom: 8px;
     padding-left: 4px;
 }
 
 div.fm-review article.review h3 {
-    border-left: 8px #fee58a solid;
+    border-left-width: 8px;
+    border-left-style: solid;
     margin-top: 8px;
     margin-bottom: 8px;
     padding-left: 8px;
@@ -62,7 +64,8 @@ div.fm-review article.review dl.update-datetime > dd:after {
 }
 
 div.fm-review article.review dl.points {
-    border-right: solid 1px #999;
+    border-right-width: 1px;
+    border-right-style: solid;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -71,17 +74,21 @@ div.fm-review article.review dl.points {
 }
 
 div.fm-review article.review dl.points > dt {
-    background-color: #fee58a;
-    border-left: solid 1px #999;
-    border-top: solid 1px #999;
-    border-bottom: solid 1px #999;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     height: 1.5em;
     text-align: center;
 }
 
 div.fm-review article.review dl.points > dd {
-    border-left: solid 1px #999;
-    border-bottom: solid 1px #999;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     height: 1.5em;
     margin:0px;
     text-align: center;

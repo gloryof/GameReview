@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='Top Page')" >
+    <head th:include="/common/base/metaInfo :: commonHeader (title='Top Page', theme='user')" >
         <title th:text="${title}">テストタイトル</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <script src="/js/lib/thymol/data/base-data.js" th:remove="all" ></script>
         <script src="/js/lib/thymol/thymol.js" th:remove="all"
                 data-thymol-load="/js/lib/thymol/project-setting.js, /js/lib/thymol/data/reviews.js">
         </script>
-        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
-        <link rel="stylesheet" th:href="@{/css/base.css}" />
     </head>
     <body>
         <div class="bs-content-area">
