@@ -1,0 +1,72 @@
+body {
+    background-color : #fdeba9;
+}
+
+.bs-content-area {
+    background-color: #fff;
+}
+
+ul.bs-error-message {
+    border-color: #ff0000;
+    background-color: #ff9999;
+}
+
+ul.bs-error-message > li {
+    color: #ff0000;
+}
+
+div.cp-genre-search dl > dd {
+    background-color: #fff7f0;
+}
+
+div.cp-genre-search dl > dt {
+    background-color: #ffe7d2;
+}
+
+div.cp-top-menu > div.menus {
+    background-color: #b7ac83;
+}
+
+div.cp-top-menu > div.logo {
+    background-color: #ffe7d2;
+}
+
+div.cp-top-menu > div.logo > h1 {
+    color: #333;
+}
+
+div.fm-review {
+    background-color: #fff;
+}
+
+div.fm-review article.review h2 {
+    border-left-color: #e5bf63;
+    border-bottom-color: #e5bf63;
+}
+
+div.fm-review article.review h3 {
+    border-left-color: #fee58a;
+}
+
+div.fm-review article.review dl.points,
+div.cp-review-list dl.points {
+    border-right-color: #999;
+}
+
+div.fm-review article.review dl.points > dt,
+div.cp-review-list dl.points > dt {
+    background-color: #fee58a;
+    border-left-color: #999;
+    border-top-color: #999;
+    border-bottom-color: #999;
+}
+
+div.fm-review article.review dl.points > dd,
+div.cp-review-list dl.points > dd {
+    border-left-color: #999;
+    border-bottom-color: #999;
+}
+
+div.cp-review-list a.title-link {
+    background-color: #c1ffff;
+}

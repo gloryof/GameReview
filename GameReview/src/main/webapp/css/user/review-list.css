@@ -1,0 +1,87 @@
+div.cp-review-list {
+    background-color: #fff;
+    padding: 8px;
+}
+
+div.cp-review-list section {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+div.cp-review-list h2 {
+    margin-top: 0px;
+}
+
+div.cp-review-list a.title-link {
+    display: block;
+}
+
+div.cp-review-list ul.reviews {
+    margin-top: 0px;
+}
+
+div.cp-review-list ul.reviews > li {
+    border-bottom-style: dashed;
+    border-bottom-width: 2px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+div.cp-review-list ul.reviews > li:first-child {
+    padding-top: 0px;
+}
+
+div.cp-review-list ul.reviews > li:last-child {
+    border-bottom-style: none;
+}
+
+div.cp-review-list dl.tuples {
+    display: flex;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+div.cp-review-list dl.tuples > dt {
+    width: 7em;
+}
+
+div.cp-review-list dl.tuples > dd {
+    margin-left: 0px;
+}
+
+div.cp-review-list dl.tuples > dd:before {
+    content: ":";
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+div.cp-review-list dl.points {
+    border-right-width: 1px;
+    border-right-style: solid;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 3em;
+    margin: 0px;
+}
+
+div.cp-review-list dl.points > dt {
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    height: 1.5em;
+    text-align: center;
+}
+
+div.cp-review-list dl.points > dd {
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    height: 1.5em;
+    margin:0px;
+    text-align: center;
+}
