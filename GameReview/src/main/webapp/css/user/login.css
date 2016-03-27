@@ -1,0 +1,29 @@
+div.bs-content-area {
+    width: 400px;
+    margin-top: 80px;
+}
+
+form.login-input {
+    padding: 16px;
+}
+
+form.login-input input {
+   width: 100%;
+}
+
+form.login-input > dl {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+form.login-input > dl > dt {
+    margin-top: 16px;
+}
+
+form.login-input > dl > dd {
+    margin-left: 0px;
+}
+
+form.login-input > div.buttons {
+    text-align: center;
+}

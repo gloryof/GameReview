@@ -7,20 +7,24 @@
                 data-thymol-load="/js/lib/thymol/project-setting.js, /js/lib/thymol/data/login.js">
         </script>
         <link rel="stylesheet" th:href="@{/css/normalize.css}" />
-        <link rel="stylesheet" th:href="@{/css/base.css}" />
+        <link rel="stylesheet" href="../../../css/normalize.css" th:href="@{/css/normalize.css}" />
+        <link rel="stylesheet" href="../../../css/base.css" th:href="@{/css/base.css}" />
+        <link rel="stylesheet" href="../../../css/user/theme.css" th:href="@{/css/user/theme.css}" th:if="${theme != 'admin'}" />
     </head>
     <body>
         <div class="bs-content-area">
+            <link rel="stylesheet" href="../../../css/user/login.css" th:href="@{/css/user/login.css}" />
 
             <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
-            <form th:action="@{/login}" method="post">
+            <form th:action="@{/login}" method="post" class="login-input">
+                <a th:href="@{/top}" href="../top/top.html">&lt;&lt;キャンセル</a>
                 <dl>
                     <dt>ユーザID</dt>
                     <dd><input type="text" name="loginId" th:value="${it.loginId}" /></dd>
                     <dt>パスワード</dt>
-                    <dd><input typt="password" name="password"  /></dd>
+                    <dd><input type="password" name="password"  /></dd>
                 </dl>
-                <div>
+                <div class="buttons">
                     <button>ログイン</button>
                 </div>
             </form>
