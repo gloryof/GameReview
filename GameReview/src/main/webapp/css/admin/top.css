@@ -1,0 +1,23 @@
+section.menus {
+    padding: 8px;
+}
+
+section.menus dl > dt {
+    margin-top: 32px;
+}
+
+section.menus dl > dt > a {
+    display: block;
+    padding: 8px;
+}
+
+section.menus dl > dd {
+    padding: 8px;
+    margin-left: 0px;
+}
+
+section.command {
+    text-align: center;
+    margin-top: 8px;
+    margin-bttom: 8px;
+}

@@ -1,0 +1,22 @@
+section.ad-bs-header-menu {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+nav.ad-bs-bread-crumbs ol {
+    display: flex;
+    padding-left: 0px;
+    margin: 0px;
+    list-style: none;
+}
+
+nav.ad-bs-bread-crumbs > ol > li:before {
+    content: ">";
+    margin-left: 4px;
+    margin-right: 4px;
+    list-style: none;
+}
+
+nav.ad-bs-bread-crumbs > ol > li {
+    font-weight: bold;
+}

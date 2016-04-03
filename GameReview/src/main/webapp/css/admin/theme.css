@@ -1,0 +1,29 @@
+/**
+*テーマカラー	#6D88D8
+全体の背景#A9BEFD
+メニュー	#8390B7
+ロゴ	#555555
+本文見出し1	#6384E5
+本文見出し2	#8AA7FE
+サイドバー見出し#D2DEFF
+サイドバー背景	#F0F4FF
+*/
+
+body {
+    background-color: #6d88db;
+}
+
+.bs-content-area {
+    background-color: #fff;
+}
+
+section.ad-bs-header-menu {
+    background-color: #a9befd;
+}
+
+section.menus dl > dt {
+    background-color: #d2deff;
+}
+section.menus dl > dd {
+    background-color: #f0f4ff;
+}
