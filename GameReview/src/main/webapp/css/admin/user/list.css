@@ -1,0 +1,9 @@
+form#search-form ul.search-buttons {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+section.command {
+    margin-bottom: 32px;
+}

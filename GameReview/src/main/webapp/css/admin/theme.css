@@ -27,3 +27,12 @@ section.menus dl > dt {
 section.menus dl > dd {
     background-color: #f0f4ff;
 }
+
+table.bs-list > thead > tr > th {
+    background-color: #d2deff;
+}
+
+table.bs-list > tbody > tr:nth-child(even) {
+    background-color: #f0f4ff;
+}
+

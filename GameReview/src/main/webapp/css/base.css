@@ -9,6 +9,19 @@ body {
 ul {
     list-style:  none;
     padding-left : 0px;
+    margin: 0px;
+}
+
+dl {
+    margin: 0px;
+}
+
+hr {
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+dl > dd {
+    margin-left: 0px;
 }
 
 .bs-content-area {

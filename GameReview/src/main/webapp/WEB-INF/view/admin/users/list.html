@@ -1,68 +1,142 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='ユーザ一覧')" >
+    <head th:include="/common/base/metaInfo :: commonHeader (title='ユーザ一覧', theme='admin')" >
         <title>ユーザ一覧</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
-        <link rel="stylesheet" th:href="@{/css/base.css}" />
+        <link rel="stylesheet" href="../../../../css/normalize.css" />
+        <link rel="stylesheet" href="../../../../css/base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/admin-base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/theme.css" />
     </head>
     <body>
-        <section class="bread-crumbs">
-            <nav class="bs-bread-crumbs">
-                <ol>
-                    <li><a th:href="@{/admin}">管理画面</a></li>
-                    <li>ユーザ一覧</li>
-                </ol>
-            </nav>
-        </section>
-        <section class="search-condition">
-            <button class="clear-button">クリア</button>
-            <form th:action="@{/admin/users/search}" method="post" id="search-form">
-                <dl>
-                    <dt>ログインID</dt>
-                    <dd><input type="text" name="loginId" th:value="${it.condition.loginId}" /></dd>
-                    <dt>ユーザ名</dt>
-                    <dd><input type="text" name="userName" th:value="${it.condition.userName}" /></dd>
-                </dl>
-                <button>検索</button>
-            </form>
-        </section>
-        <section class="command">
-            <button class="create-button" th:attr="data-create-url=@{/admin/user/create}">新規作成</button>
-        </section>
-        <section class="search-result">
-            <table class="bs-list">
-                <thead>
-                    <tr>
-                        <th rowspan="2">No.</th>
-                        <th rowspan="2">ログインID</th>
-                        <th rowspan="2">ユーザ名</th>
-                        <th colspan="2">権限</th>
-                        <th rowspan="2">削除[未実装]</th>
-                    </tr>
-                    <tr>
-                        <th th:text="${it.authorityConfigChangeLabel}">レビュー投稿</th>
-                        <th th:text="${it.authorityReviewPostLabel}">設定変更</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="userInfo,stats : ${it.users}">
-                        <td th:text="${stats.count}"></td>
-                        <td>
-                            <a th:href="@{/admin/user/{userId}(userId=${userInfo.userId})}" th:text="${userInfo.loginId}">ログインIDテスト</a>
-                        </td>
-                        <td th:text="${userInfo.userName}">ユーザ名</td>
-                        <td>
-                            <span th:if="${userInfo.configChangeable}">○</span>
-                        </td>
-                        <td>
-                            <span th:if="${userInfo.reviewPostenable}">○</span>
-                        </td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <link rel="stylesheet" href="../../../../css/admin/user/list.css" th:href="@{/css/admin/user/list.css}" />
+        <article class="bs-content-area">
+            <section class="ad-bs-header-menu">
+                <nav class="ad-bs-bread-crumbs">
+                    <ol>
+                        <li><a href="../top.html" th:href="@{/admin}">管理画面</a></li>
+                        <li>ユーザ一覧</li>
+                    </ol>
+                </nav>
+            </section>
+            <section class="ad-bs-contents">
+                <section class="command">
+                    <button class="create-button" th:attr="data-create-url=@{/admin/user/create}">新規作成</button>
+                </section>
+                <section class="search-condition">
+                    <form th:action="@{/admin/users/search}" method="post" id="search-form">
+                        <fieldset>
+                        <dl class="bs-search-inputs">
+                            <dt>ログインID</dt>
+                            <dd><input type="text" name="loginId" th:value="${it.condition.loginId}" /></dd>
+                            <dt>ユーザ名</dt>
+                            <dd><input type="text" name="userName" th:value="${it.condition.userName}" /></dd>
+                        </dl>
+                        <ul class="ad-bs-buttons search-buttons">
+                            <li>
+                                <button class="clear-button">クリア</button>
+                            </li>
+                            <li>
+                                <button>検索</button>
+                            </li>
+                        </ul>
+                        </fieldset>
+                    </form>
+                </section>
+                <section class="search-result">
+                    <hr>
+                    <table class="bs-list">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">No.</th>
+                                <th rowspan="2">ログインID</th>
+                                <th rowspan="2">ユーザ名</th>
+                                <th colspan="2">権限</th>
+                                <th rowspan="2">削除[未実装]</th>
+                            </tr>
+                            <tr>
+                                <th th:text="${it.authorityConfigChangeLabel}">レビュー投稿</th>
+                                <th th:text="${it.authorityReviewPostLabel}">設定変更</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="userInfo,stats : ${it.users}">
+                                <td class="bs-sequence" th:text="${stats.count}">1</td>
+                                <td>
+                                    <a href="view.html"
+                                       th:href="@{/admin/user/{userId}(userId=${userInfo.userId})}"
+                                       th:text="${userInfo.loginId}">ログインIDテスト</a>
+                                </td>
+                                <td th:text="${userInfo.userName}">ユーザ名</td>
+                                <td class="bs-status">
+                                    <span th:if="${userInfo.configChangeable}">○</span>
+                                </td>
+                                <td class="bs-status">
+                                    <span th:if="${userInfo.reviewPostenable}">○</span>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td class="bs-sequence">2</td>
+                                <td>
+                                    <a href="view.html">ログインIDテスト</a>
+                                </td>
+                                <td>ユーザ名</td>
+                                <td class="bs-status">
+                                    <span th:if="${userInfo.configChangeable}">○</span>
+                                </td>
+                                <td class="bs-status">
+                                    <span th:if="${userInfo.reviewPostenable}">○</span>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td class="bs-sequence">3</td>
+                                <td>
+                                    <a href="view.html">ログインIDテスト</a>
+                                </td>
+                                <td>ユーザ名</td>
+                                <td class="bs-status">
+                                    <span th:if="${userInfo.configChangeable}">○</span>
+                                </td>
+                                <td class="bs-status">
+                                    <span th:if="${userInfo.reviewPostenable}">○</span>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td class="bs-sequence">4</td>
+                                <td>
+                                    <a href="view.html">ログインIDテスト</a>
+                                </td>
+                                <td>ユーザ名</td>
+                                <td class="bs-status">
+                                    <span th:if="${userInfo.configChangeable}">○</span>
+                                </td>
+                                <td class="bs-status">
+                                    <span th:if="${userInfo.reviewPostenable}">○</span>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td class="bs-sequence">5</td>
+                                <td>
+                                    <a href="view.html">ログインIDテスト</a>
+                                </td>
+                                <td>ユーザ名</td>
+                                <td class="bs-status">
+                                    <span th:if="${userInfo.configChangeable}">○</span>
+                                </td>
+                                <td class="bs-status">
+                                    <span th:if="${userInfo.reviewPostenable}">○</span>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+        </article>
         <script>
             $(document).ready(function(event) {
                 $(".create-button").on("click", function(event) {

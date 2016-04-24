@@ -1,6 +1,4 @@
-section.menus {
-    padding: 8px;
-}
+
 
 section.menus dl > dt {
     margin-top: 32px;
@@ -19,5 +17,5 @@ section.menus dl > dd {
 section.command {
     text-align: center;
     margin-top: 8px;
-    margin-bttom: 8px;
+    margin-bottom: 8px;
 }
