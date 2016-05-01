@@ -36,3 +36,7 @@ table.bs-list > tbody > tr:nth-child(even) {
     background-color: #f0f4ff;
 }
 
+
+dl.ad-bs-view-items > dt {
+    background-color: #d2deff;
+}

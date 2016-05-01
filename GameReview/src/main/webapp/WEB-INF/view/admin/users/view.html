@@ -1,54 +1,59 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='ユーザ詳細')" >
+    <head th:include="/common/base/metaInfo :: commonHeader (title='ユーザ詳細', theme='admin')" >
         <title>ユーザ詳細</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
-        <link rel="stylesheet" th:href="@{/css/base.css}" />
+        <link rel="stylesheet" href="../../../../css/normalize.css" />
+        <link rel="stylesheet" href="../../../../css/base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/admin-base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/theme.css" />
     </head>
     <body>
-        <section class="bread-crumbs">
-            <nav class="bs-bread-crumbs">
-                <ol>
-                    <li><a th:href="@{/admin}">管理画面</a></li>
-                    <li><a th:href="@{/admin/users}">ユーザ一覧</a></li>
-                    <li th:text="${it.userName}">ユーザ名</li>
-                </ol>
-            </nav>
-        </section>
-        <section class="user-command">
-            <button class="edit-button" th:attr="data-edit-url=@{/admin/user/{userId}/edit(userId=${it.userId})}">編集</button>
-        </section>
-        <section class="user-detail">
-            <dl>
-                <dt th:text="${it.loginIdLabel}">ログインID</dt>
-                <dd th:text="${it.loginId}">test-tes-test</dd>
-                <dt th:text="${it.userNameLabel}">ユーザ名</dt>
-                <dd th:text="${it.userName}">ユーザ名</dd>
-                <dt th:text="${it.passwordLabel}">パスワード</dt>
-                <dd>-</dd>
-                <dt>権限</dt>
-                <dd>
-                    <ul>
-                        <li th:if="${it.noneAuthority}" th:text="${it.authorityNoneLabel}">権限なし</li>
-                        <li th:if="${it.reviewPostenable}" th:text="${it.authorityReviewPostLabel}">レビュー投稿</li>
-                        <li th:if="${it.configChangeable}" th:text="${it.authorityConfigChangeLabel}">設定変更</li>
+        <link rel="stylesheet" href="../../../../css/admin/user/view.css" th:href="@{/css/admin/user/view.css}" />
+        <article class="bs-content-area">           
+            <section class="ad-bs-header-menu">
+                <nav class="ad-bs-bread-crumbs">
+                    <ol>
+                        <li><a href="../top.html" th:href="@{/admin}">管理画面</a></li>
+                        <li><a href="list.html" th:href="@{/admin/users}">ユーザ一覧</a></li>
+                        <li th:text="${it.userName}">ユーザ名</li>
+                    </ol>
+                </nav>
+            </section>
+            <section class="ad-bs-contents">
+                <section class="command">
+                    <a href="list.html" th:href="data-back-url=@{/admin/users}">&lt;&lt;キャンセル</a>
+                    <ul class="ad-bs-sub-command">
+                        <li>
+                            <button class="edit-button" th:attr="data-edit-url=@{/admin/user/{userId}/edit(userId=${it.userId})}">編集</button>
+                        </li>
                     </ul>
-                </dd>
-            </dl>
-        </section>
-        <section class="command">
-            <button class="cancel-button" th:attr="data-back-url=@{/admin/users}">キャンセル</button>
-        </section>
+                </section>
+                <section class="user-detail">
+                    <dl class="ad-bs-view-items">
+                        <dt th:text="${it.loginIdLabel}">ログインID</dt>
+                        <dd th:text="${it.loginId}">test-tes-test</dd>
+                        <dt th:text="${it.userNameLabel}">ユーザ名</dt>
+                        <dd th:text="${it.userName}">ユーザ名</dd>
+                        <dt th:text="${it.passwordLabel}">パスワード</dt>
+                        <dd>-</dd>
+                        <dt>権限</dt>
+                        <dd>
+                            <ul class="ad-bs-horizontal">
+                                <li th:if="${it.noneAuthority}" th:text="${it.authorityNoneLabel}">権限なし</li>
+                                <li th:if="${it.reviewPostenable}" th:text="${it.authorityReviewPostLabel}">レビュー投稿</li>
+                                <li th:if="${it.configChangeable}" th:text="${it.authorityConfigChangeLabel}">設定変更</li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </section>
+            </section>
+        </article>
         <script>
             $(document).ready(function (event) {
                 $(".edit-button").on("click", function (event) {
                     var $self = $(this);
                     location.href = $self.data("edit-url");
-                });
-                $(".cancel-button").on("click", function (event) {
-                    var $self = $(this);
-                    location.href = $self.data("back-url");
                 });
             });
         </script>

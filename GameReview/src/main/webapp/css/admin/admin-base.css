@@ -30,6 +30,19 @@ ul.ad-bs-buttons {
     justify-content: space-between;
 }
 
+ul.ad-bs-horizontal {
+    display: flex;  
+}
+
+ul.ad-bs-horizontal > li {
+    margin-right: 8px;
+}
+
+ul.ad-bs-sub-command {
+    display: flex;
+    justify-content: flex-end;
+}
+
 dl.bs-search-inputs > dt {
     font-weight: bold;
     margin-top: 16px;
@@ -37,6 +50,35 @@ dl.bs-search-inputs > dt {
 
 dl.bs-search-inputs > dt:first-child {
     margin-top: 0px;
+}
+
+dl.ad-bs-view-items {
+    display: flex;
+    flex-wrap: wrap;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+dl.ad-bs-view-items > dt {
+    width: 20%;
+    padding: 4px;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+dl.ad-bs-view-items > dd {
+    width: 80%;
+    padding: 4px;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
 }
 
 table.bs-list {
