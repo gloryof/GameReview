@@ -7,6 +7,11 @@ section.ad-bs-contents {
     padding: 8px;
 }
 
+section.ad-bs-commands {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
 nav.ad-bs-bread-crumbs ol {
     display: flex;
     padding-left: 0px;
@@ -25,9 +30,18 @@ nav.ad-bs-bread-crumbs > ol > li {
     font-weight: bold;
 }
 
-ul.ad-bs-buttons {
+ul.ad-bs-search-buttons {
     display: flex;
     justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+}
+ul.ad-bs-edit-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 640px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 ul.ad-bs-horizontal {
@@ -43,7 +57,8 @@ ul.ad-bs-sub-command {
     justify-content: flex-end;
 }
 
-dl.bs-search-inputs > dt {
+dl.bs-search-inputs > dt,
+dl.bs-edit-inputs > dt {
     font-weight: bold;
     margin-top: 16px;
 }
