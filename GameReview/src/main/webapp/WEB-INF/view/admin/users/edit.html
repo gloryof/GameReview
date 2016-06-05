@@ -1,59 +1,74 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='ユーザ編集')" >
+    <head th:include="/common/base/metaInfo :: commonHeader (title='ユーザ編集', theme='admin')" >
         <title>ユーザ編集</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
-        <link rel="stylesheet" th:href="@{/css/base.css}" />
+        <link rel="stylesheet" href="../../../../css/normalize.css" />
+        <link rel="stylesheet" href="../../../../css/base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/admin-base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/theme.css" />
     </head>
     <body>
-        <section class="bread-crumbs">
-            <nav class="bs-bread-crumbs">
-                <ol>
-                    <li><a th:href="@{/admin}">管理画面</a></li>
-                    <li><a th:href="@{/admin/users}">ユーザ一覧</a></li>
-                    <li><a th:href="@{/admin/user/{userId}(userId=${it.userId})}" th:text="${it.userName}">ユーザ名</a></li>
-                    <li>編集</li>
-                </ol>
-            </nav>
-        </section>
-        <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
-        <section class="user-edit">
-            <form th:action="@{/admin/user/{userId}/edit(userId=${it.userId})}" method="post" id="user-edit-form">
-                <input type="hidden" name="userId" th:value="${it.userId}" id="user-id" />
-                <dl>
-                    <dt th:text="${it.loginIdLabel}">ログインID</dt>
-                    <dd><input type="text" th:value="${it.loginId}" name="loginId" /></dd>
-                    <dt th:text="${it.userNameLabel}">ユーザ名</dt>
-                    <dd><input type="text" th:value="${it.userName}" name="userName" /></dd>
-                    <dt th:text="${it.passwordLabel}">パスワード</dt>
-                    <dd><input type="password" name="password" placeholder="変更する場合はパスワードを入力してください" /></dd>
-                    <dt>権限</dt>
-                    <dd>
-                        <ul>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="authorities" th:checked="${it.reviewPostenable}"
-                                           th:value="${it.authorityReviewPost.authorityId}" />
-                                    <span th:text="${it.authorityReviewPost.name}">レビュー投稿</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="authorities" th:checked="${it.configChangeable}"
-                                           th:value="${it.authorityConfigChange.authorityId}" />
-                                    <span th:text="${it.authorityConfigChange.name}">設定変更</span>
-                                </label>
-                            </li>
-                        </ul>
-                    </dd>
-                </dl>
-            </form>
-        </section>
-        <section class="command">
-            <button class="complete-button">編集完了</button>
-            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/user/{userId}(userId=${it.userId})}">キャンセル</button>
-        </section>
+        <article class="bs-content-area">
+            <section class="ad-bs-header-menu">
+                <nav class="ad-bs-bread-crumbs">
+                    <ol>
+                        <li><a href="../top.html" th:href="@{/admin}">管理画面</a></li>
+                        <li><a href="list.html" th:href="@{/admin/users}">ユーザ一覧</a></li>
+                        <li><a href="view.html" th:href="@{/admin/user/{userId}(userId=${it.userId})}" th:text="${it.userName}">ユーザ名</a></li>
+                        <li>編集</li>
+                    </ol>
+                </nav>
+            </section>
+            <section class="ad-bs-contents">
+                <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
+                <section class="user-edit">
+                    <form th:action="@{/admin/user/{userId}/edit(userId=${it.userId})}" method="post" id="user-edit-form">
+                        <input type="hidden" name="userId" th:value="${it.userId}" id="user-id" />
+                        <dl class="bs-edit-inputs">
+                            <dt th:text="${it.loginIdLabel}">ログインID</dt>
+                            <dd><input type="text" th:value="${it.loginId}" name="loginId" /></dd>
+                            <dt th:text="${it.userNameLabel}">ユーザ名</dt>
+                            <dd><input type="text" th:value="${it.userName}" name="userName" /></dd>
+                            <dt th:text="${it.passwordLabel}">パスワード</dt>
+                            <dd><input type="password" name="password" placeholder="変更する場合のみ入力" /></dd>
+                            <dt>権限</dt>
+                            <dd>
+                                <fieldset>
+                                    <ul>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="authorities" th:checked="${it.reviewPostenable}"
+                                                       th:value="${it.authorityReviewPost.authorityId}" />
+                                                <span th:text="${it.authorityReviewPost.name}">レビュー投稿</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="authorities" th:checked="${it.configChangeable}"
+                                                       th:value="${it.authorityConfigChange.authorityId}" />
+                                                <span th:text="${it.authorityConfigChange.name}">設定変更</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </fieldset>
+                            </dd>
+                        </dl>
+                    </form>
+                </section>
+                <section class="ad-bs-commands">
+                    <ul class="ad-bs-edit-buttons">
+                        <li>
+                            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/user/{userId}(userId=${it.userId})}">キャンセル</button>
+                        </li>
+                        <li>
+                            <button class="complete-button">編集完了</button>
+                        </li>
+                    </ul>                    
+                </section>
+            </section>
+        </article>
+
         <script>
             $(document).ready(function (event) {
                 $(".complete-button").on("click", function(event) {
