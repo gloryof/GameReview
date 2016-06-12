@@ -32,6 +32,7 @@ nav.ad-bs-bread-crumbs > ol > li {
 
 ul.ad-bs-search-buttons {
     display: flex;
+    width: 300px;
     justify-content: space-between;
     margin-left: auto;
     margin-right: auto;

@@ -1,33 +1,42 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='ジャンル詳細')" >
+    <head th:include="/common/base/metaInfo :: commonHeader (title='ジャンル詳細', theme='admin')" >
         <title>ジャンル詳細</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
-        <link rel="stylesheet" th:href="@{/css/base.css}" />
+        <link rel="stylesheet" href="../../../../css/normalize.css" />
+        <link rel="stylesheet" href="../../../../css/base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/admin-base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/theme.css" />
     </head>
     <body>
-        <section class="bread-crumbs">
-            <nav class="bs-bread-crumbs">
-                <ol>
-                    <li><a th:href="@{/admin}">管理画面</a></li>
-                    <li><a th:href="@{/admin/genres}">ジャンル一覧</a></li>
-                    <li th:text="${it.name}">ジャンル名</li>
-                </ol>
-            </nav>
-        </section>
-        <section class="user-command">
-            <button class="edit-button" th:attr="data-edit-url=@{/admin/genre/{genreId}/edit(genreId=${it.genreId})}">編集</button>
-        </section>
-        <section class="genre-detail">
-            <dl>
-                <dt th:text="${it.nameLabel}">名前</dt>
-                <dd th:text="${it.name}">テスト</dd>
-            </dl>
-        </section>
-        <section class="command">
-            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/genres}">キャンセル</button>
-        </section>
+        <article class="bs-content-area">
+            <section class="ad-bs-header-menu">
+                <nav class="ad-bs-bread-crumbs">
+                    <ol>
+                        <li><a href="../top.html" th:href="@{/admin}">管理画面</a></li>
+                        <li><a href="list.html" th:href="@{/admin/genres}">ジャンル一覧</a></li>
+                        <li th:="${it.name}">ジャンル名</li>
+                    </ol>                
+                </nav>
+            </section>
+            <section class="ad-bs-contents">
+                
+                <section class="command">
+                    <a href="list.html" th:href="@{/admin/users}">&lt;&lt;キャンセル</a>
+                    <ul class="ad-bs-sub-command">
+                        <li>
+                            <button class="edit-button" th:attr="data-edit-url=@{/admin/genre/{genreId}/edit(genreId=${it.genreId})}">編集</button>
+                        </li>
+                    </ul>
+                </section>
+                <section class="genre-detail">
+                    <dl class="ad-bs-view-items">
+                        <dt th:text="${it.nameLabel}">名前</dt>
+                        <dd th:text="${it.name}">テスト</dd>
+                    </dl>
+                </section>              
+            </section>
+        </article>
         <script>
             $(document).ready(function(event){
                 $(".edit-button").on("click", function(event) {

@@ -22,7 +22,7 @@
             </section>
             <section class="ad-bs-contents">
                 <section class="command">
-                    <a href="list.html" th:href="data-back-url=@{/admin/users}">&lt;&lt;キャンセル</a>
+                    <a href="list.html" th:href="@{/admin/users}">&lt;&lt;キャンセル</a>
                     <ul class="ad-bs-sub-command">
                         <li>
                             <button class="edit-button" th:attr="data-edit-url=@{/admin/user/{userId}/edit(userId=${it.userId})}">編集</button>
