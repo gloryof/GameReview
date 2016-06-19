@@ -1,65 +1,76 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='レビュー編集')" >
+    <head th:include="/common/base/metaInfo :: commonHeader (title='レビュー編集', theme='admin')" >
         <title>レビュー編集</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
-        <link rel="stylesheet" th:href="@{/css/base.css}" />
-        <link rel="stylesheet" th:href="@{/css/pager.css}" />
+        <link rel="stylesheet" href="../../../../css/normalize.css" />
+        <link rel="stylesheet" href="../../../../css/base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/admin-base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/theme.css" />
     </head>
     <body  th:object="${it.review}">
-        <section class="bread-crumbs">
-            <nav class="bs-bread-crumbs">
-                <ol>
-                    <li><a th:href="@{/admin}">管理画面</a></li>
-                    <li><a th:href="@{/admin/reviews}">レビュー一覧</a></li>
-                    <li><a th:href="@{/admin/review/{reviewId}(reviewId=*{reviewId})}" th:text="*{game.title}">レビュータイトル</a></li>
-                    <li>編集</li>
-                </ol>
-            </nav>
-        </section>
-        <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
-        <section class="review-edit">
-            <form th:action="@{/admin/review/{reviewId}/edit(reviewId=*{reviewId})}" method="post" id="game-create-form">
-                <input type="hidden" name="reviewId" th:value="*{reviewId}" />
-                <div class="game-info" th:object="*{game}">
-                    <dl>
-                        <dt th:text="${it.tileLabel}">タイトル</dt>
-                        <dd th:text="*{title}">テストタイトル</dd>
-                        <dt th:text="${it.urlLabel}">URL</dt>
-                        <dd th:text="*{siteUrl}">http://test.co.jp</dd>
-                        <dt th:text="${it.ceroLabel}">CERO レーティング</dt>
-                        <dd th:text="*{ceroRating != null} ? *{ceroRating.label} : ''">A</dd>
-                        <dt th:text="${it.genreLabel}">ジャンル</dt>
-                        <dd th:text="*{genreName}">アクション</dd>
-                    </dl>
-                </div>
-                <div class="review-info">
-                    <dl>
-                        <dt th:text="${it.scoreLabel}">スコア</dt>
-                        <dd>
-                            <div th:replace="/admin/reviews/scoreEditComponent :: scoreComponent(*{score}, 'score')"></div>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt th:text="${it.goodPointLabel}">良い点</dt>
-                        <dd><textarea class="bs-review-text" name="goodPoint" th:text="*{goodPoint}" cols="30" rows="10"></textarea></dd>
-                    </dl>
-                    <dl>
-                        <dt th:text="${it.badPointLabel}">悪い点</dt>
-                        <dd><textarea class="bs-review-text" name="badPoint" th:text="*{badPoint}" cols="30" rows="10"></textarea></dd>
-                    </dl>
-                    <dl>
-                        <dt th:text="${it.commentLabel}">コメント</dt>
-                        <dd><textarea class="bs-review-text" name="comment" th:text="*{comment}" cols="30" rows="10"></textarea></dd>
-                    </dl>
-                </div>
-            </form>
-        </section>
-        <section class="command">
-            <button class="complete-button">編集完了</button>
-            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/review/{reviewId}(reviewId=*{reviewId})}">キャンセル</button>
-        </section>
+        <article class="bs-content-area">
+            
+            <section class="ad-bs-header-menu">
+                <nav class="ad-bs-bread-crumbs">
+                    <ol>
+                        <li><a href="../top.html" th:href="@{/admin}">管理画面</a></li>
+                        <li><a href="list.html" th:href="@{/admin/reviews}">レビュー一覧</a></li>
+                        <li><a href="view.html" th:href="@{/admin/review/{reviewId}(reviewId=*{reviewId})}" th:text="*{game.title}">レビュータイトル</a></li>
+                        <li>編集</li>
+                    </ol>
+                </nav>
+            </section>
+
+            <section class="ad-bs-contents">
+                <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
+
+                <section class="review-edit">
+                    <form th:action="@{/admin/review/{reviewId}/edit(reviewId=*{reviewId})}" method="post" id="game-create-form">
+                        <input type="hidden" name="reviewId" th:value="*{reviewId}" />
+                        <div class="game-info" th:object="*{game}">
+                            <dl class="ad-bs-view-items">
+                                <dt th:text="${it.tileLabel}">タイトル</dt>
+                                <dd th:text="*{title}">テストタイトル</dd>
+                                <dt th:text="${it.urlLabel}">URL</dt>
+                                <dd th:text="*{siteUrl}">http://test.co.jp</dd>
+                                <dt th:text="${it.ceroLabel}">CERO レーティング</dt>
+                                <dd th:text="*{ceroRating != null} ? *{ceroRating.label} : ''">A</dd>
+                                <dt th:text="${it.genreLabel}">ジャンル</dt>
+                                <dd th:text="*{genreName}">アクション</dd>
+                            </dl>
+                        </div>
+                        <div class="review-info">
+                            <dl class="bs-edit-inputs">
+                                <dt th:text="${it.scoreLabel}">スコア</dt>
+                                <dd>
+                                    <div th:replace="/admin/reviews/scoreEditComponent :: scoreComponent(*{score}, 'score')"></div>
+                                </dd>
+                                <dt th:text="${it.goodPointLabel}">良い点</dt>
+                                <dd><textarea class="ad-bs-review-text" name="goodPoint" th:text="*{goodPoint}" cols="30" rows="10"></textarea></dd>
+                                <dt th:text="${it.badPointLabel}">悪い点</dt>
+                                <dd><textarea class="ad-bs-review-text" name="badPoint" th:text="*{badPoint}" cols="30" rows="10"></textarea></dd>
+                                <dt th:text="${it.commentLabel}">コメント</dt>
+                                <dd><textarea class="ad-bs-review-text" name="comment" th:text="*{comment}" cols="30" rows="10"></textarea></dd>
+                            </dl>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="ad-bs-commands">
+                    <ul class="ad-bs-edit-buttons">
+                        <li>
+                            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/review/{reviewId}(reviewId=*{reviewId})}">キャンセル</button>
+                        </li>
+                        <li>
+                            <button class="complete-button">編集完了</button>
+                        </li>
+                    </ul>
+                </section>
+
+            </section>
+
+        </article>
         <script>
             $(document).ready(function (event) {
                 $(".complete-button").on("click", function(event) {

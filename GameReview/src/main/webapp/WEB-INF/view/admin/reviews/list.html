@@ -1,70 +1,91 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='レビュー一覧')" >
+    <head th:include="/common/base/metaInfo :: commonHeader (title='レビュー一覧', theme='admin')" >
         <title>レビュー一覧</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
-        <link rel="stylesheet" th:href="@{/css/base.css}" />
-        <link rel="stylesheet" th:href="@{/css/pager.css}" />
+        <link rel="stylesheet" href="../../../../css/normalize.css" />
+        <link rel="stylesheet" href="../../../../css/base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/admin-base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/theme.css" />
     </head>
     <body>
-        <section class="bread-crumbs">
-            <nav class="bs-bread-crumbs">
-                <ol>
-                    <li><a th:href="@{/admin}">管理画面</a></li>
-                    <li>レビュー一覧</li>
-                </ol>
-            </nav>
-        </section>
-        <section class="search-condition">
-            <button class="clear-button">クリア</button>
-            <form th:action="@{/admin/reviews/search}" method="get" id="search-form">
-                <input type="hidden" name="pageNumber" class="page-number" value="1"/>
-                <dl>
-                    <dt>FROM</dt>
-                    <dd><input type="text" class="from-date" name="from" th:value="${it.condition.from}" /></dd>
-                    <dt>TO</dt>
-                    <dd><input type="text" class="to-date" name="to" th:value="${it.condition.to}" /></dd>
-                    <dt>タイトル</dt>
-                    <dd><input type="text" name="title" th:value="${it.condition.title}" /></dd>
-                    <dt>ジャンル</dt>
-                </dl>
-                <button class="search-button">検索</button>
-            </form>
-        </section>
-        <section class="command">
-            <button class="game-search-button" th:attr="data-search-url=@{/admin/games}">ゲームを探す</button>
-        </section>
-        <section class="search-result">
-            <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=review-list-pager)"></div>
-            <table class="bs-list">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>投稿日時</th>
-                        <th>タイトル</th>
-                        <th>ジャンル</th>
-                        <th>CERO</th>
-                        <th>削除[未実装]</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="reviewInfo,stats : ${it.reviews}">
-                        <td th:text="${stats.count}"></td>
-                        <td th:text="${reviewInfo.postDateTime.format()}">2015/01/01 01:01</td>
-                        <td>
-                            <a th:href="@{/admin/review/{reviewId}(reviewId=${reviewInfo.reviewId})}" th:text="${reviewInfo.game.title}">ゲームタイトル</a>
-                        </td>
-                        <td th:text="${reviewInfo.game.genreName}">ユーザ名</td>
-                        <td>
-                            <span th:text="${reviewInfo.game.ceroRating != null}? ${reviewInfo.game.ceroRating.label} : ''">CC</span>
-                        </td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=review-list-pager)"></div>
-        </section>
+        <article class="bs-content-area">
+            <section class="ad-bs-header-menu">
+                <nav class="ad-bs-bread-crumbs">
+                    <ol>
+                        <li><a href="../top.html" th:href="@{/admin}">管理画面</a></li>
+                        <li>レビュー一覧</li>
+                    </ol>
+                </nav>
+            </section>
+
+            <section class="ad-bs-contents">
+                <section>
+                    <section class="ad-bs-commands">
+                        <button class="game-search-button" th:attr="data-search-url=@{/admin/games}">ゲームを探す</button>
+                    </section>
+                    <form th:action="@{/admin/reviews/search}" method="get" id="search-form">
+                        <fieldset>
+                            <input type="hidden" name="pageNumber" class="page-number" value="1"/>
+                            <dl class="bs-search-inputs">
+                                <dt>FROM</dt>
+                                <dd><input type="text" class="from-date" name="from" th:value="${it.condition.from}" /></dd>
+                                <dt>TO</dt>
+                                <dd><input type="text" class="to-date" name="to" th:value="${it.condition.to}" /></dd>
+                                <dt>タイトル</dt>
+                                <dd><input type="text" name="title" th:value="${it.condition.title}" /></dd>
+                                <dt>ジャンル</dt>
+                            </dl>
+                            <ul class="ad-bs-search-buttons search-buttons">
+                                <li>
+                                    <button class="clear-button">クリア</button>
+                                </li>
+                                <li>
+                                    <button class="search-button">検索</button>
+                                </li>
+                            </ul>
+                            
+                        </fieldset>
+                    </form>
+                </section>
+
+                <section>
+                    <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=review-list-pager)"></div>
+                    <table class="bs-list">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>投稿日時</th>
+                                <th>タイトル</th>
+                                <th>ジャンル</th>
+                                <th>CERO</th>
+                                <th>削除[未実装]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="reviewInfo,stats : ${it.reviews}">
+                                <td th:text="${stats.count}">1</td>
+                                <td th:text="${reviewInfo.postDateTime.format()}">2015/01/01 01:01</td>
+                                <td>
+                                    <a
+                                        href="edit.html"
+                                        th:href="@{/admin/review/{reviewId}(reviewId=${reviewInfo.reviewId})}"
+                                        th:text="${reviewInfo.game.title}">ゲームタイトル</a>
+                                </td>
+                                <td th:text="${reviewInfo.game.genreName}">ユーザ名</td>
+                                <td>
+                                    <span th:text="${reviewInfo.game.ceroRating != null}? ${reviewInfo.game.ceroRating.label} : ''">CC</span>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=review-list-pager)"></div>
+                    
+                </section>
+                
+            </section>
+        </article>
         <script>
             $(document).ready(function(event) {
                 var $searchForm = $("form#search-form");

@@ -119,6 +119,13 @@ table.bs-list > tbody > tr > td.bs-sequence {
     text-align: center;
 }
 
-table.bs-list > tbody > tr > td.bs-status {
+table.bs-list > tbody > tr > td.bs-status,
+table.bs-list > tbody > tr > td.bs-score {
     text-align: center;
+}
+
+textarea.ad-bs-review-text {
+    width: 100%;
+    height: 400px;
+    overflow: scroll;
 }
