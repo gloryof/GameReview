@@ -58,6 +58,10 @@ ul.ad-bs-sub-command {
     justify-content: flex-end;
 }
 
+ul.ad-bs-sub-command > li {
+    margin-left: 32px;
+}
+
 dl.bs-search-inputs > dt,
 dl.bs-edit-inputs > dt {
     font-weight: bold;
