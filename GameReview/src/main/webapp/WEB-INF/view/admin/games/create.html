@@ -1,50 +1,64 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='ゲーム登録')" >
+    <head th:include="/common/base/metaInfo :: commonHeader (title='ゲーム登録', theme='admin')" >
         <title>ゲーム登録</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
-        <link rel="stylesheet" th:href="@{/css/base.css}" />
+        <link rel="stylesheet" href="../../../../css/normalize.css" />
+        <link rel="stylesheet" href="../../../../css/base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/admin-base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/theme.css" />
     </head>
     <body>
-        <section class="bread-crumbs">
-            <nav class="bs-bread-crumbs">
-                <ol>
-                    <li><a th:href="@{/admin}">管理画面</a></li>
-                    <li><a th:href="@{/admin/games}">ゲーム一覧</a></li>
-                    <li>新規作成</li>
-                </ol>
-            </nav>
-        </section>
-        <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
-        <section class="game-edit">
-            <form th:action="@{/admin/game/create}" method="post" id="game-create-form">
-                <dl>
-                    <dt th:text="${it.tileLabel}">タイトル</dt>
-                    <dd><input type="text" th:value="${it.title}" name="title" /></dd>
-                    <dt th:text="${it.urlLabel}">URL</dt>
-                    <dd><input type="text" th:value="${it.url}" name="url" /></dd>
-                    <dt th:text="${it.ceroLabel}">CERO</dt>
-                    <dd>
-                        <select name="ceroRating">
-                            <option value="">選択してください</option>
-                            <option th:each="rating : ${it.ratings}" th:selected="${rating == it.ceroRating}" th:value="${rating.id}" th:text="${rating.label}"></option>
-                        </select>
-                    </dd>
-                    <dt th:text="${it.genreLabel}">ジャンル</dt>
-                    <dd>
-                        <select name="genreId">
-                            <option value="">選択してください</option>
-                            <option th:each="genre : ${it.genres}" th:selected="${genre.id == it.genreId}" th:value="${genre.id}" th:text="${genre.name}"></option>
-                        </select>
-                    </dd>
-                </dl>
-            </form>
-        </section>
-        <section class="command">
-            <button class="complete-button">新規作成</button>
-            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/games}">キャンセル</button>
-        </section>
+        <article class="bs-content-area">
+            <section class="ad-bs-header-menu">
+                <nav class="ad-bs-bread-crumbs">
+                    <ol>
+                        <li><a href="../top.html" th:href="@{/admin}">管理画面</a></li>
+                        <li><a href="list.html" th:href="@{/admin/games}">ゲーム一覧</a></li>
+                        <li>新規作成</li>
+                    </ol>
+                </nav>
+            </section>
+
+            <section class="ad-bs-contents">
+                <div th:replace="/common/component/errorMessage :: errorMessage(messages=${it.errors})"></div>
+                <section class="game-edit">
+                    <form th:action="@{/admin/game/create}" method="post" id="game-create-form">
+                        <dl>
+                            <dt th:text="${it.tileLabel}">タイトル</dt>
+                            <dd><input type="text" th:value="${it.title}" name="title" /></dd>
+                            <dt th:text="${it.urlLabel}">URL</dt>
+                            <dd><input type="text" th:value="${it.url}" name="url" /></dd>
+                            <dt th:text="${it.ceroLabel}">CERO</dt>
+                            <dd>
+                                <select name="ceroRating">
+                                    <option value="">選択してください</option>
+                                    <option th:each="rating : ${it.ratings}" th:selected="${rating == it.ceroRating}" th:value="${rating.id}" th:text="${rating.label}"></option>
+                                </select>
+                            </dd>
+                            <dt th:text="${it.genreLabel}">ジャンル</dt>
+                            <dd>
+                                <select name="genreId">
+                                    <option value="">選択してください</option>
+                                    <option th:each="genre : ${it.genres}" th:selected="${genre.id == it.genreId}" th:value="${genre.id}" th:text="${genre.name}"></option>
+                                </select>
+                            </dd>
+                        </dl>
+                    </form>
+                </section>
+
+                <section class="ad-bs-commands">
+                    <ul class="ad-bs-edit-buttons">
+                        <li>
+                            <button class="cancel-button" th:attr="data-cancel-url=@{/admin/games}">キャンセル</button>
+                        </li>
+                        <li>
+                            <button class="complete-button">新規作成</button>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+        </article>
         <script>
             $(document).ready(function (event) {
                 $(".complete-button").on("click", function(event) {

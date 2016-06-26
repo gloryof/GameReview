@@ -1,83 +1,98 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="/common/base/metaInfo :: commonHeader (title='ゲーム一覧')" >
+    <head th:include="/common/base/metaInfo :: commonHeader (title='ゲーム一覧', theme='admin')" >
         <title>ゲーム一覧</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" th:href="@{/css/normalize.css}" />
-        <link rel="stylesheet" th:href="@{/css/base.css}" />
-        <link rel="stylesheet" th:href="@{/css/pager.css}" />
+        <link rel="stylesheet" href="../../../../css/normalize.css" />
+        <link rel="stylesheet" href="../../../../css/base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/admin-base.css" />
+        <link rel="stylesheet" href="../../../../css/admin/theme.css" />
     </head>
     <body>
-        <section class="bread-crumbs">
-            <nav class="bs-bread-crumbs">
-                <ol>
-                    <li><a th:href="@{/admin}">管理画面</a></li>
-                    <li>ゲーム一覧</li>
-                </ol>
-            </nav>
-        </section>
-        <section class="search-condition">
-            <button class="clear-button">クリア</button>
-            <form th:action="@{/admin/games/search}" method="get" id="search-form">
-                <input type="hidden" name="pageNumber" class="page-number" />
-                <dl>
-                    <dt>タイトル</dt>
-                    <dd><input type="text" name="title" th:value="${it.condition.title}" /></dd>
-                    <dt>ジャンル</dt>
-                    <dd>
-                        <select name="genreId">
-                            <option value="">--</option>
-                            <option th:each="genre : ${it.condition.genres}"
-                                    th:selected="${genre.id == it.condition.genreId}"
-                                    th:value="${genre.id}"
-                                    th:text="${genre.name}">ジャンル</option>
-                        </select>
-                    </dd>
-                    <dt>CERO</dt>
-                    <dd>
-                        <select name="ceroRating">
-                            <option value="">--</option>
-                            <option th:each="rating : ${it.condition.ratings}"
-                                    th:selected="${it.condition.ceroRating != null and rating.id == it.condition.ceroRating.id}"
-                                    th:value="${rating.id}"
-                                    th:text="${rating.label}">ジャンル</option>
-                        </select>
-                    </dd>
-                </dl>
-                <button>検索</button>
-            </form>
-        </section>
-        <section class="command">
-            <button class="create-button" th:attr="data-create-url=@{/admin/game/create}">新規作成</button>
-        </section>
-        <section class="search-result">
-            <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=game-list-pager)"></div>
-            <table class="bs-list">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>タイトル</th>
-                        <th>ジャンル</th>
-                        <th>CERO</th>
-                        <th>削除[未実装]</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="gameInfo,stats : ${it.games}">
-                        <td th:text="${stats.count}"></td>
-                        <td>
-                            <a th:href="@{/admin/game/{gameId}(gameId=${gameInfo.gameId})}" th:text="${gameInfo.title}">ゲームタイトル</a>
-                        </td>
-                        <td th:text="${gameInfo.genreName}">ユーザ名</td>
-                        <td>
-                            <span th:text="${gameInfo.ceroRating.label}">CC</span>
-                        </td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=game-list-pager)"></div>
-        </section>
+        <article class="bs-content-area">
+            <section class="ad-bs-header-menu">
+                <nav class="ad-bs-bread-crumbs">
+                    <ol>
+                        <li><a href="../top.html" th:href="@{/admin}">管理画面</a></li>
+                        <li>ゲーム一覧</li>
+                    </ol>
+                </nav>
+            </section>
+            <section class="ad-bs-contents">
+                <section>
+                    <section class="ad-bs-commands">
+                        <button class="create-button" th:attr="data-create-url=@{/admin/game/create}">新規作成</button>
+                    </section>
+                    <form th:action="@{/admin/games/search}" method="get" id="search-form">
+                        <input type="hidden" name="pageNumber" class="page-number" />
+                        <fieldset>
+                            <dl>
+                                <dt>タイトル</dt>
+                                <dd><input type="text" name="title" th:value="${it.condition.title}" /></dd>
+                                <dt>ジャンル</dt>
+                                <dd>
+                                    <select name="genreId">
+                                        <option value="">--</option>
+                                        <option th:each="genre : ${it.condition.genres}"
+                                                th:selected="${genre.id == it.condition.genreId}"
+                                                th:value="${genre.id}"
+                                                th:text="${genre.name}">ジャンル</option>
+                                    </select>
+                                </dd>
+                                <dt>CERO</dt>
+                                <dd>
+                                    <select name="ceroRating">
+                                        <option value="">--</option>
+                                        <option th:each="rating : ${it.condition.ratings}"
+                                                th:selected="${it.condition.ceroRating != null and rating.id == it.condition.ceroRating.id}"
+                                                th:value="${rating.id}"
+                                                th:text="${rating.label}">ジャンル</option>
+                                    </select>
+                                </dd>
+                            </dl>
+                            <ul class="ad-bs-search-buttons search-buttons">
+                                <li>
+                                    <button class="clear-button">クリア</button>
+                                </li>
+                                <li>
+                                    <button>検索</button>
+                                </li>
+                            </ul>
+                        </fieldset>                      
+                    </form>
+                </section>
+                
+                <section class="command">
+                    <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=game-list-pager)"></div>
+                    <table class="bs-list">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>タイトル</th>
+                                <th>ジャンル</th>
+                                <th>CERO</th>
+                                <th>削除[未実装]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="gameInfo,stats : ${it.games}">
+                                <td th:text="${stats.count}">1</td>
+                                <td>
+                                    <a href="view.html" th:href="@{/admin/game/{gameId}(gameId=${gameInfo.gameId})}" th:text="${gameInfo.title}">ゲームタイトル</a>
+                                </td>
+                                <td th:text="${gameInfo.genreName}">ユーザ名</td>
+                                <td>
+                                    <span th:text="${gameInfo.ceroRating.label}">CC</span>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div th:replace="/common/component/pager :: pager(pagerInfo=${it.pager}, appendClass=game-list-pager)"></div>           
+                </section>
+            </section>
+
+        </article>
         <script>
             $(document).ready(function(event) {
                 var $searchForm = $("form#search-form");
